@@ -3,14 +3,11 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 // import IconButton from 'material-ui/IconButton';
-
 import CodeEditor from 'app/components/editor/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaList from 'app/components/editor/media-list'; // eslint-disable-line import/no-extraneous-dependencies
 import CodeEditorSettings from 'app/components/editor/code-editor-settings'; // eslint-disable-line import/no-extraneous-dependencies
-
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-
 import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
 
@@ -23,6 +20,10 @@ const Editor = class extends React.Component {
 		this.state = {};
 		this.handleStateChange = newState => {
 			this.setState(newState);
+		};
+
+		this.handleAddMedia = media => {
+			ManifestActions.insertMedia(media);
 		};
 	}
 
@@ -75,6 +76,15 @@ const Editor = class extends React.Component {
 			}
 		};
 
+		let panelLeft;
+
+		if (this.state.manifest && this.state.manifest.status === ManifestStore.ERROR) {
+			panelLeft = <p>Error</p>;
+		}
+		if (this.state.manifest && this.state.manifest.status === ManifestStore.PARSED) {
+			panelLeft = <MediaList onInsertMedia={this.handleAddMedia} manifestParsed={this.state.manifest.parsed}/>;
+		}
+
 		return (
 			<div>
 				<AppBar
@@ -85,8 +95,7 @@ const Editor = class extends React.Component {
 					/>
 				<div style={{display: 'flex'}}>
 					<div style={styles.panelLeft}>
-						{this.state.manifest && this.state.manifest.status === ManifestStore.ERROR && <p>Error</p>}
-						{this.state.manifest && this.state.manifest.status === ManifestStore.PARSED && <MediaList manifestParsed={this.state.manifest.parsed}/>}
+						{panelLeft}
 					</div>
 					<div style={styles.panelRight}>
 						<CodeEditorSettings/>

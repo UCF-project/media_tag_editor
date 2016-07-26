@@ -9,6 +9,10 @@ import {Step, StepButton, Stepper} from 'material-ui/Stepper';
 import MediaContentContainer from 'app/containers/media-content';
 import MediaRulesContainer from 'app/containers/media-rules';
 import MediaConfirmContainer from 'app/containers/media-confirm';
+import MediaStore from 'app/stores/media';
+import MediaActions from 'app/actions/media';
+
+const debug = require('debug')('MTME:Components:Dialog:DialogAddMedia');
 
 const DialogAddMedia = class extends React.Component {
 	constructor(props) {
@@ -19,6 +23,7 @@ const DialogAddMedia = class extends React.Component {
 		};
 
 		this.handleOpen = () => {
+			// TODO: Should load/reset fields
 			this.setState({open: true, stepIndex: 0});
 		};
 
@@ -31,21 +36,39 @@ const DialogAddMedia = class extends React.Component {
 		};
 	}
 
+	handleSave = () => {
+		debug('handleSave', this);
+		const newMedia = MediaStore.convertToMediaObject(this.state.media);
+
+		this.props.onInsertMedia(newMedia);
+		this.handleClose();
+	}
+
 	render() {
-		const actions = [
-			<FlatButton
-				label={this.state.stepIndex === 2 ? 'Save' : 'Next'}
+		const actions = [];
+
+		if (this.state.stepIndex === 2) {
+			actions.push(<FlatButton
+				label="Save"
+				primary
+				onClick={this.handleSave}
+				key={0}
+				/>);
+		} else {
+			actions.push(<FlatButton
+				label="Next"
 				primary
 				onClick={this.handleNext}
 				key={0}
-				/>,
-			<FlatButton
-				label="Cancel"
-				primary
-				onClick={this.handleClose}
-				key={1}
-				/>
-		];
+				/>);
+		}
+
+		actions.push(<FlatButton
+			label="Cancel"
+			primary
+			onClick={this.handleClose}
+			key={1}
+			/>);
 
 		return (
 			<div>
@@ -92,6 +115,19 @@ const DialogAddMedia = class extends React.Component {
 				</Dialog>
 			</div>
 		);
+	}
+
+	handleStateChange = newState => {
+		this.setState(newState);
+	}
+
+	componentDidMount() {
+		this.unsubscribe = MediaStore.listen(this.handleStateChange);
+		MediaActions.stateCast();
+	}
+
+	componentWillUnmount() {
+		this.unsubscribe();
 	}
 };
 

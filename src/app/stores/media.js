@@ -109,4 +109,16 @@ MediaStore.createRule = (monitor, state, action, flag, editting) => {
 	};
 };
 
+MediaStore.convertToMediaObject = mediaState => {
+	const mediaObject = Object.assign({}, mediaState);
+	mediaObject.rules = {};
+	mediaState.rules.forEach(r => {
+		mediaObject.rules[r.monitor] = mediaObject.rules[r.monitor] || {};
+		mediaObject.rules[r.monitor][r.state] = mediaObject.rules[r.monitor][r.state] || {};
+		mediaObject.rules[r.monitor][r.state][r.action] = mediaObject.rules[r.monitor][r.state][r.action] || {};
+		mediaObject.rules[r.monitor][r.state][r.action] = r.flag;
+	});
+	return mediaObject;
+};
+
 module.exports = MediaStore;

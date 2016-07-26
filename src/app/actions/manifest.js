@@ -6,7 +6,8 @@ const ManifestActions = Reflux.createActions({
 	change: {},
 	changeToTemplateIndex: {},
 	download: {},
-	upload: {}
+	upload: {},
+	insertMedia: {}
 });
 
 module.exports = ManifestActions;

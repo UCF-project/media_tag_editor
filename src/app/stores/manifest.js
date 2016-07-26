@@ -102,6 +102,12 @@ const ManifestStore = Reflux.createStore({
 		reader.readAsText(file);
 	},
 
+	onInsertMedia(newMedia) {
+		const manifestParsed = JSON.parse(this.state.manifest.source);
+		manifestParsed.medias.push(newMedia);
+		ManifestActions.change(json2str(manifestParsed));
+	},
+
 	// Methods //
 
 	setSource(newManifestSource) {
