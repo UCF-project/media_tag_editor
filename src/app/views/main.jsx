@@ -14,21 +14,23 @@ const Main = class extends React.Component {
 	}
 
 	render() {
-		const styles = {
-			footer: {
-				background: 'rgba(0, 0, 0, 0.81)',
-				textAlign: 'center',
-				color: 'white',
-				padding: 20
-			}
-		};
+		// const styles = {
+		// 	footer: {
+		// 		background: 'rgba(0, 0, 0, 0.81)',
+		// 		textAlign: 'center',
+		// 		color: 'white',
+		// 		padding: 20
+		// 	}
+		// };
+		// const footer = (
+		// 	<div style={styles.footer}>
+		// 		<p>COPYRIGHT © MTME</p>
+		// 	</div>
+		// );
 		return (
 			<MuiThemeProvider muiTheme={Theme}>
 				<div>
 					{this.props.children}
-					<div style={styles.footer}>
-						<p>COPYRIGHT © MTME</p>
-					</div>
 				</div>
 			</MuiThemeProvider>
 		);

@@ -12,7 +12,14 @@ const LabeledSpan = (props, context) => {
 			transformOrigin: 'left top 0px',
 			color: context.muiTheme.palette.primary1Color
 		},
-		field: {minWidth: 100, display: 'inline-block', lineHeight: '20px', margin: 0, padding: '10px 9px'},
+		field: {
+			position: 'relative',
+			minWidth: 100,
+			display: 'inline-block',
+			lineHeight: '20px',
+			margin: 0,
+			padding: '10px 9px'
+		},
 		value: {color: 'rgba(0, 0, 0, 0.5)'}
 	};
 

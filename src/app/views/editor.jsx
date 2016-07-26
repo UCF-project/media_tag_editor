@@ -54,7 +54,8 @@ const Editor = class extends React.Component {
 				display: 'inline-block',
 				verticalAlign: 'top',
 				padding: 10,
-				boxSizing: 'border-box'
+				boxSizing: 'border-box',
+				overflow: 'auto'
 			},
 			item: {
 				paddingTop: 14,
@@ -93,7 +94,7 @@ const Editor = class extends React.Component {
 					// iconElementLeft={<IconButton iconClassName="mdi mdi-close"/>}
 					// iconElementRight={<IconButton iconClassName="mdi mdi-content-save"/>}
 					/>
-				<div style={{display: 'flex'}}>
+				<div style={{display: 'flex', height: 'calc(100vh - 64px)'}}>
 					<div style={styles.panelLeft}>
 						{panelLeft}
 					</div>
