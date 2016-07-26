@@ -127,6 +127,7 @@ const ManifestStore = Reflux.createStore({
 			this.state.manifest.status = this.PARSED;
 		} catch (err) {
 			debug('err', err);
+			this.state.manifest.statusError = err;
 			this.state.manifest.status = this.ERROR;
 			this.updateState();
 		}

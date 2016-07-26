@@ -76,7 +76,6 @@ const DialogAddMedia = class extends React.Component {
 					label="Add Media"
 					onClick={this.handleOpen}
 					secondary
-					style={{marginTop: 10}}
 					icon={<FontIcon className="mdi mdi-plus"/>}
 					/>
 				<Dialog

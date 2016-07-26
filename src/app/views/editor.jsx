@@ -10,6 +10,7 @@ import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/n
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
+import ParserErrorBox from 'app/components/editor/parser-error-box'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Views:Editor');
 
@@ -80,7 +81,7 @@ const Editor = class extends React.Component {
 		let panelLeft;
 
 		if (this.state.manifest && this.state.manifest.status === ManifestStore.ERROR) {
-			panelLeft = <p>Error</p>;
+			panelLeft = <ParserErrorBox error={this.state.manifest.statusError}/>;
 		}
 		if (this.state.manifest && this.state.manifest.status === ManifestStore.PARSED) {
 			panelLeft = <MediaList onInsertMedia={this.handleAddMedia} manifestParsed={this.state.manifest.parsed}/>;

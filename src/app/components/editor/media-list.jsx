@@ -33,8 +33,6 @@ const MediaList = props => {
 	};
 	return (
 		<div>
-			<h1 style={styles.h1}>Medias</h1>
-			<Divider/>
 			{medias}
 			<DialogAddMedia onInsertMedia={props.onInsertMedia}/>
 		</div>

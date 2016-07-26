@@ -44,7 +44,7 @@ const CodeEditorSettings = class extends React.Component {
 		return (
 			<div style={{position: 'absolute', right: 0, zIndex: 100}}>
 				<IconMenu
-					iconButtonElement={<IconButton iconClassName="mdi mdi-settings"/>}
+					iconButtonElement={<IconButton iconStyle={{color: this.context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-settings"/>}
 					anchorOrigin={{horizontal: 'right', vertical: 'top'}}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 					>
@@ -67,6 +67,10 @@ const CodeEditorSettings = class extends React.Component {
 			</div>
 		);
 	}
+};
+
+CodeEditorSettings.contextTypes = {
+	muiTheme: React.PropTypes.object
 };
 
 module.exports = CodeEditorSettings;
