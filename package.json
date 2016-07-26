@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -v",
-    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ]",
+    "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -v",
+    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ]",
     "build": "npm run copy-files:mdi && npm run copy-files:static && npm run build:app",
     "copy-files:static": "mkdir dist || true && cp -R src/static/* dist/",
     "copy-files:mdi": "mkdir -p dist/css || true && cp ./node_modules/mdi/css/materialdesignicons.min.css* dist/css/ && mkdir -p dist/fonts || true && cp ./node_modules/mdi/fonts/* dist/fonts/ ",
