@@ -2,24 +2,41 @@
 
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import Divider from 'material-ui/Divider';
-import AceEditor from 'react-ace';
-import brace from 'brace';
-import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
-import Paper from 'material-ui/Paper';
+// import IconButton from 'material-ui/IconButton';
 
-import 'brace/mode/json';
-import 'brace/theme/github';
+import CodeEditor from 'app/components/editor/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
+import MediaList from 'app/components/editor/media-list'; // eslint-disable-line import/no-extraneous-dependencies
+import CodeEditorSettings from 'app/components/editor/code-editor-settings'; // eslint-disable-line import/no-extraneous-dependencies
 
-import manifestJson from 'app/extras/manifest-sample'; // eslint-disable-line import/no-extraneous-dependencies
-import LabeledSpan from 'app/components/form/labeled-span'; // eslint-disable-line import/no-extraneous-dependencies
-import DialogAddMedia from 'app/components/dialog/dialog-add-media'; // eslint-disable-line import/no-extraneous-dependencies
-import DialogAddRule from 'app/components/dialog/dialog-add-rule'; // eslint-disable-line import/no-extraneous-dependencies
+import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
+import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
+
+import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
+
+const debug = require('debug')('MTME:Views:Editor');
 
 const Editor = class extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {};
+		this.handleStateChange = newState => {
+			this.setState(newState);
+		};
+	}
+
+	componentDidMount() {
+		this.unsubscribe = ManifestStore.listen(this.handleStateChange);
+		ManifestActions.change(json2str(Templates.manifests[0].json));
+	}
+
+	componentWillUnmount() {
+		this.unsubscribe();
+	}
+
 	render() {
+		debug('render', this.state);
 		const styles = {
 			h1: {
 				margin: '5px 0px',
@@ -62,110 +79,18 @@ const Editor = class extends React.Component {
 			<div>
 				<AppBar
 					title="Media Tag Manifest Editor"
+					showMenuIconButton={false}
 					// iconElementLeft={<IconButton iconClassName="mdi mdi-close"/>}
-					iconElementRight={<IconButton iconClassName="mdi mdi-content-save"/>}
+					// iconElementRight={<IconButton iconClassName="mdi mdi-content-save"/>}
 					/>
-				<div>
+				<div style={{display: 'flex'}}>
 					<div style={styles.panelLeft}>
-						<h1 style={styles.h1}>Medias</h1>
-						<Divider/>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="http://0.0.0.0:3000/tests/assets/media/image.png"
-								label="url"
-								/>
-
-							<LabeledSpan
-								value="image"
-								label="type"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="http://0.0.0.0:3000/tests/assets/media/image.png"
-								label="url"
-								/>
-
-							<LabeledSpan
-								value="image"
-								label="type"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="http://0.0.0.0:3000/tests/assets/media/image.png"
-								label="url"
-								/>
-
-							<LabeledSpan
-								value="image"
-								label="type"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="http://0.0.0.0:3000/tests/assets/media/image.png"
-								label="url"
-								/>
-
-							<LabeledSpan
-								value="image"
-								label="type"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<DialogAddMedia/>
-
-						<h1 style={styles.h1}>Rules</h1>
-						<Divider/>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="image"
-								label="type"
-								/>
-
-							<LabeledSpan
-								value="monitor"
-								label="network"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<Paper style={styles.item}>
-							<LabeledSpan
-								value="dash-audio"
-								label="type"
-								/>
-
-							<LabeledSpan
-								value="monitor"
-								label="network"
-								/>
-							<IconButton style={styles.buttonIcon.root} iconStyle={styles.buttonIcon.icon} iconClassName="mdi mdi-delete"/>
-						</Paper>
-
-						<DialogAddRule/>
-
+						{this.state.manifest && this.state.manifest.status === ManifestStore.ERROR && <p>Error</p>}
+						{this.state.manifest && this.state.manifest.status === ManifestStore.PARSED && <MediaList manifestParsed={this.state.manifest.parsed}/>}
 					</div>
 					<div style={styles.panelRight}>
-						<AceEditor
-							mode="json"
-							theme="github"
-							// onChange={onChange}
-							name="UNIQUE_ID_OF_DIV"
-							editorProps={{$blockScrolling: true}}
-							value={manifestJson}
-							width="100%"
-							/>
+						<CodeEditorSettings/>
+						{this.state.manifest && <CodeEditor manifestSource={this.state.manifest.source}/>}
 					</div>
 				</div>
 

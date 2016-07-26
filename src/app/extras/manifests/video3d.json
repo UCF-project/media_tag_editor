@@ -1,0 +1,62 @@
+{
+  "medias":  [
+    {
+      "content": "https://sketchfab.com/models/1b3f7cabd0854bb59c725c13514fec19",
+      "rules": {
+        "fakeMonitor": {
+          "show3d": {"visibility": true},
+          "started": {"visibility": false},
+          "showVideo": {"visibility": false},
+          "showText": {"visibility": false},
+          "showImage": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": {
+        "sources": [
+          {
+            "src": "/assets/sample.webm"
+          },
+          {
+            "src": "/assets/sample.mp4"
+          }
+        ],
+        "contentType": "videoObj"
+      },
+      "rules": {
+        "fakeMonitor": {
+          "show3d": {"visibility": false},
+          "started": {"visibility": false},
+          "showVideo": {"visibility": true},
+          "showText": {"visibility": false},
+          "showImage": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "/assets/sample.png",
+      "rules": {
+        "fakeMonitor": {
+          "show3d": {"visibility": false},
+          "started": {"visibility": false},
+          "showVideo": {"visibility": false},
+          "showText": {"visibility": false},
+          "showImage": {"visibility": true}
+        }
+      }
+    },
+    {
+      "content": "/assets/sample.txt",
+      "rules": {
+        "fakeMonitor": {
+          "show3d": {"visibility": false},
+          "started": {"visibility": false},
+          "showVideo": {"visibility": false},
+          "showText": {"visibility": true},
+          "showImage": {"visibility": false}
+        }
+      }
+    }
+  ]
+}

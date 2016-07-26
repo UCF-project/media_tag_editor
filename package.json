@@ -2,10 +2,10 @@
   "name": "mt-manifest-editor",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react ] ] -v",
-    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react ] ]",
+    "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -v",
+    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ]",
     "build": "npm run copy-files:mdi && npm run copy-files:static && npm run build:app",
     "copy-files:static": "mkdir dist || true && cp -R src/static/* dist/",
     "copy-files:mdi": "mkdir -p dist/css || true && cp ./node_modules/mdi/css/materialdesignicons.min.css* dist/css/ && mkdir -p dist/fonts || true && cp ./node_modules/mdi/fonts/* dist/fonts/ ",
@@ -19,10 +19,15 @@
   "dependencies": {
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.0",
+    "babel-preset-stage-1": "^6.5.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
+    "camelcase": "^3.0.0",
+    "debug": "^2.2.0",
+    "install": "^0.8.1",
     "material-ui": "^0.15.1",
     "mdi": "^1.6.50",
+    "media-tag": "file:///Users/karine/Projects/UCF/MediaTag/media_tag",
     "node-sass": "^3.8.0",
     "react": "^15.1.0",
     "react-ace": "^3.4.1",
@@ -30,12 +35,17 @@
     "react-router": "^2.5.1",
     "react-tap-event-plugin": "^1.0.0",
     "reflux": "^0.4.1",
-    "reflux-promise": "^1.0.4"
+    "reflux-promise": "^1.0.4",
+    "warning": "^3.0.0"
   },
   "xo": {
+    "envs": [
+      "browser"
+    ],
     "esnext": true,
     "extends": [
-      "xo-react"
+      "xo-react",
+      "core-module-app"
     ],
     "ignores": [
       "dist/**/*"

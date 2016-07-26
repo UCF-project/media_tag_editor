@@ -9,8 +9,13 @@
 import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 import refluxPromise from 'reflux-promise';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import 'media-tag';
 
 // APP
+
+// Needed for material-ui http://www.material-ui.com/#/get-started/installation
+injectTapEventPlugin();
 
 // Uses the user agent's Promise implementation
 Reflux.use(refluxPromise(window.Promise));
