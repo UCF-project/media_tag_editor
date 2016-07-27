@@ -8,7 +8,12 @@ const MediaActions = Reflux.createActions({
 	insertRule: {},
 	deleteRule: {},
 	saveRule: {},
-	editRule: {}
+	editRule: {},
+	gotoStep: {},
+	save: {},
+	nextStep: {},
+	close: {},
+	open: {}
 });
 
 module.exports = MediaActions;

@@ -1,16 +1,8 @@
 'use strict';
 
+import {MediaContentContainer, MediaRulesContainer, MediaConfirmContainer, MediaStore, MediaActions} from 'app';
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import FontIcon from 'material-ui/FontIcon';
-import {Step, StepButton, Stepper} from 'material-ui/Stepper';
-import MediaContentContainer from 'app/containers/media-content';
-import MediaRulesContainer from 'app/containers/media-rules';
-import MediaConfirmContainer from 'app/containers/media-confirm';
-import MediaStore from 'app/stores/media';
-import MediaActions from 'app/actions/media';
+import {Dialog, FlatButton, FontIcon, RaisedButton, Step, StepButton, Stepper} from 'material-ui';
 
 const debug = require('debug')('MTME:Components:Dialog:DialogAddMedia');
 

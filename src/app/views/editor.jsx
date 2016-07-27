@@ -26,6 +26,10 @@ const Editor = class extends React.Component {
 		this.handleAddMedia = media => {
 			ManifestActions.insertMedia(media);
 		};
+
+		this.handleDeleteMedia = mediaIndex => {
+			ManifestActions.deleteMedia(mediaIndex);
+		};
 	}
 
 	componentDidMount() {
@@ -78,15 +82,6 @@ const Editor = class extends React.Component {
 			}
 		};
 
-		let panelLeft;
-
-		if (this.state.manifest && this.state.manifest.status === ManifestStore.ERROR) {
-			panelLeft = <ParserErrorBox error={this.state.manifest.statusError}/>;
-		}
-		if (this.state.manifest && this.state.manifest.status === ManifestStore.PARSED) {
-			panelLeft = <MediaList onInsertMedia={this.handleAddMedia} manifestParsed={this.state.manifest.parsed}/>;
-		}
-
 		return (
 			<div>
 				<AppBar
@@ -97,7 +92,7 @@ const Editor = class extends React.Component {
 					/>
 				<div style={{display: 'flex', height: 'calc(100vh - 64px)'}}>
 					<div style={styles.panelLeft}>
-						{panelLeft}
+						{this.props.children}
 					</div>
 					<div style={styles.panelRight}>
 						<CodeEditorSettings/>
@@ -113,6 +108,10 @@ const Editor = class extends React.Component {
 Editor.contextTypes = {
 	router: React.PropTypes.object,
 	muiTheme: React.PropTypes.object
+};
+
+Editor.propTypes = {
+	children: React.PropTypes.node
 };
 
 module.exports = Editor;

@@ -2,6 +2,8 @@
 'use strict';
 
 import Reflux from 'reflux';
+import {hashHistory} from 'react-router';
+// import {browserHistory} from 'react-router';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 // import MediaTag from 'media-tag/dist/media-tag.all';
 
@@ -10,6 +12,7 @@ import MediaObject from 'media-tag/src/lib/modules/media-object';
 
 import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
+// import history from 'app/extras/history';
 
 const debug = require('debug')('MTME:Stores:Manifest');
 
@@ -48,7 +51,7 @@ const ManifestStore = Reflux.createStore({
 				}
 			}
 		};
-		this.setSource('{"medias":[]}');
+		this.setSource(json2str({medias: []}));
 	},
 
 	// Actions //
@@ -67,6 +70,7 @@ const ManifestStore = Reflux.createStore({
 
 	onChangeToTemplateIndex(index) {
 		ManifestActions.change(json2str(Templates.manifests[index].json));
+		ManifestActions.listMedia();
 	},
 
 	onUpload(e) {
@@ -98,6 +102,7 @@ const ManifestStore = Reflux.createStore({
 		const reader = new FileReader();
 		reader.addEventListener('load', e => {
 			ManifestActions.change(e.target.result);
+			ManifestActions.listMedia();
 		});
 		reader.readAsText(file);
 	},
@@ -106,6 +111,44 @@ const ManifestStore = Reflux.createStore({
 		const manifestParsed = JSON.parse(this.state.manifest.source);
 		manifestParsed.medias.push(newMedia);
 		ManifestActions.change(json2str(manifestParsed));
+	},
+
+	onDeleteMedia(mediaIndex) {
+		const manifestParsed = JSON.parse(this.state.manifest.source);
+		manifestParsed.medias.splice(mediaIndex, 1);
+		ManifestActions.change(json2str(manifestParsed));
+	},
+
+	onUpdateMedia(mediaIndex, newMedia) {
+		const manifestParsed = JSON.parse(this.state.manifest.source);
+		manifestParsed.medias[mediaIndex] = newMedia;
+		ManifestActions.change(json2str(manifestParsed));
+	},
+
+	onEditMedia(mediaIndex) {
+		const manifestParsed = JSON.parse(this.state.manifest.source);
+		manifestParsed.medias.splice(mediaIndex, 1);
+		ManifestActions.change(json2str(manifestParsed));
+	},
+
+	onShowMedia(mediaIndex) {
+		// const mediaUrl = History.createHref(`${mediaIndex}`);
+		// debug('onShowMedia', mediaIndex, mediaUrl);
+		debug('onShowMedia', mediaIndex);
+
+		// History.replace(null, '/#testing2');
+		// browserHistory.push(`/#/${mediaIndex}`);
+
+		hashHistory.replace(`/${mediaIndex}`);
+	},
+
+	onListMedia() {
+		debug('onShowMediaList');
+		hashHistory.replace('/');
+	},
+
+	onStateCast() {
+		this.updateState();
 	},
 
 	// Methods //

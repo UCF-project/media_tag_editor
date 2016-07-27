@@ -2,7 +2,8 @@
 
 import Reflux from 'reflux';
 // Need to be full path, import {MediaActions} from 'app'; makes a circular dependency
-import MediaActions from 'app/actions/media';
+import MediaActions from 'app/actions/media';  // eslint-disable-line import/no-extraneous-dependencies
+import ManifestActions from 'app/actions/manifest';  // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Stores:Media');
 
@@ -16,6 +17,10 @@ const MediaStore = Reflux.createStore({
 		this.state = {};
 		this.state.media = {
 			content: '',
+			dialog: {
+				open: false,
+				stepIndex: 0
+			},
 			rules: [
 				{
 					monitor: 'netxwork',
@@ -83,13 +88,50 @@ const MediaStore = Reflux.createStore({
 		debug('onEditRule');
 		this.state.media.rules[ruleIndex].editting = true;
 		this.onStateCast();
-	}
+	},
 
-	// Methods //
+	onGotoStep(stepIndex) {
+		if (stepIndex > MediaStore.maxSteps) {
+			throw new Error('Tried to go higher than max steps.');
+		} else if (stepIndex < 0) {
+			throw new Error('Invalid negative step.');
+		}
+		this.state.media.dialog.stepIndex = stepIndex;
+		this.onStateCast();
+	},
+
+	onNextStep() {
+		this.state.media.dialog.stepIndex++;
+		if (this.state.media.dialog.stepIndex > MediaStore.maxSteps) {
+			throw new Error('Tried to go next step but it is already at last step.');
+		}
+		this.onStateCast();
+	},
+
+	onClose() {
+		this.state.media.dialog.open = false;
+		this.onStateCast();
+	},
+
+	onOpen() {
+		this.state.media.dialog.open = true;
+		this.onStateCast();
+	},
+
+	onSave() {
+		const newMedia = MediaStore.convertToMediaObject(this.state.media);
+		// TODO: will depend on the open params
+		ManifestActions.insertMedia(newMedia);
+		MediaActions.close();
+	}
 });
 
 const initialState = {
 	media: {
+		dialog: {
+			open: false,
+			stepIndex: 0
+		},
 		content: '',
 		rules: []
 	}
@@ -98,6 +140,8 @@ const initialState = {
 MediaStore.getInitialState = () => {
 	return Object.assign({}, initialState);
 };
+
+MediaStore.maxSteps = 3;
 
 MediaStore.createRule = (monitor, state, action, flag, editting) => {
 	return {
@@ -110,7 +154,8 @@ MediaStore.createRule = (monitor, state, action, flag, editting) => {
 };
 
 MediaStore.convertToMediaObject = mediaState => {
-	const mediaObject = Object.assign({}, mediaState);
+	const mediaObject = {};
+	mediaObject.content = mediaState.content;
 	mediaObject.rules = {};
 	mediaState.rules.forEach(r => {
 		mediaObject.rules[r.monitor] = mediaObject.rules[r.monitor] || {};

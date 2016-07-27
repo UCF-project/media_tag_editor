@@ -3,7 +3,7 @@
 import React from 'react';
 import {FontIcon, Paper} from 'material-ui';
 
-const ParserErrorBox = (props, context) => {
+const ErrorBox = (props, context) => {
 	const {
 		error,
 		style,
@@ -17,13 +17,13 @@ const ParserErrorBox = (props, context) => {
 	);
 };
 
-ParserErrorBox.contextTypes = {
+ErrorBox.contextTypes = {
 	muiTheme: React.PropTypes.object
 };
 
-ParserErrorBox.propTypes = {
+ErrorBox.propTypes = {
 	error: React.PropTypes.object.required,
 	style: React.PropTypes.object
 };
 
-module.exports = ParserErrorBox;
+module.exports = ErrorBox;

@@ -24,7 +24,7 @@ const LabeledSpan = (props, context) => {
 	};
 
 	return (
-		<span className={`spWrapper${props.className}`} style={styles.field} key={props.key}>
+		<span className={`spWrapper${props.className}`} style={Object.assign(styles.field, props.style || {})} key={props.key}>
 			<label className={`lb${props.className}`} style={styles.label}>{props.label}</label>
 			<span className={`sp${props.className}`} style={styles.value}>{props.value}</span>
 		</span>
@@ -43,7 +43,8 @@ LabeledSpan.propTypes = {
 	value: React.PropTypes.node,
 	label: React.PropTypes.node,
 	key: React.PropTypes.string,
-	className: React.PropTypes.string
+	className: React.PropTypes.string,
+	style: React.PropTypes.object
 };
 
 module.exports = LabeledSpan;

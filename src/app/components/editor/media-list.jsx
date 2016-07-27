@@ -1,40 +1,32 @@
 'use strict';
 
+// import {MediaBox} from 'app';
 import React from 'react';
-import DialogAddMedia from 'app/components/dialog/dialog-add-media'; // eslint-disable-line import/no-extraneous-dependencies
-import Divider from 'material-ui/Divider';
-import MediaBox from 'app/components/editor/media-box'; // eslint-disable-line import/no-extraneous-dependencies
+import {FontIcon, RaisedButton} from 'material-ui';
+import DialogMediaContainer from 'app/containers/dialog-media';
+import MediaBox from 'app/components/editor/media-box';
 
 const MediaList = props => {
 	const medias = props.manifestParsed.medias.map((m, i) => {
-		return <MediaBox key={i} media={m}/>;
+		return (<MediaBox
+			key={i}
+			itemIndex={i}
+			media={m}
+			onDelete={props.onDeleteMedia}
+			onEdit={props.onEditMedia}
+			onShow={props.onShowMedia}
+			/>);
 	});
-	const styles = {
-		h1: {
-			margin: '5px 0px',
-			fontWeight: 400,
-			color: 'rgba(0,0,0,.87)'
-		},
-		panelRight: {
-			width: '50%',
-			display: 'inline-block',
-			verticalAlign: 'top'
-		},
-		panelLeft: {
-			width: '50%',
-			display: 'inline-block',
-			verticalAlign: 'top',
-			padding: 10,
-			boxSizing: 'border-box'
-		},
-		button: {
-			marginTop: 10
-		}
-	};
 	return (
 		<div>
 			{medias}
-			<DialogAddMedia onInsertMedia={props.onInsertMedia}/>
+			<RaisedButton
+				label="Add Media"
+				onClick={props.onOpenNewMedia}
+				secondary
+				icon={<FontIcon className="mdi mdi-plus"/>}
+				/>
+			<DialogMediaContainer/>
 		</div>
 	);
 };
@@ -44,7 +36,11 @@ MediaList.contextTypes = {
 };
 
 MediaList.propTypes = {
-	manifestParsed: React.PropTypes.object
+	manifestParsed: React.PropTypes.object,
+	onDeleteMedia: React.PropTypes.func,
+	onEditMedia: React.PropTypes.func,
+	onShowMedia: React.PropTypes.func,
+	onOpenNewMedia: React.PropTypes.func
 };
 
 module.exports = MediaList;
