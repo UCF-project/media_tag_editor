@@ -7,6 +7,20 @@ import ManifestActions from 'app/actions/manifest';  // eslint-disable-line impo
 
 const debug = require('debug')('MTME:Stores:Media');
 
+const initialState = {
+	media: {
+		dialog: {
+			open: false,
+			stepIndex: 0,
+			type: null,
+			mediaIndex: null,
+			contentTabIndex: 0
+		},
+		content: '',
+		rules: []
+	}
+};
+
 const MediaStore = Reflux.createStore({
 	// Base Store //
 
@@ -15,42 +29,6 @@ const MediaStore = Reflux.createStore({
 	init() {
 		debug('init');
 		this.state = {};
-		this.state.media = {
-			content: '',
-			dialog: {
-				open: false,
-				stepIndex: 0
-			},
-			rules: [
-				{
-					monitor: 'netxwork',
-					state: 'up',
-					action: 'visibility',
-					flag: true
-				},
-				{
-					monitor: 'network',
-					state: 'down',
-					action: 'visibility',
-					flag: false,
-					editting: false
-				},
-				{
-					monitor: 'network',
-					state: 'down',
-					action: 'style',
-					flag: 'color: red',
-					editting: true
-				},
-				{
-					monitor: 'network',
-					state: 'up',
-					action: 'style',
-					flag: 'color: green',
-					editting: true
-				}
-			]
-		};
 	},
 
 	// Actions //
@@ -113,7 +91,26 @@ const MediaStore = Reflux.createStore({
 		this.onStateCast();
 	},
 
-	onOpen() {
+	onOpenUpdate(mediaIndex, mediaObject) {
+		debug('onOpenUpdate', mediaIndex, mediaObject);
+		this.state = MediaStore.getInitialState();
+		debug('1');
+		const dialogState = Object.assign({}, this.state.media.dialog);
+		debug('2');
+		this.state.media = MediaStore.convertToMediaState(mediaObject);
+		debug('3');
+		this.state.media.dialog = dialogState;
+		this.state.media.dialog.type = MediaStore.UPDATE;
+		this.state.media.dialog.open = true;
+		this.state.media.dialog.mediaIndex = mediaIndex;
+		debug('state', this.state);
+		this.onStateCast();
+	},
+
+	onOpenNew() {
+		debug('onOpenNew');
+		this.state = MediaStore.getInitialState();
+		this.state.media.dialog.type = MediaStore.NEW;
 		this.state.media.dialog.open = true;
 		this.onStateCast();
 	},
@@ -121,24 +118,30 @@ const MediaStore = Reflux.createStore({
 	onSave() {
 		const newMedia = MediaStore.convertToMediaObject(this.state.media);
 		// TODO: will depend on the open params
-		ManifestActions.insertMedia(newMedia);
+		if (this.state.media.dialog.type === MediaStore.NEW) {
+			ManifestActions.insertMedia(newMedia);
+		} else if (this.state.media.dialog.type === MediaStore.UPDATE) {
+			ManifestActions.updateMedia(this.state.media.dialog.mediaIndex, newMedia);
+		} else {
+			throw new Error('Try to save with undefined type state.');
+		}
 		MediaActions.close();
+	},
+
+	onSetUrl(newUrl) {
+		MediaActions.updateContent(newUrl);
+		MediaActions.setContentTabIndex(0);
+	},
+
+	onSetContentTabIndex(newIndex) {
+		debug('onSetContentTabIndex');
+		this.state.media.dialog.contentTabIndex = newIndex;
+		this.onStateCast();
 	}
 });
 
-const initialState = {
-	media: {
-		dialog: {
-			open: false,
-			stepIndex: 0
-		},
-		content: '',
-		rules: []
-	}
-};
-
 MediaStore.getInitialState = () => {
-	return Object.assign({}, initialState);
+	return JSON.parse(JSON.stringify(initialState));
 };
 
 MediaStore.maxSteps = 3;
@@ -156,14 +159,38 @@ MediaStore.createRule = (monitor, state, action, flag, editting) => {
 MediaStore.convertToMediaObject = mediaState => {
 	const mediaObject = {};
 	mediaObject.content = mediaState.content;
-	mediaObject.rules = {};
-	mediaState.rules.forEach(r => {
-		mediaObject.rules[r.monitor] = mediaObject.rules[r.monitor] || {};
-		mediaObject.rules[r.monitor][r.state] = mediaObject.rules[r.monitor][r.state] || {};
-		mediaObject.rules[r.monitor][r.state][r.action] = mediaObject.rules[r.monitor][r.state][r.action] || {};
-		mediaObject.rules[r.monitor][r.state][r.action] = r.flag;
-	});
+	if (mediaState.rules.length) {
+		mediaObject.rules = {};
+		mediaState.rules.forEach(r => {
+			mediaObject.rules[r.monitor] = mediaObject.rules[r.monitor] || {};
+			mediaObject.rules[r.monitor][r.state] = mediaObject.rules[r.monitor][r.state] || {};
+			mediaObject.rules[r.monitor][r.state][r.action] = mediaObject.rules[r.monitor][r.state][r.action] || {};
+			mediaObject.rules[r.monitor][r.state][r.action] = r.flag;
+		});
+	}
 	return mediaObject;
 };
+
+MediaStore.convertToMediaState = mediaObject => {
+	const mediaState = {};
+	mediaState.content = mediaObject.content;
+	mediaState.rules = [];
+	if ('rules' in mediaObject) {
+		const rulesKeys = Object.keys(mediaObject.rules);
+		rulesKeys.forEach(rk => {
+			const stateKeys = Object.keys(mediaObject.rules[rk]);
+			stateKeys.forEach(sk => {
+				const actionKeys = Object.keys(mediaObject.rules[rk][sk]);
+				actionKeys.forEach(ak => {
+					mediaState.rules.push(MediaStore.createRule(rk, sk, ak, mediaObject.rules[rk][sk][ak], false));
+				});
+			});
+		});
+	}
+	return mediaState;
+};
+
+MediaStore.NEW = 'NEW';
+MediaStore.UPDATE = 'UPDATE';
 
 module.exports = MediaStore;

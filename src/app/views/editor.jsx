@@ -4,13 +4,11 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 // import IconButton from 'material-ui/IconButton';
 import CodeEditor from 'app/components/editor/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
-import MediaList from 'app/components/editor/media-list'; // eslint-disable-line import/no-extraneous-dependencies
 import CodeEditorSettings from 'app/components/editor/code-editor-settings'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
-import ParserErrorBox from 'app/components/editor/parser-error-box'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Views:Editor');
 

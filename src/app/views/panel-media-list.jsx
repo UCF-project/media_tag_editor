@@ -28,7 +28,7 @@ class PanelMediaList extends React.Component {
 	}
 
 	handleOpenNewMedia() {
-		MediaActions.open();
+		MediaActions.openNew();
 	}
 
 	render() {

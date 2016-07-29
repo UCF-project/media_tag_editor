@@ -1,18 +1,13 @@
-/* global document, window, Blob, FileReader */
+/* global Blob, FileReader */
 'use strict';
 
 import Reflux from 'reflux';
 import {hashHistory} from 'react-router';
-// import {browserHistory} from 'react-router';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-// import MediaTag from 'media-tag/dist/media-tag.all';
-
-// const MediaObject = MediaTag.mediaObject;
+import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaObject from 'media-tag/src/lib/modules/media-object';
-
 import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
-// import history from 'app/extras/history';
 
 const debug = require('debug')('MTME:Stores:Manifest');
 
@@ -127,18 +122,11 @@ const ManifestStore = Reflux.createStore({
 
 	onEditMedia(mediaIndex) {
 		const manifestParsed = JSON.parse(this.state.manifest.source);
-		manifestParsed.medias.splice(mediaIndex, 1);
-		ManifestActions.change(json2str(manifestParsed));
+		MediaActions.openUpdate(mediaIndex, manifestParsed.medias[mediaIndex]);
 	},
 
 	onShowMedia(mediaIndex) {
-		// const mediaUrl = History.createHref(`${mediaIndex}`);
-		// debug('onShowMedia', mediaIndex, mediaUrl);
 		debug('onShowMedia', mediaIndex);
-
-		// History.replace(null, '/#testing2');
-		// browserHistory.push(`/#/${mediaIndex}`);
-
 		hashHistory.replace(`/${mediaIndex}`);
 	},
 

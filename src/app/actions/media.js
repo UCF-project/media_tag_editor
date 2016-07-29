@@ -13,7 +13,10 @@ const MediaActions = Reflux.createActions({
 	save: {},
 	nextStep: {},
 	close: {},
-	open: {}
+	openNew: {},
+	openUpdate: {},
+	setUrl: {},
+	setContentTabIndex: {}
 });
 
 module.exports = MediaActions;
