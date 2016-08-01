@@ -3,7 +3,6 @@
 import Reflux from 'reflux';
 
 const MediaActions = Reflux.createActions({
-	updateContent: {},
 	stateCast: {},
 	insertRule: {},
 	deleteRule: {},
@@ -16,7 +15,10 @@ const MediaActions = Reflux.createActions({
 	openNew: {},
 	openUpdate: {},
 	setUrl: {},
-	setContentTabIndex: {}
+	setContentTabIndex: {},
+	setUploadError: {},
+	updateContentURL: {},
+	updateContentObject: {}
 });
 
 module.exports = MediaActions;

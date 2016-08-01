@@ -8,24 +8,18 @@ import 'brace'; // eslint-disable-line import/no-extraneous-dependencies
 import 'brace/mode/json'; // eslint-disable-line import/no-extraneous-dependencies
 import 'brace/theme/github'; // eslint-disable-line import/no-extraneous-dependencies
 
-import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-
-const debug = require('debug')('MTME:Components:Editor:CodeEditor');
-
-function onChange(newValue) {
-	debug('change', newValue);
-	ManifestActions.change(newValue);
-}
+const debug = require('debug')('MTME:Components:CodeEditor');
 
 const CodeEditor = props => {
+	debug('render');
 	return (
 		<AceEditor
 			mode="json"
 			theme="github"
-			onChange={onChange}
-			name="UNIQUE_ID_OF_DIV"
+			onChange={props.onChange}
+			name={props.name}
 			editorProps={{$blockScrolling: true}}
-			value={props.manifestSource}
+			value={props.value}
 			width="100%"
 			height="100%"
 			/>
@@ -33,7 +27,9 @@ const CodeEditor = props => {
 };
 
 CodeEditor.propTypes = {
-	manifestSource: React.PropTypes.string
+	name: React.PropTypes.string.isRequired,
+	value: React.PropTypes.string,
+	onChange: React.PropTypes.func
 };
 
 module.exports = CodeEditor;

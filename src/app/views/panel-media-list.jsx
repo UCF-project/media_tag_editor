@@ -1,8 +1,8 @@
 'use strict';
 
 import React from 'react';
-import MediaList from 'app/components/editor/media-list'; // eslint-disable-line import/no-extraneous-dependencies
-import ErrorBox from 'app/components/editor/error-box'; // eslint-disable-line import/no-extraneous-dependencies
+import MediaList from 'app/components/media-list'; // eslint-disable-line import/no-extraneous-dependencies
+import ErrorBox from 'app/components/error-box'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies

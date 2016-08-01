@@ -22,7 +22,7 @@ ErrorBox.contextTypes = {
 };
 
 ErrorBox.propTypes = {
-	error: React.PropTypes.object.required,
+	error: React.PropTypes.object.isRequired,
 	style: React.PropTypes.object
 };
 

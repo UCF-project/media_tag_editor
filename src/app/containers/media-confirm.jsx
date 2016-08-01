@@ -14,7 +14,15 @@ const MediaConfirmContainer = class extends React.Component {
 	}
 
 	render() {
-		return <MediaConfirm media={this.state.media.content} rules={this.state.media.rules}/>;
+		let mediaStr = '';
+		if (this.state.media.contentValueType === MediaStore.TYPE_URL) {
+			mediaStr = this.state.media.contentURL;
+		} else if (this.state.media.contentValueType === MediaStore.TYPE_OBJECT) {
+			mediaStr = this.state.media.contentObject;
+		} else {
+			throw new Error('Could not find media content.');
+		}
+		return <MediaConfirm media={mediaStr} rules={this.state.media.rules}/>;
 	}
 
 	componentDidMount() {

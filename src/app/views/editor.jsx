@@ -3,12 +3,12 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
 // import IconButton from 'material-ui/IconButton';
-import CodeEditor from 'app/components/editor/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
-import CodeEditorSettings from 'app/components/editor/code-editor-settings'; // eslint-disable-line import/no-extraneous-dependencies
+import CodeEditor from 'app/components/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
+import CodeEditorSettings from 'app/components/code-editor-settings'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
-import {json2str} from 'app/extras/utils'; // eslint-disable-line import/no-extraneous-dependencies
+import * as Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Views:Editor');
 
@@ -28,6 +28,11 @@ const Editor = class extends React.Component {
 		this.handleDeleteMedia = mediaIndex => {
 			ManifestActions.deleteMedia(mediaIndex);
 		};
+	}
+
+	handleChange(newValue) {
+		debug('handleChange', newValue);
+		ManifestActions.change(newValue);
 	}
 
 	componentDidMount() {
@@ -94,7 +99,7 @@ const Editor = class extends React.Component {
 					</div>
 					<div style={styles.panelRight}>
 						<CodeEditorSettings/>
-						{this.state.manifest && <CodeEditor manifestSource={this.state.manifest.source}/>}
+						{this.state.manifest && <CodeEditor name="manifest" onChange={this.handleChange} value={this.state.manifest.source}/>}
 					</div>
 				</div>
 

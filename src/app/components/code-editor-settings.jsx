@@ -8,7 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import * as Templates from 'app/extras/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import * as Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Components:Editor:CodeEditorSettings');
 

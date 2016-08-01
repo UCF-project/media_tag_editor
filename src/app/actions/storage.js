@@ -1,7 +1,7 @@
 'use strict';
 
 import Reflux from 'reflux';
-import Api from 'app/helpers/api';
+import Api from 'app/helpers/api'; // eslint-disable-line import/no-extraneous-dependencies
 
 // const debug = require('debug')('MTME:Actions:Storage');
 

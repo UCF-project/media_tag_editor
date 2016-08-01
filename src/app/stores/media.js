@@ -2,24 +2,13 @@
 
 import Reflux from 'reflux';
 // Need to be full path, import {MediaActions} from 'app'; makes a circular dependency
+import {json2str} from 'app/helpers/utils';
 import MediaActions from 'app/actions/media';  // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest';  // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Stores:Media');
 
-const initialState = {
-	media: {
-		dialog: {
-			open: false,
-			stepIndex: 0,
-			type: null,
-			mediaIndex: null,
-			contentTabIndex: 0
-		},
-		content: '',
-		rules: []
-	}
-};
+let initialState = {};
 
 const MediaStore = Reflux.createStore({
 	// Base Store //
@@ -33,9 +22,17 @@ const MediaStore = Reflux.createStore({
 
 	// Actions //
 
-	onUpdateContent(newContent) {
+	onUpdateContentURL(newContent) {
 		debug('onUpdateContent', newContent);
-		this.state.media.content = newContent;
+		this.state.media.contentURL = newContent;
+		this.state.media.contentValueType = MediaStore.TYPE_URL;
+		this.onStateCast();
+	},
+
+	onUpdateContentObject(newContent) {
+		debug('onUpdateContent', newContent);
+		this.state.media.contentObject = newContent;
+		this.state.media.contentValueType = MediaStore.TYPE_OBJECT;
 		this.onStateCast();
 	},
 
@@ -93,13 +90,8 @@ const MediaStore = Reflux.createStore({
 
 	onOpenUpdate(mediaIndex, mediaObject) {
 		debug('onOpenUpdate', mediaIndex, mediaObject);
-		this.state = MediaStore.getInitialState();
-		debug('1');
-		const dialogState = Object.assign({}, this.state.media.dialog);
-		debug('2');
+		this.state = {};
 		this.state.media = MediaStore.convertToMediaState(mediaObject);
-		debug('3');
-		this.state.media.dialog = dialogState;
 		this.state.media.dialog.type = MediaStore.UPDATE;
 		this.state.media.dialog.open = true;
 		this.state.media.dialog.mediaIndex = mediaIndex;
@@ -129,13 +121,23 @@ const MediaStore = Reflux.createStore({
 	},
 
 	onSetUrl(newUrl) {
-		MediaActions.updateContent(newUrl);
+		MediaActions.updateContentURL(newUrl);
 		MediaActions.setContentTabIndex(0);
 	},
 
 	onSetContentTabIndex(newIndex) {
 		debug('onSetContentTabIndex');
 		this.state.media.dialog.contentTabIndex = newIndex;
+		if (newIndex === 0) {
+			this.state.media.contentValueType = MediaStore.TYPE_URL;
+		} else if (newIndex === 2) {
+			this.state.media.contentValueType = MediaStore.TYPE_OBJECT;
+		}
+		this.onStateCast();
+	},
+
+	onSetUploadError(error) {
+		this.state.media.dialog.uploadError = error;
 		this.onStateCast();
 	}
 });
@@ -157,8 +159,17 @@ MediaStore.createRule = (monitor, state, action, flag, editting) => {
 };
 
 MediaStore.convertToMediaObject = mediaState => {
+	debug('convertToMediaObject', mediaState);
 	const mediaObject = {};
-	mediaObject.content = mediaState.content;
+	if (mediaState.contentValueType === MediaStore.TYPE_URL) {
+		mediaObject.content = mediaState.contentURL;
+	} else if (mediaState.contentValueType === MediaStore.TYPE_OBJECT) {
+		mediaObject.content = JSON.parse(mediaState.contentObject);
+	} else {
+		// TODO: check why this error is been caught somewhere
+		debug('error', mediaState.contentValueType);
+		throw new Error('Could not convert state to media object');
+	}
 	if (mediaState.rules.length) {
 		mediaObject.rules = {};
 		mediaState.rules.forEach(r => {
@@ -168,12 +179,26 @@ MediaStore.convertToMediaObject = mediaState => {
 			mediaObject.rules[r.monitor][r.state][r.action] = r.flag;
 		});
 	}
+	debug('mediaObject', mediaObject);
 	return mediaObject;
 };
 
+// TODO: refactor this code so to have only one place with changes
+// to the state
 MediaStore.convertToMediaState = mediaObject => {
-	const mediaState = {};
-	mediaState.content = mediaObject.content;
+	debug('convertToMediaState', mediaObject, typeof mediaObject.content);
+	const mediaState = MediaStore.getInitialState().media;
+	if (typeof mediaObject.content === 'string') {
+		mediaState.contentURL = mediaObject.content;
+		mediaState.contentValueType = MediaStore.TYPE_URL;
+		mediaState.dialog.contentTabIndex = 0;
+	} else if (typeof mediaObject.content === 'object') {
+		mediaState.contentObject = json2str(mediaObject.content);
+		mediaState.contentValueType = MediaStore.TYPE_OBJECT;
+		mediaState.dialog.contentTabIndex = 2;
+	} else {
+		throw new Error('Could not convert media object to state');
+	}
 	mediaState.rules = [];
 	if ('rules' in mediaObject) {
 		const rulesKeys = Object.keys(mediaObject.rules);
@@ -192,5 +217,26 @@ MediaStore.convertToMediaState = mediaObject => {
 
 MediaStore.NEW = 'NEW';
 MediaStore.UPDATE = 'UPDATE';
+
+MediaStore.TYPE_URL = 'URL';
+MediaStore.TYPE_OBJECT = 'OBJECT';
+
+initialState = {
+	media: {
+		// TODO: separate window state from media state
+		dialog: {
+			open: false,
+			stepIndex: 0,
+			type: null,
+			mediaIndex: null,
+			contentTabIndex: 0,
+			uploadError: null
+		},
+		contentURL: '',
+		contentObject: '',
+		contentValueType: MediaStore.TYPE_URL,
+		rules: []
+	}
+};
 
 module.exports = MediaStore;

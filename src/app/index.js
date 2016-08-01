@@ -13,8 +13,10 @@ export MediaStore from './stores/media';
 export StorageStore from './stores/storage';
 
 /* Components */
+export CodeEditor from './components/code-editor';
 export Dropzone from './components/dropzone';
 export ErrorBox from './components/error-box';
+export IconButton from './components/icon-button';
 export LabeledSpan from './components/labeled-span';
 export MediaAvatar from './components/media-avatar';
 export MediaBox from './components/media-box';

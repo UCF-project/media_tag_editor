@@ -6,7 +6,7 @@ import React from 'react';
 const MediaConfirm = props => {
 	return (
 		<div>
-			<LabeledSpan label="url" value={props.media}/>
+			<LabeledSpan label="media" value={props.media}/>
 			<MediaRules height="30vh" rules={props.rules} editable={false}/>
 		</div>
 	);
