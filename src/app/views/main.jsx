@@ -2,7 +2,7 @@
 
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Theme from 'app/configs/theme'; // eslint-disable-line import/no-extraneous-dependencies
+import Theme from 'app/helpers/theme'; // eslint-disable-line import/no-extraneous-dependencies
 
 // const debug = require('debug')('MTME:Views:Main');
 

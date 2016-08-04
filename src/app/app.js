@@ -24,7 +24,7 @@ Reflux.use(refluxPromise(window.Promise));
 // and if AppRoutes is done on the begging of the file
 // browserify will solve it before anything else is executed
 // even when the refluxPromise is before the import
-const AppRoutes = require('app/configs/routes'); // eslint-disable-line import/no-extraneous-dependencies
+const AppRoutes = require('app/helpers/routes'); // eslint-disable-line import/no-extraneous-dependencies
 
 // Router
 ReactDOM.render(AppRoutes, document.getElementById('app'));
