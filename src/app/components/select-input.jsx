@@ -7,7 +7,7 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 
-const debug = require('debug')('MTME:Components:Form:SelectInput');
+const debug = require('debug')('MTME:Components:SelectInput');
 
 const convert2MenuItem = (v, i) => <MenuItem key={i} value={v} primaryText={v}/>;
 

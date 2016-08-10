@@ -4,9 +4,9 @@ import {MediaContentContainer, MediaRulesContainer, MediaConfirmContainer, Media
 import React from 'react';
 import {Dialog, FlatButton, Step, StepButton, Stepper} from 'material-ui';
 
-const debug = require('debug')('MTME:Components:Dialog:DialogAddMedia');
+const debug = require('debug')('MTME:Containers:DialogMediaContainer');
 
-class DialogMedia extends React.Component {
+class DialogMediaContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = MediaStore.getInitialState();
@@ -116,4 +116,5 @@ class DialogMedia extends React.Component {
 	}
 }
 
-module.exports = DialogMedia;
+module.exports = DialogMediaContainer;
+module.exports = DialogMediaContainer;

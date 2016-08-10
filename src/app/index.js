@@ -17,6 +17,7 @@ export CodeEditor from './components/code-editor';
 export Dropzone from './components/dropzone';
 export ErrorBox from './components/error-box';
 export IconButton from './components/icon-button';
+export Label from './components/label';
 export LabeledSpan from './components/labeled-span';
 export MediaAvatar from './components/media-avatar';
 export MediaBox from './components/media-box';
@@ -29,7 +30,7 @@ export SelectInput from './components/select-input';
 export {Tabs, Tab} from './components/tabs-horizontal';
 
 /* Containers */
-export DialogMediaContainer from './containers/dialog-media';
-export MediaContentContainer from './containers/media-content';
-export MediaRulesContainer from './containers/media-rules';
-export MediaConfirmContainer from './containers/media-confirm';
+export DialogMediaContainer from './containers/dialog-media-container';
+export MediaContentContainer from './containers/media-content-container';
+export MediaRulesContainer from './containers/media-rules-container';
+export MediaConfirmContainer from './containers/media-confirm-container';

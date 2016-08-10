@@ -8,6 +8,8 @@ const IconButtonApp = (props, context) => {
 		primary,
 		secondary,
 		iconStyle,
+		on,
+		off,
 		...others
 	} = props;
 	let calcIconStyle = {};
@@ -20,8 +22,17 @@ const IconButtonApp = (props, context) => {
 	if (secondary) {
 		calcIconStyle = {color: context.muiTheme.palette.accent1Color};
 	}
+
+	if (off) {
+		calcIconStyle = {color: context.muiTheme.palette.textLightColor};
+	}
+
+	if (on) {
+		calcIconStyle = {color: context.muiTheme.palette.accent3Color};
+	}
+
 	return (
-		<IconButton iconStyle={Object.assign(calcIconStyle, iconStyle)} {...others}/>
+		<IconButton color={calcIconStyle.color} iconStyle={Object.assign(calcIconStyle, iconStyle)} {...others}/>
 	);
 };
 
@@ -32,7 +43,9 @@ IconButtonApp.contextTypes = {
 IconButtonApp.propTypes = {
 	primary: React.PropTypes.bool,
 	secondary: React.PropTypes.bool,
-	iconStyle: React.PropTypes.object
+	iconStyle: React.PropTypes.object,
+	on: React.PropTypes.bool,
+	off: React.PropTypes.bool
 };
 
 module.exports = IconButtonApp;

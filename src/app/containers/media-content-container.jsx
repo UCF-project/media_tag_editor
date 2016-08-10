@@ -3,7 +3,6 @@
 import {CodeEditor, Dropzone, ErrorBox, MediaStore, MediaActions, StorageActions, Tabs, Tab} from 'app';
 import React from 'react';
 import {FontIcon, RaisedButton, TextField} from 'material-ui';
-// import debounce from 'lodash.debounce';
 
 const debug = require('debug')('MTME:Containers:MediaContentContainer');
 

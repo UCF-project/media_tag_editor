@@ -1,18 +1,17 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import * as Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 
-const debug = require('debug')('MTME:Components:Editor:CodeEditorSettings');
+const debug = require('debug')('MTME:Containers:EditorSettingsContainer');
 
-const CodeEditorSettings = class extends React.Component {
+const EditorSettingsContainer = class extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -21,7 +20,7 @@ const CodeEditorSettings = class extends React.Component {
 			ManifestActions.changeToTemplateIndex(index);
 		};
 
-		this.handlers = Templates.manifests.map((_, i) => {
+		this.handleTempleClick = Templates.manifests.map((_, i) => {
 			return this.handleLoadTemplate.bind(null, i);
 		});
 
@@ -30,8 +29,7 @@ const CodeEditorSettings = class extends React.Component {
 		};
 
 		this.handleClickUpload = () => {
-			const fileUploadDom = ReactDOM.findDOMNode(this.refs.fileUpload);
-			fileUploadDom.click();
+			this.fileUpload.click();
 		};
 
 		this.handleUpload = e => {
@@ -39,13 +37,17 @@ const CodeEditorSettings = class extends React.Component {
 		};
 	}
 
+	setRef(fileUpload) {
+		this.fileUpload = fileUpload;
+	}
+
 	render() {
-		const templates = Templates.manifests.map((m, i) => <MenuItem key={i} value={i} onTouchTap={this.handlers[i]} primaryText={m.label}/>);
+		const templates = Templates.manifests.map((m, i) => <MenuItem key={i} value={i} onTouchTap={this.handleTempleClick[i]} primaryText={m.label}/>);
 		return (
-			<div style={{position: 'absolute', right: 0, zIndex: 100}}>
+			<div {...this.props}>
 				<IconMenu
 					iconButtonElement={<IconButton iconStyle={{color: this.context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-settings"/>}
-					anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+					anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
 					targetOrigin={{horizontal: 'right', vertical: 'top'}}
 					>
 					<MenuItem
@@ -59,7 +61,7 @@ const CodeEditorSettings = class extends React.Component {
 					<MenuItem onTouchTap={this.handleClickUpload} primaryText="Upload" leftIcon={<FontIcon className="mdi mdi-upload"/>}/>
 				</IconMenu>
 				<input
-					ref="fileUpload"
+					ref={this.setRef}
 					type="file"
 					style={{display: 'none'}}
 					onChange={this.handleUpload}
@@ -69,8 +71,8 @@ const CodeEditorSettings = class extends React.Component {
 	}
 };
 
-CodeEditorSettings.contextTypes = {
+EditorSettingsContainer.contextTypes = {
 	muiTheme: React.PropTypes.object
 };
 
-module.exports = CodeEditorSettings;
+module.exports = EditorSettingsContainer;

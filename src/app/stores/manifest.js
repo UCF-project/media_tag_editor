@@ -3,10 +3,10 @@
 
 import Reflux from 'reflux';
 import {hashHistory} from 'react-router';
+import MediaObject from 'media-tag/src/lib/modules/media-object';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
-import MediaObject from 'media-tag/src/lib/modules/media-object';
-import * as Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Stores:Manifest');

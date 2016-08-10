@@ -14,11 +14,7 @@ https://github.com/silexlabs/cloud-explorer/
 * http://codepen.io/pen/
 
 ## Templates
-video dash + image + html
-video non dash + audio + text
-3d > video > image
 
-## TODO
-
-*
-
+* video dash + image + html
+* video non dash + audio + text
+* 3d > video > image

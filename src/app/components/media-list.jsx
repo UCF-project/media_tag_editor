@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {FontIcon, RaisedButton} from 'material-ui';
-import DialogMediaContainer from 'app/containers/dialog-media'; // eslint-disable-line import/no-extraneous-dependencies
+import DialogMediaContainer from 'app/containers/dialog-media-container'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaBox from 'app/components/media-box'; // eslint-disable-line import/no-extraneous-dependencies
 
 const MediaList = props => {

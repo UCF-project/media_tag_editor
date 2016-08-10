@@ -4,7 +4,7 @@ import {LabeledSpan, MediaAvatar} from 'app';
 import React from 'react';
 import {Card, CardText, IconButton} from 'material-ui';
 
-// const debug = require('debug')('MTME:Components:Editor:MediaBox');
+// const debug = require('debug')('MTME:Components:MediaBox');
 
 const MediaBox = (props, context) => {
 	const handleDelete = () => {

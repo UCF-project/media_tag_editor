@@ -34,19 +34,30 @@ class PanelMediaList extends React.Component {
 	render() {
 		debug('render', this.state);
 
-		let panelLeft = <div/>;
+		const style = {
+			padding: 10,
+			boxSizing: 'border-box',
+			overflow: 'auto',
+			height: '100%'
+		};
+
+		let panelLeft = <div style={style}/>;
 
 		if (this.state.manifest && this.state.manifest.status === ManifestStore.ERROR) {
-			panelLeft = <ErrorBox error={this.state.manifest.statusError}/>;
+			panelLeft = <div style={style}><ErrorBox error={this.state.manifest.statusError}/></div>;
 		}
 		if (this.state.manifest && this.state.manifest.status === ManifestStore.PARSED) {
-			panelLeft = (<MediaList
-				onDeleteMedia={this.handleDeleteMedia}
-				onEditMedia={this.handleEditMedia}
-				onShowMedia={this.handleShowMedia}
-				onOpenNewMedia={this.handleOpenNewMedia}
-				manifestParsed={this.state.manifest.parsed}
-				/>);
+			panelLeft = (
+				<div style={style}>
+					<MediaList
+						onDeleteMedia={this.handleDeleteMedia}
+						onEditMedia={this.handleEditMedia}
+						onShowMedia={this.handleShowMedia}
+						onOpenNewMedia={this.handleOpenNewMedia}
+						manifestParsed={this.state.manifest.parsed}
+						/>
+				</div>
+			);
 		}
 
 		return panelLeft;

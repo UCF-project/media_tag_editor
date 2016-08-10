@@ -6,7 +6,7 @@ import {Card, CardText} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import reactifyDOMNode from 'reactify-dom-node';
 
-const debug = require('debug')('MTME:Components:Editor:MediaBox');
+const debug = require('debug')('MTME:Components:MediaBoxFull');
 
 const MediaBoxFull = props => {
 	const rules = props.media.rules && props.media.rules.length ? props.media.rules.map((r, i) => {

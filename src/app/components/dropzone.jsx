@@ -1,11 +1,9 @@
 /* global URL */
+'use strict';
 
-// Vendor
 import React from 'react';
-import ReactDOM from 'react-dom';
 import accept from 'attr-accept';
 
-// APP
 const Dropzone = class extends React.Component {
 
 	constructor(props) {
@@ -105,9 +103,8 @@ const Dropzone = class extends React.Component {
 	}
 
 	open() {
-		const fileInput = ReactDOM.findDOMNode(this.fileInput);
-		fileInput.value = null;
-		fileInput.click();
+		this.fileInput.value = null;
+		this.fileInput.click();
 	}
 
 	render() {

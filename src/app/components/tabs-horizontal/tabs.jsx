@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import ReactDOM from 'react-dom';
 import warning from 'warning';
 import TabTemplate from './tab-template';
 import InkBar from './ink-bar';
@@ -86,12 +85,15 @@ class Tabs extends Component {
 		const valueLink = this.getValueLink(this.props);
 		const initialIndex = this.props.initialSelectedIndex;
 
+		let selectedIndex = 0;
+		if (valueLink.value !== undefined) {
+			selectedIndex = this.getSelectedIndex(this.props);
+		} else if (initialIndex < this.getTabCount()) {
+			selectedIndex = initialIndex;
+		}
+
 		this.setState({
-			selectedIndex: valueLink.value !== undefined ?
-				this.getSelectedIndex(this.props) :
-				initialIndex < this.getTabCount() ?
-				initialIndex :
-				0
+			selectedIndex
 		});
 	}
 
@@ -111,7 +113,7 @@ class Tabs extends Component {
 	getEvenWidth() {
 		return (
 			parseInt(window
-				.getComputedStyle(ReactDOM.findDOMNode(this))
+				.getComputedStyle(this.tabs)
 				.getPropertyValue('width'), 10)
 		);
 	}
@@ -173,6 +175,10 @@ class Tabs extends Component {
 			this.state.selectedIndex === index;
 	}
 
+	setRef(tabs) {
+		this.tabs = tabs;
+	}
+
 	render() {
 		const {
 			contentContainerClassName,
@@ -229,6 +235,7 @@ class Tabs extends Component {
 			<div
 				{...other}
 				style={prepareStyles(Object.assign({display: 'flex'}, style))}
+				ref={this.setRef}
 				>
 				<div style={{position: 'relative'}}>
 					{inkBar}
