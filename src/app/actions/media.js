@@ -18,7 +18,9 @@ const MediaActions = Reflux.createActions({
 	setContentTabIndex: {},
 	setUploadError: {},
 	updateContentURL: {},
-	updateContentObject: {}
+	updateContentObject: {},
+	setInnerContentTabIndex: {},
+	setInnerStatus: {}
 });
 
 module.exports = MediaActions;

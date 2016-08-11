@@ -1,5 +1,5 @@
 /* Helpers */
-export {json2str} from './helpers/utils';
+export {json2str, bytes2str} from './helpers/utils';
 export Api from './helpers/api';
 
 /* Actions */
@@ -16,6 +16,7 @@ export StorageStore from './stores/storage';
 export CodeEditor from './components/code-editor';
 export Dropzone from './components/dropzone';
 export ErrorBox from './components/error-box';
+export FileExplorer from './components/file-explorer';
 export IconButton from './components/icon-button';
 export Label from './components/label';
 export LabeledSpan from './components/labeled-span';

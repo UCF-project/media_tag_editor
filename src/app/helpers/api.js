@@ -35,6 +35,28 @@ const Api = Reflest.createGateway({
 				credentials: 'include',
 				method: 'POST'
 			}
+		},
+		storageList: {
+			pathname: 'api/v1.0/file/'
+		},
+		storageDelete: {
+			pathname: 'api/v1.0/file/{filename}',
+			options: {
+				method: 'DELETE'
+			}
+		},
+		storageConvert: {
+			pathname: 'api/v1.0/convert',
+			options: {
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				method: 'POST'
+			}
+		},
+		storageConvertStatus: {
+			pathname: 'api/v1.0/convert/task/{taskId}'
 		}
 	}
 });

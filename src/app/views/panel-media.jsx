@@ -49,7 +49,7 @@ const PanelMedia = class extends React.Component {
 		}
 
 		return (
-			<div>
+			<div style={{overflow: 'auto', height: '100%', width: '100%'}}>
 				<IconButton onClick={this.handleListMedia} tooltipPosition="bottom-right" tooltip="Back to media list" iconStyle={{color: this.context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-arrow-left-bold"/>
 				{mediaPanel}
 			</div>

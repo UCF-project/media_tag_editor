@@ -37,7 +37,7 @@ const EditorSettingsContainer = class extends React.Component {
 		};
 	}
 
-	setRef(fileUpload) {
+	setRef = fileUpload => {
 		this.fileUpload = fileUpload;
 	}
 

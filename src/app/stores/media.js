@@ -128,6 +128,7 @@ const MediaStore = Reflux.createStore({
 	onSetContentTabIndex(newIndex) {
 		debug('onSetContentTabIndex');
 		this.state.media.dialog.contentTabIndex = newIndex;
+		this.state.media.dialog.innerContentTabIndex = 'main';
 		if (newIndex === 0) {
 			this.state.media.contentValueType = MediaStore.TYPE_URL;
 		} else if (newIndex === 2) {
@@ -138,6 +139,19 @@ const MediaStore = Reflux.createStore({
 
 	onSetUploadError(error) {
 		this.state.media.dialog.uploadError = error;
+		this.onStateCast();
+	},
+
+	onSetInnerContentTabIndex(newInnerIndex, files) {
+		this.state.media.dialog.innerContentTabIndex = newInnerIndex;
+		this.state.media.dialog.innerContentFiles = files;
+		this.state.media.dialog.innerContentStatus = '';
+		this.onStateCast();
+	},
+
+	onSetInnerStatus(status, statusMessage) {
+		this.state.media.dialog.innerContentStatus = status;
+		this.state.media.dialog.innerContentStatusMessage = statusMessage;
 		this.onStateCast();
 	}
 });
@@ -230,7 +244,8 @@ initialState = {
 			type: null,
 			mediaIndex: null,
 			contentTabIndex: 0,
-			uploadError: null
+			uploadError: null,
+			innerContentTabIndex: 'main'
 		},
 		contentURL: '',
 		contentObject: '',

@@ -1,8 +1,12 @@
 'use strict';
 
-import {CodeEditor, Dropzone, ErrorBox, MediaStore, MediaActions, StorageActions, Tabs, Tab} from 'app';
+import {CodeEditor, Dropzone, ErrorBox, FileExplorer, MediaStore, MediaActions, StorageActions, StorageStore, Tabs, Tab} from 'app';
 import React from 'react';
-import {FontIcon, RaisedButton, TextField} from 'material-ui';
+import {FontIcon, RaisedButton, FlatButton, TextField} from 'material-ui';
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import LinearProgress from 'material-ui/LinearProgress';
 
 const debug = require('debug')('MTME:Containers:MediaContentContainer');
 
@@ -16,7 +20,9 @@ const debug = require('debug')('MTME:Containers:MediaContentContainer');
 class MediaContentContainer extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = MediaStore.getInitialState();
+		const newState = MediaStore.getInitialState();
+		newState.local = {videoType: 'mp4'};
+		this.state = newState;
 	}
 
 	handleDrop() {
@@ -78,6 +84,58 @@ class MediaContentContainer extends React.Component {
 		}
 	}
 
+	handleClickUpload = () => {
+		MediaActions.setContentTabIndex(1);
+	}
+
+	handleClickUrl = newUrl => {
+		MediaActions.setUrl(newUrl);
+	}
+
+	handleClickVideo = fileIndex => {
+		MediaActions.setInnerContentTabIndex('convert', this.state.storage.list[fileIndex]);
+	}
+
+	handleClickDelete = fileIndexes => {
+		// TODO: Change to batch delete
+		fileIndexes.forEach(i => {
+			StorageActions.delete({}, {filename: this.state.storage.list[i].filename});
+		});
+	}
+
+	handleClickDash = fileIndexes => {
+		const files = this.state.storage.list.filter((c, i) => fileIndexes.indexOf(i) !== -1);
+		MediaActions.setInnerContentTabIndex('dash', files);
+	}
+
+	handleClickCancel = () => {
+		MediaActions.setInnerContentTabIndex('main', null);
+	}
+
+	handleClickConvert = () => {
+		const payload = {
+			outputFile: this.refVideoName.getValue(),
+			type: 'mp4',
+			inputFile: this.state.media.dialog.innerContentFiles.filename
+		};
+		if (this.refVideoScale.getValue()) {
+			payload.scale = this.refVideoScale.getValue();
+		}
+		const body = JSON.stringify(payload);
+		StorageActions.convert({body});
+	}
+
+	handleClickCreate = () => {
+		const body = JSON.stringify({
+			outputFile: this.refMpd.getValue(),
+			type: 'dash',
+			inputFile: this.state.media.dialog.innerContentFiles.map(f => f.filename)
+		});
+		StorageActions.convert({body});
+	}
+
+	handleVideoChange = (event, index, value) => this.setState({local: {videoType: value}});
+
 	setRefURL = c => {
 		this.urlInput = c;
 	}
@@ -86,15 +144,30 @@ class MediaContentContainer extends React.Component {
 		this.objInput = c;
 	}
 
+	setRefMpd = c => {
+		this.refMpd = c;
+	}
+
+	setRefVideoName = c => {
+		this.refVideoName = c;
+	}
+
+	setRefVideoScale = c => {
+		this.refVideoScale = c;
+	}
+
 	componentDidMount() {
 		debug('componentDidMount');
-		this.unsubscribe = MediaStore.listen(this.handleStateChange);
+		this.unsubscribe = [];
+		this.unsubscribe.push(MediaStore.listen(this.handleStateChange));
+		this.unsubscribe.push(StorageStore.listen(this.handleStateChange));
 		MediaActions.stateCast();
+		StorageActions.list();
 	}
 
 	componentWillUnmount() {
 		debug('componentWillUnmount');
-		this.unsubscribe();
+		this.unsubscribe.forEach(fn => fn());
 	}
 
 	render() {
@@ -137,6 +210,109 @@ class MediaContentContainer extends React.Component {
 				>
 			Click here or drag your file
 			</Dropzone>);
+		const files = this.state.storage && this.state.storage.list ? this.state.storage.list : [];
+		let innerTab = null;
+
+		const videoTypes = [
+			<MenuItem key="mp4" value="mp4" primaryText="mp4"/>,
+			<MenuItem key="webm" value="webm" primaryText="webm"/>
+		];
+
+		const styleToolbarTitle = {
+			lineHeight: '49px'
+		};
+
+		const loadingBar = (
+			<LinearProgress style={{backgroundColor: 'rgb(153, 153, 153)', marginTop: -4}} mode="indeterminate"/>
+		);
+
+		if (this.state.media.dialog.innerContentTabIndex === 'main') {
+			innerTab = (
+				<FileExplorer
+					files={files}
+					onClickUpload={this.handleClickUpload}
+					onClickUrl={this.handleClickUrl}
+					onClickVideo={this.handleClickVideo}
+					onClickDelete={this.handleClickDelete}
+					onClickDash={this.handleClickDash}
+					/>
+			);
+		} else if (this.state.media.dialog.innerContentTabIndex === 'convert') {
+			const fields = (
+				<div>
+					<TextField
+						style={{width: '30%'}}
+						floatingLabelText="File name"
+						floatingLabelFixed
+						ref={this.setRefVideoName}
+						/>
+					<SelectField
+						style={{width: '30%'}}
+						value={this.state.local.videoType}
+						floatingLabelText="Convert to"
+						floatingLabelFixed
+						onChange={this.handleVideoChange}
+						>
+						{videoTypes}
+					</SelectField>
+					{this.state.local.videoType === 'mp4' &&
+						<TextField
+							style={{width: '30%'}}
+							floatingLabelText="Scale"
+							floatingLabelFixed
+							ref={this.setRefVideoScale}
+							/>}
+					<br/>
+					<RaisedButton primary label="Convert" onClick={this.handleClickConvert}/>
+					<FlatButton label="Cancel" onClick={this.handleClickCancel}/>
+				</div>
+			);
+			const loadingTab = (
+				<div>
+					{loadingBar}
+					<p>Converting video...</p>
+				</div>
+			);
+			innerTab = (
+				<div>
+					<Toolbar style={{backgroundColor: 'rgb(240, 240, 240)', height: 50}}>
+						<ToolbarGroup>
+							<ToolbarTitle style={styleToolbarTitle} text="Convert video"/>
+						</ToolbarGroup>
+					</Toolbar>
+					{this.state.media.dialog.innerContentStatus === 'loading' ? loadingTab : fields}
+				</div>
+			);
+		} else if (this.state.media.dialog.innerContentTabIndex === 'dash') {
+			const fields = (
+				<div>
+					<TextField
+						floatingLabelText="MPD file name"
+						floatingLabelFixed
+						ref={this.setRefMpd}
+						/>
+					<br/>
+					<RaisedButton primary label="Create" onClick={this.handleClickCreate}/>
+					<FlatButton label="Cancel" onClick={this.handleClickCancel}/>
+				</div>
+			);
+			const loadingTab = (
+				<div>
+					{loadingBar}
+					<p>Creating DASH manifest file...</p>
+				</div>
+			);
+			innerTab = (
+				<div>
+					<Toolbar style={{backgroundColor: 'rgb(240, 240, 240)', height: 50}}>
+						<ToolbarGroup>
+							<ToolbarTitle style={styleToolbarTitle} text="Create DASH"/>
+						</ToolbarGroup>
+					</Toolbar>
+					{this.state.media.dialog.innerContentStatus === 'loading' ? loadingTab : fields}
+				</div>
+			);
+		}
 		return (
 			<Tabs value={this.state.media.dialog.contentTabIndex} onChange={this.handleTabChange}>
 				<Tab icon={<FontIcon className="mdi mdi-link"/>} label="URL" value={0}>
@@ -164,6 +340,11 @@ class MediaContentContainer extends React.Component {
 							onChange={this.handleChangeObject}
 							value={contentObject}
 							/>
+					</div>
+				</Tab>
+				<Tab icon={<FontIcon className="mdi mdi-server"/>} label="Server" value={3}>
+					<div style={styleTab}>
+						{innerTab}
 					</div>
 				</Tab>
 			</Tabs>

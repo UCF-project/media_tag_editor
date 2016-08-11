@@ -13,7 +13,9 @@ const StorageStore = Reflux.createStore({
 
 	init() {
 		debug('init');
-		this.state = {};
+		this.state = {
+			storage: {}
+		};
 	},
 
 	// Actions //
@@ -51,6 +53,39 @@ const StorageStore = Reflux.createStore({
 
 	onDragLeave() {
 		debug('onDragLeave', arguments);
+	},
+
+	onListCompleted(result) {
+		debug('onListCompleted', result);
+		this.state.storage.list = result;
+		this.onStateCast();
+	},
+
+	onDelete() {
+		MediaActions.setInnerStatus('loading');
+	},
+
+	onDeleteCompleted() {
+		MediaActions.setInnerStatus('');
+		StorageActions.list();
+	},
+
+	onDeleteFailed() {
+		MediaActions.setInnerStatus('');
+		StorageActions.list();
+	},
+
+	onConvert() {
+		MediaActions.setInnerStatus('loading');
+	},
+
+	onConvertCompleted() {
+		StorageActions.list();
+		MediaActions.setInnerContentTabIndex('main', null);
+	},
+
+	onConvertFailed(error) {
+		MediaActions.setInnerStatus('error', error);
 	}
 });
 
