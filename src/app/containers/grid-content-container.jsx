@@ -3,6 +3,7 @@
 import React from 'react';
 import GridContent from 'app/components/grid-content'; // eslint-disable-line import/no-extraneous-dependencies
 import CodeEditor from 'app/components/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
+import MediaTagWrapper from 'app/components/media-tag-wrapper'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import EditorStore from 'app/stores/editor'; // eslint-disable-line import/no-extraneous-dependencies
@@ -57,7 +58,7 @@ class GridContentContainer extends React.Component {
 						/>
 				)}
 			</div>),
-			View: <div key="View">view</div>
+			View: <div key="View">{this.state.manifest && <MediaTagWrapper src={this.state.manifest.url}/>}</div>
 		};
 
 		if (this.state.editor) {

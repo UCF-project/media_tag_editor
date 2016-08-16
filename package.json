@@ -12,6 +12,8 @@
     "xo": "xo",
     "build:sass": "node-sass src/sass/main.scss dist/css/main.css",
     "watch:sass": "node-sass -w src/sass/main.scss dist/css/main.css",
+    "build:media-tag": "cd node_modules/media-tag && npm i && npm run build",
+    "copy-files:media-tag": "cp node_modules/media-tag/dist/media* dist/",
     "test": "xo && ava"
   },
   "author": "",

@@ -156,6 +156,8 @@ const ManifestStore = Reflux.createStore({
 				return newMedia;
 			});
 			this.state.manifest.status = this.PARSED;
+			// TODO: refactor download file to add use this url
+			this.state.manifest.url = makeTextFile(this.state.manifest.source);
 		} catch (err) {
 			debug('err', err);
 			this.state.manifest.statusError = err;

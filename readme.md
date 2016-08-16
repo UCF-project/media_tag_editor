@@ -1,4 +1,20 @@
 
+## Roadmap
+
+* Download with assets and HTML sample
+* Animations on delete/etc
+* Save/load state last navigation
+* Fix code format, some es5, some es6
+* Refactor dialog store (separate dialog from media)
+* Flag different types (now is only string, we need bool, object, etc)
+* Upload connectors? For example, connect with other sites APIs to upload oEmbed content
+* Update buttons with app/IconButton
+* Advanced formatting media (more user friendly for complex formats like videojs)
+* Upload login
+* Electron
+* View/render area update (only work in chrome because webcomponents)
+* Add in View controllers for monitor state change
+* Upload in other storages
 
 ## Backend references
 
