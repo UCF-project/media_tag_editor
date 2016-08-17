@@ -35,6 +35,7 @@ const StorageStore = Reflux.createStore({
 
 	onDropAcceptCompleted(result) {
 		debug('onDropAcceptCompleted', arguments);
+		StorageActions.list();
 		MediaActions.setUrl(result.file.url);
 	},
 

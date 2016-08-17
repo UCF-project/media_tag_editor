@@ -21,13 +21,13 @@ StorageActions.convert.listenAndPromise(options => {
 	return Api.storageConvert(options).then(result => {
 		return new Promise((resolve, reject) => {
 			const timeout = setInterval(() => {
-				Api.storageConvertStatus({}, {taskId: result.task.uuid})
+				Api.storageConvertStatus({}, {taskId: result.uuid})
 				.then(taskStatus => {
-					if (taskStatus.task.status !== 'CONVERTING') {
+					if (taskStatus.status !== 'CONVERTING') {
 						clearInterval(timeout);
-						if (taskStatus.task.status === 'ERROR') {
-							reject(taskStatus.task.error.stderr);
-						} else if (taskStatus.task.status === 'SUCCESS') {
+						if (taskStatus.status === 'ERROR') {
+							reject(taskStatus.error.stderr);
+						} else if (taskStatus.status === 'SUCCESS') {
 							resolve();
 						} else {
 							reject('Task status unknown.');

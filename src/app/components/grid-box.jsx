@@ -92,16 +92,14 @@ class GridBox extends React.Component {
 			throw new Error('Please select at least one property for GridBox, either columns or rows.');
 		}
 
-		let styleWrapper;
-		let styleSection;
+		let styleWrapper = {width: '100%', height: '100%', position: 'relative'};
+		let styleSection = {position: 'relative'};
 
 		if (columns) {
-			styleWrapper = {width: '100%', height: '100%', display: 'flex'};
-			styleSection = {verticalAlign: 'top'};
+			styleWrapper = Object.assign(styleWrapper, {display: 'flex'});
+			styleSection = Object.assign(styleSection, {verticalAlign: 'top'});
 			styleResizeBar = Object.assign(styleResizeBar, {width: resizeBarSize, cursor: 'col-resize'});
 		} else {
-			styleWrapper = {width: '100%', height: '100%'};
-			styleSection = {};
 			styleResizeBar = Object.assign(styleResizeBar, {height: resizeBarSize, cursor: 'row-resize'});
 		}
 

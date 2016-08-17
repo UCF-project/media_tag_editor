@@ -58,7 +58,9 @@ class GridContentContainer extends React.Component {
 						/>
 				)}
 			</div>),
-			View: <div key="View">{this.state.manifest && <MediaTagWrapper src={this.state.manifest.url}/>}</div>
+			View: (<div key="View" style={{height: '100%', width: '100%', overflow: 'auto'}}>
+				{this.state.manifest && <MediaTagWrapper src={this.state.manifest.url}/>}
+			</div>)
 		};
 
 		if (this.state.editor) {
