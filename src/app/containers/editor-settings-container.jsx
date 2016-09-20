@@ -53,12 +53,12 @@ const EditorSettingsContainer = class extends React.Component {
 					<MenuItem
 						desktop
 						primaryText="Load Template"
-						leftIcon={<FontIcon className="mdi mdi-menu-left"/>}
+						leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-menu-left"/>}
 						menuItems={templates}
 						/>
 					<Divider/>
-					<MenuItem onTouchTap={this.handleDownload} primaryText="Download" leftIcon={<FontIcon className="mdi mdi-download"/>}/>
-					<MenuItem onTouchTap={this.handleClickUpload} primaryText="Upload" leftIcon={<FontIcon className="mdi mdi-upload"/>}/>
+					<MenuItem onTouchTap={this.handleDownload} primaryText="Download" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-download"/>}/>
+					<MenuItem onTouchTap={this.handleClickUpload} primaryText="Upload" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-upload"/>}/>
 				</IconMenu>
 				<input
 					ref={this.setRef}

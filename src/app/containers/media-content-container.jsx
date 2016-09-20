@@ -118,7 +118,7 @@ class MediaContentContainer extends React.Component {
 			type: 'mp4',
 			inputFile: this.state.media.dialog.innerContentFiles.filename
 		};
-		if (this.refVideoScale.getValue()) {
+		if (this.refVideoScale && this.refVideoScale.getValue()) {
 			payload.scale = this.refVideoScale.getValue();
 		}
 		const body = JSON.stringify(payload);

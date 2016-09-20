@@ -110,7 +110,7 @@ class Tabs extends Component {
 		this.setState(newState);
 	}
 
-	getEvenWidth() {
+	getEvenWidth = () => {
 		return (
 			parseInt(window
 				.getComputedStyle(this.tabs)
@@ -118,7 +118,7 @@ class Tabs extends Component {
 		);
 	}
 
-	getTabs() {
+	getTabs = () => {
 		const tabs = [];
 		React.Children.forEach(this.props.children, tab => {
 			if (React.isValidElement(tab)) {
@@ -128,7 +128,7 @@ class Tabs extends Component {
 		return tabs;
 	}
 
-	getTabCount() {
+	getTabCount = () => {
 		return this.getTabs().length;
 	}
 
@@ -140,7 +140,7 @@ class Tabs extends Component {
 		};
 	}
 
-	getSelectedIndex(props) {
+	getSelectedIndex = props => {
 		const valueLink = this.getValueLink(props);
 		let selectedIndex = -1;
 
@@ -169,13 +169,13 @@ class Tabs extends Component {
 		}
 	};
 
-	getSelected(tab, index) {
+	getSelected = (tab, index) => {
 		const valueLink = this.getValueLink(this.props);
 		return valueLink.value ? valueLink.value === tab.props.value :
 			this.state.selectedIndex === index;
 	}
 
-	setRef(tabs) {
+	setRef = tabs => {
 		this.tabs = tabs;
 	}
 
