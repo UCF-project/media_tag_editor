@@ -1,6 +1,6 @@
 'use strict';
 
-import {LabeledSpan, MediaAvatar, ScaleToFit} from 'app';
+import {LabeledSpan, MediaAvatar, ScaleToFit} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Card, CardText} from 'material-ui';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';

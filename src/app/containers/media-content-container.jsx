@@ -1,6 +1,6 @@
 'use strict';
 
-import {CodeEditor, Dropzone, ErrorBox, FileExplorer, MediaStore, MediaActions, StorageActions, StorageStore, Tabs, Tab} from 'app';
+import {CodeEditor, Dropzone, ErrorBox, FileExplorer, MediaStore, MediaActions, StorageActions, StorageStore, Tabs, Tab} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {FontIcon, RaisedButton, FlatButton, TextField} from 'material-ui';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';

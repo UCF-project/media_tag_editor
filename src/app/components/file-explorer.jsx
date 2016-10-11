@@ -1,7 +1,7 @@
 'use strict';
 
 import path from 'path';
-import {bytes2str, IconButton} from 'app';
+import {bytes2str, IconButton} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {GridList, GridTile} from 'material-ui/GridList';
 import FontIcon from 'material-ui/FontIcon';

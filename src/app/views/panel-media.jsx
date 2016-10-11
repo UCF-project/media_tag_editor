@@ -1,6 +1,6 @@
 'use strict';
 
-import {ManifestActions, ManifestStore, ErrorBox, MediaBoxFull} from 'app';
+import {ManifestActions, ManifestStore, ErrorBox, MediaBoxFull} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {IconButton} from 'material-ui';
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import {LabeledSpan, MediaRules} from 'app';
+import {LabeledSpan, MediaRules} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 
 const MediaConfirm = props => {

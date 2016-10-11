@@ -2,7 +2,7 @@
 
 import Reflux from 'reflux';
 // Need to be full path, import {MediaActions} from 'app'; makes a circular dependency
-import {json2str} from 'app/helpers/utils';
+import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media';  // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest';  // eslint-disable-line import/no-extraneous-dependencies
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import {IconButton, Label} from 'app';
+import {IconButton, Label} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Popover} from 'material-ui';
 import {alignment as GridAlignment, buttons} from 'app/helpers/grid'; // eslint-disable-line import/no-extraneous-dependencies

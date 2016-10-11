@@ -14,7 +14,7 @@
     "watch:sass": "node-sass -w src/sass/main.scss dist/css/main.css",
     "build:media-tag": "cd node_modules/media-tag && npm i --production && npm run build-lib",
     "copy-files:media-tag": "cp node_modules/media-tag/dist/media* dist/",
-    "test": "xo && ava",
+    "test": "xo",
     "start": "npm run server-editor && npm run server-assets",
     "server-editor": "http-server -p 9091 ./dist/ -P http://localhost:9092 &",
     "server-assets": "http-server -p 9092 ./node_modules/media-tag/tests/ &"

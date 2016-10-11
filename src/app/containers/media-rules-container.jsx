@@ -1,6 +1,6 @@
 'use strict';
 
-import {MediaRules, MediaActions, MediaStore} from 'app';
+import {MediaRules, MediaActions, MediaStore} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 
 const debug = require('debug')('MTME:Containers:MediaRulesContainer');

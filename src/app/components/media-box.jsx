@@ -1,6 +1,6 @@
 'use strict';
 
-import {LabeledSpan, MediaAvatar} from 'app';
+import {LabeledSpan, MediaAvatar} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Card, CardText, IconButton} from 'material-ui';
 

@@ -1,6 +1,6 @@
 'use strict';
 
-import {MediaIcon} from 'app';
+import {MediaIcon} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Avatar} from 'material-ui';
 

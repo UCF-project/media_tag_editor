@@ -1,6 +1,6 @@
 'use strict';
 
-import {MediaContentContainer, MediaRulesContainer, MediaConfirmContainer, MediaStore, MediaActions} from 'app';
+import {MediaContentContainer, MediaRulesContainer, MediaConfirmContainer, MediaStore, MediaActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Dialog, FlatButton, Step, StepButton, Stepper} from 'material-ui';
 

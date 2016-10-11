@@ -1,6 +1,6 @@
 'use strict';
 
-import {MediaConfirm, MediaActions, MediaStore} from 'app';
+import {MediaConfirm, MediaActions, MediaStore} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 
 const MediaConfirmContainer = class extends React.Component {

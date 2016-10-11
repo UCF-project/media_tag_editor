@@ -1,6 +1,6 @@
 'use strict';
 
-import {SelectInput} from 'app';
+import {SelectInput} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import {Table, TableBody, TableHeader, TableFooter, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 // import RaisedButton from 'material-ui/RaisedButton';

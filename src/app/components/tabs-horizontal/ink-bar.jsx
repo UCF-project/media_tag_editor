@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React from 'react';
 import transitions from 'material-ui/styles/transitions';
 
 function getStyles(props, context) {
@@ -18,26 +18,24 @@ function getStyles(props, context) {
 	};
 }
 
-class InkBar extends Component {
-	static propTypes = {
-		color: PropTypes.string,
-		top: PropTypes.number.isRequired,
-		style: PropTypes.object
-	};
+const InkBar = (props, context) => {
+	const {style} = props;
+	const {prepareStyles} = context.muiTheme;
+	const styles = getStyles(props, context);
 
-	static contextTypes = {
-		muiTheme: PropTypes.object.isRequired
-	};
+	return (
+		<div style={prepareStyles(Object.assign(styles.root, style))}/>
+	);
+};
 
-	render() {
-		const {style} = this.props;
-		const {prepareStyles} = this.context.muiTheme;
-		const styles = getStyles(this.props, this.context);
+InkBar.propTypes = {
+	color: React.PropTypes.string,
+	top: React.PropTypes.number.isRequired,
+	style: React.PropTypes.object
+};
 
-		return (
-			<div style={prepareStyles(Object.assign(styles.root, style))}/>
-		);
-	}
-}
+InkBar.contextTypes = {
+	muiTheme: React.PropTypes.object.isRequired
+};
 
 export default InkBar;
