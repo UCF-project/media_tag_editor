@@ -4,11 +4,11 @@
       "content": {
         "id": "test",
         "sourcesVideo": [{
-          "src": "http://0.0.0.0:3000/tests/assets/media/video-only.mpd",
+          "src": "http://0.0.0.0:9091/assets/media/video-only.mpd",
           "type": "application/dash+xml"
         }],
         "sourcesAudio": [{
-          "src": "http://0.0.0.0:3000/tests/assets/media/audio-only.mpd",
+          "src": "http://0.0.0.0:9091/assets/media/audio-only.mpd",
           "type": "application/dash+xml"
         }],
         "class": "video-js vjs-sublime-skin",
@@ -70,7 +70,7 @@
         "network": {"up": {"visibility": true}, "down": {"visibility": false}}
       }
     }, {
-      "content": "http://0.0.0.0:3000/tests/assets/media/image.png",
+      "content": "http://0.0.0.0:9091/assets/media/image.png",
       "rules": {
         "network": {"up": {"visibility": false}, "down": {"visibility": true}}
       }

@@ -15,7 +15,9 @@
     "build:media-tag": "cd node_modules/media-tag && npm i && npm run build",
     "copy-files:media-tag": "cp node_modules/media-tag/dist/media* dist/",
     "test": "xo && ava",
-    "start": "http-server -p 9091 ./dist/"
+    "start": "npm run server-editor && npm run server-assets",
+    "server-editor": "http-server -p 9091 ./dist/ -P http://localhost:9092 &",
+    "server-assets": "http-server -p 9092 ./node_modules/media-tag/tests/ &"
   },
   "author": "",
   "license": "ISC",

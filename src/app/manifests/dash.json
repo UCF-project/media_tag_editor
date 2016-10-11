@@ -1,7 +1,7 @@
 {
   "medias":  [
     {
-      "content": "http://0.0.0.0:3000/tests/assets/media/video-only.mpd",
+      "content": "http://0.0.0.0:9091/assets/media/video-only.mpd",
       "rules": {
         "bandwidth": {
           "insufficient": {
@@ -55,7 +55,7 @@
         "network": {"up": {"visibility": true}, "down": {"visibility": false}}
       }
     }, {
-      "content": "http://0.0.0.0:3000/tests/assets/media/image.png",
+      "content": "http://0.0.0.0:9091/assets/media/image.png",
       "rules": {
         "network": {"up": {"visibility": false}, "down": {"visibility": true}}
       }
