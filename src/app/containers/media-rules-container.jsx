@@ -69,7 +69,6 @@ MediaRulesContainer.contextTypes = {
 };
 
 MediaRulesContainer.propTypes = {
-	rules: React.PropTypes.array,
 	editable: React.PropTypes.bool
 };
 

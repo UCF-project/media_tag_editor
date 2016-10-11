@@ -81,7 +81,7 @@ class SelectInput extends React.Component {
 					onRequestClose={this.handleRequestClose}
 					>
 					<Menu>
-					{menu.map(convert2MenuItem)}
+						{menu.map(convert2MenuItem)}
 					</Menu>
 				</Popover>
 			</div>

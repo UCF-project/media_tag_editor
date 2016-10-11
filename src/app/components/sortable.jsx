@@ -109,7 +109,7 @@ const Sortable = class extends React.Component {
 		debug('renderedChildren', renderedChildren);
 		return (
 			<div {...others}>
-			{renderedChildren}
+				{renderedChildren}
 			</div>
 		);
 	}

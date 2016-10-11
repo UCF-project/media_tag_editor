@@ -50,7 +50,11 @@
     "envs": ["browser"],
     "esnext": true,
     "extends": ["xo-react"],
-    "ignores": ["dist/**/*"]
+    "ignores": ["dist/**/*"],
+    "rules": {
+      "react/forbid-component-props": "off",
+      "react/no-unused-prop-types": "off"
+    }
   },
   "devDependencies": {
     "eslint": "3.7.1",

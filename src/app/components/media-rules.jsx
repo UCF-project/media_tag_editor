@@ -130,7 +130,7 @@ const MediaRules = (props, context) => {
 				</TableRow>
 			</TableHeader>
 			<TableBody displayRowCheckbox={false}>
-			{renderedRules}
+				{renderedRules}
 			</TableBody>
 			{editable && (
 				<TableFooter>

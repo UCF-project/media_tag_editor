@@ -200,16 +200,16 @@ class MediaContentContainer extends React.Component {
 				<RaisedButton style={{marginTop: 17}} onClick={this.handleUploadRetry} label="Retry" primary/>
 			</div>
 			) : (
-			<Dropzone
-				onDrop={this.handleDrop}
-				onDropAccepted={this.handleDropAccepted}
-				onDropRejected={this.handleDropRejected}
-				onDragEnter={this.handleDragEnter}
-				onDragLeave={this.handleDragLeave}
-				style={styleDropzone}
-				>
-			Click here or drag your file
-			</Dropzone>);
+				<Dropzone
+					onDrop={this.handleDrop}
+					onDropAccepted={this.handleDropAccepted}
+					onDropRejected={this.handleDropRejected}
+					onDragEnter={this.handleDragEnter}
+					onDragLeave={this.handleDragLeave}
+					style={styleDropzone}
+					>
+				Click here or drag your file
+				</Dropzone>);
 		const files = this.state.storage && this.state.storage.list ? this.state.storage.list : [];
 		let innerTab = null;
 
