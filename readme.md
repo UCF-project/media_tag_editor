@@ -1,5 +1,5 @@
 
-## Usage
+## Usage
 
 ```
 npm i          # Install dependencies
