@@ -1,4 +1,12 @@
 
+## Usage
+
+```
+npm i          # Install dependencies
+npm run build  # Build media-tag and application, creates ./dist with all needed files
+npm start      # Start two web servers, one with application and another with assets
+```
+
 ## Roadmap
 
 * Download with assets and HTML sample
