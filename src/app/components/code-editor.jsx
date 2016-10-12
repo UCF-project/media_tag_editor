@@ -14,7 +14,7 @@ const CodeEditor = props => {
 	debug('render');
 	return (
 		<AceEditor
-			mode="json"
+			mode={props.mode}
 			theme="github"
 			onChange={props.onChange}
 			name={props.name}
@@ -26,10 +26,15 @@ const CodeEditor = props => {
 	);
 };
 
+CodeEditor.defaultProps = {
+	mode: 'json'
+};
+
 CodeEditor.propTypes = {
 	name: React.PropTypes.string.isRequired,
 	value: React.PropTypes.string,
-	onChange: React.PropTypes.func
+	onChange: React.PropTypes.func,
+	mode: React.PropTypes.string.isRequired
 };
 
 module.exports = CodeEditor;

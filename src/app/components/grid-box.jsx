@@ -22,9 +22,12 @@ class GridBox extends React.Component {
 
 	handleDrag = e => {
 		if (e.pageX) {
+			const totalWidth = document.body.scrollWidth;
+			// TODO: change to detect total height without appbar
+			const totalHeight = (document.body.scrollHeight - 64);
 			// debug('handleDrag');
 			// TODO: change to detect total height without appbar
-			const percentage = Math.round(this.props.columns ? e.pageX / this.props.totalWidth * 100 : (e.pageY - 64) / this.props.totalHeight * 100);
+			const percentage = Math.round(this.props.columns ? e.pageX / totalWidth * 100 : (e.pageY - 64) / totalHeight * 100);
 			const sizingIndex = parseInt(e.currentTarget.dataset.sizingIndex, 10);
 			const newSizes = this.state.sizes.slice(0);
 			const previousSum = newSizes.slice(0, sizingIndex).reduce((p, c) => {
@@ -77,8 +80,6 @@ class GridBox extends React.Component {
 			rows,
 			sections,
 			style,
-			totalWidth, // eslint-disable-line no-unused-vars
-			totalHeight, // eslint-disable-line no-unused-vars
 			...others
 		} = this.props;
 
@@ -138,19 +139,11 @@ GridBox.contextTypes = {
 	muiTheme: React.PropTypes.object
 };
 
-GridBox.defaultProps = {
-	totalWidth: document.body.scrollWidth,
-	// TODO: change to detect total height without appbar
-	totalHeight: (document.body.scrollHeight - 64)
-};
-
 GridBox.propTypes = {
 	columns: React.PropTypes.bool,
 	rows: React.PropTypes.bool,
 	sections: React.PropTypes.array,
-	style: React.PropTypes.object,
-	totalWidth: React.PropTypes.number,
-	totalHeight: React.PropTypes.number
+	style: React.PropTypes.object
 };
 
 module.exports = GridBox;
