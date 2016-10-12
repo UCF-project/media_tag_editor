@@ -8,6 +8,9 @@ import ManifestActions from 'app/actions/manifest'; // eslint-disable-line impor
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
 import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
+import JSZip from 'jszip';
+import {saveAs} from 'file-saver';
+import packageHtml from 'app/helpers/package-html'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Stores:Manifest');
 
@@ -24,6 +27,27 @@ function makeTextFile(text) {
 	textFile = window.URL.createObjectURL(data);
 
 	return textFile;
+}
+
+function downloadPackage(filename, manifestSource) {
+	const mediaTagUrl = 'media-tag.webcomponent.js';
+	debug('downloadPackage', filename, manifestSource);
+	fetch(mediaTagUrl)
+	.then(response => response.text())
+	.then(mediaTagSource => {
+		const zip = new JSZip();
+		zip.file('manifest.json', manifestSource);
+		zip.file('index.html', packageHtml);
+		zip.file(mediaTagUrl, mediaTagSource);
+		zip.generateAsync({type: 'blob'})
+		.then(content => {
+			debug('finished generating zip');
+			saveAs(content, filename);
+		})
+		.catch(err => {
+			throw err;
+		});
+	});
 }
 
 const ManifestStore = Reflux.createStore({
@@ -61,6 +85,12 @@ const ManifestStore = Reflux.createStore({
 		link.href = makeTextFile(this.state.manifest.source);
 		link.download = 'manifest.json';
 		link.click();
+	},
+
+	onDownloadPackage() {
+		const filename = 'media-tag-package.zip';
+		const manifestSource = this.state.manifest.source;
+		downloadPackage(filename, manifestSource);
 	},
 
 	onChangeToTemplateIndex(index) {

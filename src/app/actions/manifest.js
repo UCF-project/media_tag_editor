@@ -6,6 +6,7 @@ const ManifestActions = Reflux.createActions({
 	change: {},
 	changeToTemplateIndex: {},
 	download: {},
+	downloadPackage: {},
 	upload: {},
 	insertMedia: {},
 	deleteMedia: {},

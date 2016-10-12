@@ -6,7 +6,7 @@
   "scripts": {
     "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -v",
     "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ]",
-    "build": "npm run copy-files:mdi && npm run copy-files:static && npm run build:sass && npm run build:media-tag && npm run copy-files:media-tag && npm run build:app",
+    "build": "run-s copy-files:mdi copy-files:static build:sass build:media-tag copy-files:media-tag build:app",
     "copy-files:static": "mkdir dist || true && cp -R src/static/* dist/",
     "copy-files:mdi": "mkdir -p dist/css || true && cp ./node_modules/mdi/css/materialdesignicons.min.css* dist/css/ && mkdir -p dist/fonts || true && cp ./node_modules/mdi/fonts/* dist/fonts/ ",
     "xo": "xo",
@@ -15,9 +15,10 @@
     "build:media-tag": "cd node_modules/media-tag && npm i --production && npm run build-lib",
     "copy-files:media-tag": "cp node_modules/media-tag/dist/media* dist/",
     "test": "xo",
-    "start": "npm run server-editor && npm run server-assets",
-    "server-editor": "http-server -p 9091 ./dist/ -P http://localhost:9092 &",
-    "server-assets": "http-server -p 9092 ./node_modules/media-tag/tests/ &"
+    "start": "run-p server-editor server-assets server-vendor",
+    "server-editor": "http-server -p 9091 --cors ./dist/ -P http://localhost:9092",
+    "server-assets": "http-server -p 9092 ./node_modules/media-tag/tests/ -P http://localhost:9093",
+    "server-vendor": "http-server -p 9093 ./node_modules/media-tag/"
   },
   "author": "",
   "license": "ISC",
@@ -30,11 +31,14 @@
     "browserify": "13.1.0",
     "debug": "2.2.0",
     "element-resize-detector": "1.1.9",
+    "file-saver": "^1.3.3",
     "isomorphic-fetch": "2.2.1",
+    "jszip": "^3.1.3",
     "material-ui": "0.16.0",
     "mdi": "1.7.22",
     "media-tag": "git+ssh://git@git.rnd.alterway.fr:UCF/media_tag.git",
     "node-sass": "3.10.1",
+    "npm-run-all": "^3.1.0",
     "react": "15.3.2",
     "react-ace": "3.6.1",
     "react-dom": "15.3.2",
@@ -47,10 +51,16 @@
     "warning": "3.0.0"
   },
   "xo": {
-    "envs": ["browser"],
+    "envs": [
+      "browser"
+    ],
     "esnext": true,
-    "extends": ["xo-react"],
-    "ignores": ["dist/**/*"],
+    "extends": [
+      "xo-react"
+    ],
+    "ignores": [
+      "dist/**/*"
+    ],
     "rules": {
       "react/forbid-component-props": "off",
       "react/no-unused-prop-types": "off"
