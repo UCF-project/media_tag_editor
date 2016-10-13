@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import Templates from 'app/templates'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Containers:EditorSettingsContainer');
 

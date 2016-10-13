@@ -1,6 +1,5 @@
 import {mediaObject as MediaObject} from 'media-tag';
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
-import packageHtml from 'app/helpers/package-html'; // eslint-disable-line import/no-extraneous-dependencies
 import JSZip from 'jszip';
 import {saveAs} from 'file-saver';
 
@@ -28,7 +27,6 @@ class Manifest {
 		this.files[htmlIndex] = {type: 'html', filename: 'index.html', source: '', url: null, mode: 'html'};
 		this.editingFileIndex = manifestIndex;
 		this.setManifestSource(json2str({medias: []}));
-		this.setHtmlSource(packageHtml);
 	}
 
 	getManifestSource() {
@@ -47,6 +45,12 @@ class Manifest {
 		return this.files[htmlIndex].source;
 	}
 
+	getHtmlSourceDoc() {
+		const source = this.getHtmlSource();
+		const sourceDoc = source.replace('manifest.json', this.getManifestUrl());
+		return sourceDoc;
+	}
+
 	getHtmlFilename() {
 		return this.files[htmlIndex].filename;
 	}
@@ -62,13 +66,15 @@ class Manifest {
 	getState() {
 		return {
 			source: this.files[this.editingFileIndex].source,
-			url: this.files[manifestIndex].url,
+			url: this.getManifestUrl(),
 			mode: this.files[this.editingFileIndex].mode,
 			type: this.getType(),
 			status: this.status,
 			statusError: this.statusError,
 			parsed: this.parsed,
-			files: this.files
+			files: this.files,
+			htmlUrl: this.files[htmlIndex].url,
+			htmlSourceDoc: this.getHtmlSourceDoc()
 		};
 	}
 
@@ -98,6 +104,7 @@ class Manifest {
 
 	setHtmlSource(newHtmlSource) {
 		this.files[htmlIndex].source = newHtmlSource;
+		this.updateHtmlUrl();
 	}
 
 	updateManifestUrl() {
@@ -110,6 +117,18 @@ class Manifest {
 		}
 
 		this.files[manifestIndex].url = window.URL.createObjectURL(data);
+	}
+
+	updateHtmlUrl() {
+		const data = new Blob([this.getHtmlSource()], {type: 'text/html'});
+
+		// If we are replacing a previously generated file we need to
+		// manually revoke the object URL to avoid memory leaks.
+		if (this.files[htmlIndex].url !== null) {
+			window.URL.revokeObjectURL(this.files[htmlIndex].url);
+		}
+
+		this.files[htmlIndex].url = window.URL.createObjectURL(data);
 	}
 
 	downloadPackage() {

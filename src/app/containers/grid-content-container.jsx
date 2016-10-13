@@ -3,8 +3,7 @@
 import React from 'react';
 import GridContent from 'app/components/grid-content'; // eslint-disable-line import/no-extraneous-dependencies
 import SourceSectionContainer from 'app/containers/source-section-container'; // eslint-disable-line import/no-extraneous-dependencies
-import MediaTagWrapper from 'app/components/media-tag-wrapper'; // eslint-disable-line import/no-extraneous-dependencies
-import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
+import ViewSectionContainer from 'app/containers/view-section-container'; // eslint-disable-line import/no-extraneous-dependencies
 import EditorStore from 'app/stores/editor'; // eslint-disable-line import/no-extraneous-dependencies
 import EditorActions from 'app/actions/editor'; // eslint-disable-line import/no-extraneous-dependencies
 
@@ -22,7 +21,6 @@ class GridContentContainer extends React.Component {
 
 	componentDidMount() {
 		this.unsubscribe = [];
-		this.unsubscribe.push(ManifestStore.listen(this.handleStateChange));
 		this.unsubscribe.push(EditorStore.listen(this.handleStateChange));
 		EditorActions.stateCast();
 	}
@@ -41,9 +39,7 @@ class GridContentContainer extends React.Component {
 		const sections = {
 			Media: children,
 			Source: <SourceSectionContainer/>,
-			View: (<div key="View" style={{height: '100%', width: '100%', overflow: 'auto'}}>
-				{this.state.manifest && <MediaTagWrapper src={this.state.manifest.url}/>}
-			</div>)
+			View: <ViewSectionContainer/>
 		};
 
 		if (this.state.editor) {

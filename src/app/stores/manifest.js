@@ -5,7 +5,7 @@ import Reflux from 'reflux';
 import {hashHistory} from 'react-router';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
-import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
+import Templates from 'app/templates'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 import Manifest from 'app/helpers/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 
@@ -38,7 +38,8 @@ const ManifestStore = Reflux.createStore({
 	},
 
 	onChangeToTemplateIndex(index) {
-		ManifestActions.changeSource('manifest', json2str(Templates.manifests[index].json));
+		ManifestActions.changeSource('manifest', Templates.manifests[index].json);
+		ManifestActions.changeSource('html', Templates.manifests[index].html);
 		ManifestActions.listMedia();
 	},
 

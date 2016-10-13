@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="media-tag.webcomponent.js"></script>
+		<script type="text/javascript">
+			function onload() {
+				if (MediaTag) {
+					// Add fake monitoring
+					MediaTag.extensionApi.addMonitor({
+						name: 'fakeMonitor',
+						states: ['started', 'show3d', 'showVideo', 'showText', 'showImage'],
+						startup: function () {
+							// Initiates value
+							MediaTag.controller.changeState('fakeMonitor', 'started');
+						}
+					});
+
+					// Add clicks that changes monitor
+					var bts = document.querySelectorAll('button');
+					for (var i = 0; i < bts.length; i++) {
+						bts[i].onclick = function () {
+							MediaTag.controller.changeState('fakeMonitor', this.dataset.state);
+						};
+					}
+
+					// Create the container for media tag
+					var mediaContainer = document.createElement('media-tag');
+					mediaContainer.setAttribute('src', 'manifest.json');
+					document.querySelector('body').appendChild(mediaContainer);
+				}
+			}
+		</script>
+	</head>
+	<body onload="onload()">
+		<div>
+			<button data-state="show3d">show 3d</button>
+			<button data-state="showVideo">show video</button>
+			<button data-state="showImage">show image</button>
+			<button data-state="showText">show text</button>
+		</div>
+	</body>
+</html>

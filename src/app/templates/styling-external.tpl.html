@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="media-tag.webcomponent.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+		<style type="text/css">
+			/* Attention ::shadow is deprecated */
+			media-tag::shadow div{
+				background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+				background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+				color:transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+				font-family: 'Pacifico', cursive;
+				width: 275px;
+				height: 100px;
+				border: 3px solid #f22;
+				border-radius: 15px;
+				margin: 30px;
+				padding: 30px;
+				text-align: center;
+				font-size:30px;
+			}
+		</style>
+	</head>
+	<body>
+		<media-tag src="manifest.json">
+			<div>I'm in the media tag with src attribute</div>
+		</media-tag>
+	</body>
+</html>

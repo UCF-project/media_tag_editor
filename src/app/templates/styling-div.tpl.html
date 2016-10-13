@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="media-tag.webcomponent.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <meta charset="utf-8">
+    <style>
+    #mediaTagContainer{
+      background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+      background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+      color:transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      font-family: 'Pacifico', cursive;
+      width: 275px;
+      height: 100px;
+      border-radius: 15px;
+      margin: 30px;
+      padding: 30px;
+      text-align: center;
+      font-size:30px;
+      border: 5px solid #f22;
+      animation: rainbow 15s infinite alternate;
+    }
+
+    @keyframes rainbow {
+      0% {border-color: #f22;}
+      15% {border-color: #f2f;}
+      30% {border-color: #22f;}
+      45% {border-color: #2ff;}
+      60% {border-color: #2f2;}
+      75% {border-color: #2f2;}
+      90% {border-color: #ff2;}
+      100% {border-color: #f22;}
+    }
+    </style>
+    <script type="text/javascript">
+      function onload() {
+        if (MediaTag) {
+          // Create the container for media tag
+          var mediaContainer = document.createElement('div');
+          mediaContainer.id = 'mediaTagContainer';
+          document.querySelector('body').appendChild(mediaContainer);
+
+          // Load manifest into the container
+          MediaTag.manifest.load('manifest.json', document.getElementById('mediaTagContainer'));
+        }
+      }
+    </script>
+  </head>
+  <body onload="onload()">
+  </body>
+</html>

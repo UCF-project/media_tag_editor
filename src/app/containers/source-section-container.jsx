@@ -4,11 +4,14 @@ import React from 'react';
 import CodeEditor from 'app/components/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
-import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 import FlatButton from 'material-ui/FlatButton';
+import {debounce} from 'lodash';
 
 const debug = require('debug')('MTME:Containers:GridContentContainer');
+
+const debouncedSourceChange = debounce((type, newValue) => {
+	ManifestActions.changeSource(type, newValue);
+}, 1000);
 
 class SourceSectionContainer extends React.Component {
 	constructor(props) {
@@ -22,7 +25,7 @@ class SourceSectionContainer extends React.Component {
 
 	handleCodeChange = newValue => {
 		debug('handleChange', newValue);
-		ManifestActions.changeSource(this.state.manifest.type, newValue);
+		debouncedSourceChange(this.state.manifest.type, newValue);
 	}
 
 	handleClickFile = e => {
@@ -34,7 +37,7 @@ class SourceSectionContainer extends React.Component {
 	componentDidMount() {
 		this.unsubscribe = [];
 		this.unsubscribe.push(ManifestStore.listen(this.handleStateChange));
-		ManifestActions.changeSource('manifest', json2str(Templates.manifests[0].json));
+		ManifestActions.changeToTemplateIndex(0);
 	}
 
 	componentWillUnmount() {

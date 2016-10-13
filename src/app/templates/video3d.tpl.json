@@ -16,10 +16,10 @@
       "content": {
         "sources": [
           {
-            "src": "/assets/sample.webm"
+            "src": "http://0.0.0.0:9091/assets/sample.webm"
           },
           {
-            "src": "/assets/sample.mp4"
+            "src": "http://0.0.0.0:9091/assets/sample.mp4"
           }
         ],
         "contentType": "videoObj"
@@ -35,7 +35,7 @@
       }
     },
     {
-      "content": "/assets/sample.png",
+      "content": "http://0.0.0.0:9091/assets/sample.png",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},
@@ -47,7 +47,7 @@
       }
     },
     {
-      "content": "/assets/sample.txt",
+      "content": "http://0.0.0.0:9091/assets/sample.txt",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},
