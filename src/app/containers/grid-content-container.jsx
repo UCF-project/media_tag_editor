@@ -2,14 +2,11 @@
 
 import React from 'react';
 import GridContent from 'app/components/grid-content'; // eslint-disable-line import/no-extraneous-dependencies
-import CodeEditor from 'app/components/code-editor'; // eslint-disable-line import/no-extraneous-dependencies
+import SourceSectionContainer from 'app/containers/source-section-container'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaTagWrapper from 'app/components/media-tag-wrapper'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
-import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import EditorStore from 'app/stores/editor'; // eslint-disable-line import/no-extraneous-dependencies
 import EditorActions from 'app/actions/editor'; // eslint-disable-line import/no-extraneous-dependencies
-import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
-import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Containers:GridContentContainer');
 
@@ -23,16 +20,10 @@ class GridContentContainer extends React.Component {
 		this.setState(newState);
 	}
 
-	handleCodeChange = newValue => {
-		debug('handleChange', newValue);
-		ManifestActions.change(newValue);
-	}
-
 	componentDidMount() {
 		this.unsubscribe = [];
 		this.unsubscribe.push(ManifestStore.listen(this.handleStateChange));
 		this.unsubscribe.push(EditorStore.listen(this.handleStateChange));
-		ManifestActions.change(json2str(Templates.manifests[0].json));
 		EditorActions.stateCast();
 	}
 
@@ -49,15 +40,7 @@ class GridContentContainer extends React.Component {
 
 		const sections = {
 			Media: children,
-			Source: (<div key="Source" style={{height: '100%', width: '100%'}}>
-				{this.state.manifest && (
-					<CodeEditor
-						name="manifest"
-						onChange={this.handleCodeChange}
-						value={this.state.manifest.source}
-						/>
-				)}
-			</div>),
+			Source: <SourceSectionContainer/>,
 			View: (<div key="View" style={{height: '100%', width: '100%', overflow: 'auto'}}>
 				{this.state.manifest && <MediaTagWrapper src={this.state.manifest.url}/>}
 			</div>)

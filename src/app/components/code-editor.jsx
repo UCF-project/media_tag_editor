@@ -6,6 +6,7 @@ import AceEditor from 'react-ace';
 // Comes from react-ace, needed for properly initiate react-ace
 import 'brace'; // eslint-disable-line import/no-extraneous-dependencies
 import 'brace/mode/json'; // eslint-disable-line import/no-extraneous-dependencies
+import 'brace/mode/html'; // eslint-disable-line import/no-extraneous-dependencies
 import 'brace/theme/github'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Components:CodeEditor');

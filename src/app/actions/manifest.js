@@ -3,7 +3,6 @@
 import Reflux from 'reflux';
 
 const ManifestActions = Reflux.createActions({
-	change: {},
 	changeToTemplateIndex: {},
 	download: {},
 	downloadPackage: {},
@@ -14,7 +13,9 @@ const ManifestActions = Reflux.createActions({
 	editMedia: {},
 	showMedia: {},
 	stateCast: {},
-	listMedia: {}
+	listMedia: {},
+	changeFile: {},
+	changeSource: {}
 });
 
 module.exports = ManifestActions;

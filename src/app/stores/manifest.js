@@ -3,98 +3,42 @@
 
 import Reflux from 'reflux';
 import {hashHistory} from 'react-router';
-import MediaObject from 'media-tag/src/lib/modules/media-object';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
 import Templates from 'app/manifests'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
-import JSZip from 'jszip';
-import {saveAs} from 'file-saver';
-import packageHtml from 'app/helpers/package-html'; // eslint-disable-line import/no-extraneous-dependencies
+import Manifest from 'app/helpers/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 
 const debug = require('debug')('MTME:Stores:Manifest');
 
-let textFile = null;
-function makeTextFile(text) {
-	const data = new Blob([text], {type: 'application/json'});
-
-	// If we are replacing a previously generated file we need to
-	// manually revoke the object URL to avoid memory leaks.
-	if (textFile !== null) {
-		window.URL.revokeObjectURL(textFile);
-	}
-
-	textFile = window.URL.createObjectURL(data);
-
-	return textFile;
-}
-
-function downloadPackage(filename, manifestSource) {
-	const mediaTagUrl = 'media-tag.webcomponent.js';
-	debug('downloadPackage', filename, manifestSource);
-	fetch(mediaTagUrl)
-	.then(response => response.text())
-	.then(mediaTagSource => {
-		const zip = new JSZip();
-		zip.file('manifest.json', manifestSource);
-		zip.file('index.html', packageHtml);
-		zip.file(mediaTagUrl, mediaTagSource);
-		zip.generateAsync({type: 'blob'})
-		.then(content => {
-			debug('finished generating zip');
-			saveAs(content, filename);
-		})
-		.catch(err => {
-			throw err;
-		});
-	});
-}
-
 const ManifestStore = Reflux.createStore({
 
-	ERROR: 'ERROR',
-	PARSED: 'PARSED',
+	ERROR: Manifest.ERROR,
+	PARSED: Manifest.PARSED,
 
 	// Base Store //
 
 	listenables: ManifestActions,
 
 	init() {
-		this.state = {};
-		this.state.manifest = {};
-		this.state.manifest.mediaNode = document.createElement('div');
-		this.state.manifest.mediaNode.mediaTag = {
-			options: {
-				dependencyLoader: {
-					catchLoaderErrors: true
-				}
-			}
-		};
-		this.setSource(json2str({medias: []}));
+		this.manifestObj = new Manifest();
 	},
 
 	// Actions //
 
-	onChange(newManifestSource) {
-		this.setSource(newManifestSource);
-		this.updateState();
-	},
-
 	onDownload() {
 		const link = document.createElement('a');
-		link.href = makeTextFile(this.state.manifest.source);
-		link.download = 'manifest.json';
+		link.href = this.manifestObj.getManifestUrl();
+		link.download = this.manifestObj.getManifestFilename();
 		link.click();
 	},
 
 	onDownloadPackage() {
-		const filename = 'media-tag-package.zip';
-		const manifestSource = this.state.manifest.source;
-		downloadPackage(filename, manifestSource);
+		this.manifestObj.downloadPackage();
 	},
 
 	onChangeToTemplateIndex(index) {
-		ManifestActions.change(json2str(Templates.manifests[index].json));
+		ManifestActions.changeSource('manifest', json2str(Templates.manifests[index].json));
 		ManifestActions.listMedia();
 	},
 
@@ -126,32 +70,32 @@ const ManifestStore = Reflux.createStore({
 
 		const reader = new FileReader();
 		reader.addEventListener('load', e => {
-			ManifestActions.change(e.target.result);
+			ManifestActions.changeSource('manifest', e.target.result);
 			ManifestActions.listMedia();
 		});
 		reader.readAsText(file);
 	},
 
 	onInsertMedia(newMedia) {
-		const manifestParsed = JSON.parse(this.state.manifest.source);
+		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
 		manifestParsed.medias.push(newMedia);
-		ManifestActions.change(json2str(manifestParsed));
+		ManifestActions.changeSource('manifest', json2str(manifestParsed));
 	},
 
 	onDeleteMedia(mediaIndex) {
-		const manifestParsed = JSON.parse(this.state.manifest.source);
+		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
 		manifestParsed.medias.splice(mediaIndex, 1);
-		ManifestActions.change(json2str(manifestParsed));
+		ManifestActions.changeSource('manifest', json2str(manifestParsed));
 	},
 
 	onUpdateMedia(mediaIndex, newMedia) {
-		const manifestParsed = JSON.parse(this.state.manifest.source);
+		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
 		manifestParsed.medias[mediaIndex] = newMedia;
-		ManifestActions.change(json2str(manifestParsed));
+		ManifestActions.changeSource('manifest', json2str(manifestParsed));
 	},
 
 	onEditMedia(mediaIndex) {
-		const manifestParsed = JSON.parse(this.state.manifest.source);
+		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
 		MediaActions.openUpdate(mediaIndex, manifestParsed.medias[mediaIndex]);
 	},
 
@@ -169,35 +113,26 @@ const ManifestStore = Reflux.createStore({
 		this.updateState();
 	},
 
-	// Methods //
-
-	setSource(newManifestSource) {
-		try {
-			this.state.manifest.source = newManifestSource;
-			const manifestParsed = JSON.parse(this.state.manifest.source);
-			this.state.manifest.parsed = {};
-			this.state.manifest.parsed.medias = manifestParsed.medias.map(m => {
-				const newMedia = {};
-				newMedia.mediaObj = new MediaObject(m, this.state.manifest.mediaNode);
-				newMedia.preview = newMedia.mediaObj.DOMElements;
-				newMedia.type = newMedia.mediaObj.contentType;
-				newMedia.rules = newMedia.mediaObj.rulesArray;
-				newMedia.rulesCount = newMedia.rules.length;
-				return newMedia;
-			});
-			this.state.manifest.status = this.PARSED;
-			// TODO: refactor download file to add use this url
-			this.state.manifest.url = makeTextFile(this.state.manifest.source);
-		} catch (err) {
-			debug('err', err);
-			this.state.manifest.statusError = err;
-			this.state.manifest.status = this.ERROR;
-			this.updateState();
-		}
+	onChangeFile(newFileType) {
+		this.manifestObj.changeFileType(newFileType);
+		this.updateState();
 	},
 
+	onChangeSource(type, newSource) {
+		if (type === 'manifest') {
+			this.manifestObj.setManifestSource(newSource);
+		} else if (type === 'html') {
+			this.manifestObj.setHtmlSource(newSource);
+		} else {
+			throw new Error(`Type ${type} for change not found.`);
+		}
+		this.updateState();
+	},
+
+	// Methods //
+
 	updateState() {
-		this.trigger(this.state);
+		this.trigger({manifest: this.manifestObj.getState()});
 	}
 
 });
