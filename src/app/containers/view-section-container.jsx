@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import MediaTagWrapper from 'app/components/media-tag-wrapper'; // eslint-disable-line import/no-extraneous-dependencies
+// import MediaTagWrapper from 'app/components/media-tag-wrapper'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestStore from 'app/stores/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 

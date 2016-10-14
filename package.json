@@ -62,7 +62,8 @@
       "xo-react"
     ],
     "ignores": [
-      "dist/**/*"
+      "dist/**/*",
+      "src/static/**/*"
     ],
     "rules": {
       "react/forbid-component-props": "off",
