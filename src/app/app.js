@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 import refluxPromise from 'reflux-promise';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import 'media-tag';
+// import 'media-tag';
 
 // APP
 

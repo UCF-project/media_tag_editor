@@ -7,6 +7,7 @@ const types = {
 	'video-dash': 'mdi mdi-video',
 	'video': 'mdi mdi-video',
 	'image': 'mdi mdi-image',
+	'imageObj': 'mdi mdi-image',
 	'html': 'mdi mdi-code-tags',
 	'videojs-audio': 'mdi mdi-video',
 	'oembed': 'mdi mdi-share-variant',

@@ -8,20 +8,41 @@ const debug = require('debug')('MTME:Helpers:Manifest');
 const manifestIndex = 0;
 const htmlIndex = 1;
 
+function createMediaNode() {
+	const mediaNode = document.createElement('div');
+	mediaNode.mediaTag = {
+		options: {
+			dependencyLoader: {
+				catchLoaderErrors: true
+			}
+		}
+	};
+	return mediaNode;
+}
+
+function json2MediaObject(mediaJson) {
+	const newMedia = {};
+	newMedia.mediaNode = createMediaNode();
+	newMedia.mediaObj = new MediaObject(mediaJson, newMedia.mediaNode);
+	// newMedia.preview = newMedia.mediaObj.DOMElements;
+	newMedia.type = newMedia.mediaObj.contentType;
+	newMedia.rules = newMedia.mediaObj.rulesArray;
+	newMedia.rulesCount = newMedia.rules.length;
+	// newMedia.preview = this.mediaNode;
+	// newMedia.type = 'type';
+	// newMedia.rules = MTRule.convert2Array(mediaJson.rules);
+	// newMedia.rulesCount = newMedia.rules.length;
+	delete newMedia.mediaNode;
+	delete newMedia.mediaObj;
+	return newMedia;
+}
+
 class Manifest {
 
 	static ERROR = 'ERROR';
 	static PARSED = 'PARSED';
 
 	constructor() {
-		this.mediaNode = document.createElement('div');
-		this.mediaNode.mediaTag = {
-			options: {
-				dependencyLoader: {
-					catchLoaderErrors: true
-				}
-			}
-		};
 		this.files = [];
 		this.files[manifestIndex] = {type: 'manifest', filename: 'manifest.json', source: '', url: null, mode: 'json'};
 		this.files[htmlIndex] = {type: 'html', filename: 'index.html', source: '', url: null, mode: 'html'};
@@ -84,17 +105,8 @@ class Manifest {
 			this.files[manifestIndex].source = newManifestSource;
 			const manifestParsed = JSON.parse(this.getManifestSource());
 			this.parsed = {};
-			this.parsed.medias = manifestParsed.medias.map(m => {
-				const newMedia = {};
-				newMedia.mediaObj = new MediaObject(m, this.mediaNode);
-				newMedia.preview = newMedia.mediaObj.DOMElements;
-				newMedia.type = newMedia.mediaObj.contentType;
-				newMedia.rules = newMedia.mediaObj.rulesArray;
-				newMedia.rulesCount = newMedia.rules.length;
-				return newMedia;
-			});
+			this.parsed.medias = manifestParsed.medias.map(json2MediaObject);
 			this.status = Manifest.PARSED;
-			// TODO: refactor download file to add use this url
 			this.updateManifestUrl();
 		} catch (err) {
 			debug('err', err);

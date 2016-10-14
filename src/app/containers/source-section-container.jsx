@@ -76,7 +76,7 @@ class SourceSectionContainer extends React.Component {
 				<div key="Source" style={{height: '100%', width: '100%'}}>
 					<div style={{position: 'relative', height: '100%', width: '100%'}}>
 						{editors[this.state.manifest.type]}
-						<div style={{position: 'absolute', bottom: 15, right: 15}}>
+						<div style={{position: 'absolute', bottom: 15, right: 15, background: '#fff', zIndex: 500}}>
 							{fileBts}
 						</div>
 					</div>
