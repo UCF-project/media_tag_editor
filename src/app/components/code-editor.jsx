@@ -19,6 +19,7 @@ const CodeEditor = props => {
 			theme="github"
 			onChange={props.onChange}
 			name={props.name}
+			key={props.name}
 			editorProps={{$blockScrolling: true}}
 			value={props.value}
 			width="100%"

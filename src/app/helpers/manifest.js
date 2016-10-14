@@ -74,6 +74,7 @@ class Manifest {
 			parsed: this.parsed,
 			files: this.files,
 			htmlUrl: this.files[htmlIndex].url,
+			htmlSource: this.getHtmlSource(),
 			htmlSourceDoc: this.getHtmlSourceDoc()
 		};
 	}

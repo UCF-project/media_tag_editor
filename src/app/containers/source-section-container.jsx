@@ -23,9 +23,14 @@ class SourceSectionContainer extends React.Component {
 		this.setState(newState);
 	}
 
-	handleCodeChange = newValue => {
+	handleChangeHtml = newValue => {
 		debug('handleChange', newValue);
-		debouncedSourceChange(this.state.manifest.type, newValue);
+		debouncedSourceChange('html', newValue);
+	}
+
+	handleChangeManifest = newValue => {
+		debug('handleChange', newValue);
+		debouncedSourceChange('manifest', newValue);
 	}
 
 	handleClickFile = e => {
@@ -45,24 +50,40 @@ class SourceSectionContainer extends React.Component {
 	}
 
 	render() {
-		const fileBts = this.state.manifest ? this.state.manifest.files.map(f => <FlatButton data-file-type={f.type} key={f.type} label={f.filename} primary disabled={f.type === this.state.manifest.type} onClick={this.handleClickFile}/>) : null;
-		return (
-			<div key="Source" style={{height: '100%', width: '100%'}}>
-				{this.state.manifest && (
+		if (this.state.manifest) {
+			const fileBts = this.state.manifest.files.map(f => <FlatButton data-file-type={f.type} key={f.type} label={f.filename} primary disabled={f.type === this.state.manifest.type} onClick={this.handleClickFile}/>);
+			// If we use the same editor for both html and manifest
+			// the ctrl z bugs (shows the last state independently from type)
+			const editors = {
+				html: (
+					<CodeEditor
+						name="html"
+						mode="html"
+						onChange={this.handleChangeHtml}
+						value={this.state.manifest.htmlSource}
+						/>
+				),
+				manifest: (
+					<CodeEditor
+						name="manifest"
+						mode="json"
+						onChange={this.handleChangeManifest}
+						value={this.state.manifest.source}
+						/>
+				)
+			};
+			return (
+				<div key="Source" style={{height: '100%', width: '100%'}}>
 					<div style={{position: 'relative', height: '100%', width: '100%'}}>
-						<CodeEditor
-							name={this.state.manifest.type}
-							mode={this.state.manifest.mode}
-							onChange={this.handleCodeChange}
-							value={this.state.manifest.source}
-							/>
+						{editors[this.state.manifest.type]}
 						<div style={{position: 'absolute', bottom: 15, right: 15}}>
 							{fileBts}
 						</div>
 					</div>
-				)}
-			</div>
-		);
+				</div>
+			);
+		}
+		return <div key="Source" style={{height: '100%', width: '100%'}}/>;
 	}
 }
 
