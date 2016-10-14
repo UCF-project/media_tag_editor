@@ -42,7 +42,7 @@ class SourceSectionContainer extends React.Component {
 	componentDidMount() {
 		this.unsubscribe = [];
 		this.unsubscribe.push(ManifestStore.listen(this.handleStateChange));
-		ManifestActions.changeToTemplateIndex(0);
+		ManifestActions.stateCast();
 	}
 
 	componentWillUnmount() {

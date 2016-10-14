@@ -26,7 +26,6 @@ function afterEachRequest(response) {
 
 const Api = Reflest.createGateway({
 	request: fetch,
-	origin: 'http://localhost:9092/',
 	afterEachRequest,
 	routes: {
 		storageUpload: {

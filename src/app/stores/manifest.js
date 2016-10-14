@@ -21,7 +21,14 @@ const ManifestStore = Reflux.createStore({
 	listenables: ManifestActions,
 
 	init() {
+		debug('init');
 		this.manifestObj = new Manifest();
+		// // Call to ManifestActions in init() does not work
+		// ManifestActions.changeToTemplateIndex(0);
+		// // But this works =>
+		setTimeout(() => {
+			ManifestActions.changeToTemplateIndex(0);
+		}, 1);
 	},
 
 	// Actions //
@@ -38,6 +45,7 @@ const ManifestStore = Reflux.createStore({
 	},
 
 	onChangeToTemplateIndex(index) {
+		debug('onChangeToTemplateIndex', index);
 		ManifestActions.changeSource('manifest', Templates.manifests[index].json);
 		ManifestActions.changeSource('html', Templates.manifests[index].html);
 		ManifestActions.listMedia();
