@@ -1,8 +1,8 @@
 'use strict';
 
-import {MediaContentContainer, MediaRulesContainer, MediaConfirmContainer, MediaStore, MediaActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
+import {MediaContentContainer, MediaStore, MediaActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
-import {Dialog, FlatButton, Step, StepButton, Stepper} from 'material-ui';
+import {Dialog, FlatButton, RaisedButton} from 'material-ui';
 
 const debug = require('debug')('MTME:Containers:DialogMediaContainer');
 
@@ -12,28 +12,8 @@ class DialogMediaContainer extends React.Component {
 		this.state = MediaStore.getInitialState();
 	}
 
-	handleGotoStep(stepIndex) {
-		MediaActions.gotoStep(stepIndex);
-	}
-
-	handleStep1 = () => {
-		this.handleGotoStep(0);
-	}
-
-	handleStep2 = () => {
-		this.handleGotoStep(1);
-	}
-
-	handleStep3 = () => {
-		this.handleGotoStep(2);
-	}
-
 	handleSave() {
 		MediaActions.save();
-	}
-
-	handleNext() {
-		MediaActions.nextStep();
 	}
 
 	handleClose() {
@@ -46,7 +26,7 @@ class DialogMediaContainer extends React.Component {
 		if (this.state && this.state.media && this.state.media.dialog) {
 			const actions = [];
 
-			actions.push(<FlatButton
+			actions.push(<RaisedButton
 				label="Save"
 				primary
 				onClick={this.handleSave}

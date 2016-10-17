@@ -36,4 +36,3 @@ export {Tabs, Tab} from './components/tabs-horizontal';
 export DialogMediaContainer from './containers/dialog-media-container';
 export MediaContentContainer from './containers/media-content-container';
 export MediaRulesContainer from './containers/media-rules-container';
-export MediaConfirmContainer from './containers/media-confirm-container';

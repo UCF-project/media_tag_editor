@@ -227,7 +227,7 @@ const SelectTextField = class extends React.Component {
 			onFocus, // eslint-disable-line no-unused-vars
 			multiple,
 			maxHeight,
-			defaultValue,
+			defaultValue, // eslint-disable-line no-unused-vars
 			...others
 		} = this.props;
 		// const palette = context.muiTheme.baseTheme.palette;

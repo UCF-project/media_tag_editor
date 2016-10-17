@@ -8,54 +8,9 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import RuleInput from './rule-input';
 
-// import FloatingActionButton from 'material-ui/FloatingActionButton';
-// import SelectField from 'material-ui/SelectField';
-// import Menu from 'material-ui/Menu';
-// import MenuItem from 'material-ui/MenuItem';
-
 const debug = require('debug')('MTME:Components:MediaRules');
 
 const rulesProps = ['monitor', 'state', 'action', 'flag'];
-
-const monitors = ['network', 'fake', 'resize'];
-
-// const states = {
-// 	network: ['up', 'down'],
-// 	fake: ['value1', 'value2', 'value3', 'value4', 'value5'],
-// 	resize: ['desktop', 'mobile']
-// };
-
-const actions = ['visibility', 'style'];
-
-// const flags = {
-// 	visibility: [true, false],
-// 	style: []
-// };
-
-// const convert2MenuItem = (v, i) => <MenuItem key={i} value={v} primaryText={v}/>;
-
-// const menus = {
-// 	monitor: <Menu>{monitors.map(convert2MenuItem)}</Menu>,
-// 	state: <Menu>{monitors.map(convert2MenuItem)}</Menu>,
-// 	action: <Menu>{actions.map(convert2MenuItem)}</Menu>,
-// 	flag: <Menu>{monitors.map(convert2MenuItem)}</Menu>
-// };
-
-const menus = {
-	monitor: monitors,
-	state: monitors,
-	action: actions,
-	flag: monitors
-};
-
-// <SelectField
-// 	floatingLabelFixed
-// 	floatingLabelText="content type"
-// 	value={r[rp]}
-// 	>
-// 	{monitors}
-// </SelectField>
-
 
 const MediaRules = (props, context) => {
 	const {
