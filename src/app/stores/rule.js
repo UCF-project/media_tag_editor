@@ -18,7 +18,7 @@ const RuleStore = Reflux.createStore({
 
 	init() {
 		debug('init');
-		this.state = {rule: {rules: []}};
+		this.state = {rule: {rules: [], editRules: []}};
 	},
 
 	// Actions //
@@ -38,7 +38,9 @@ const RuleStore = Reflux.createStore({
 
 	onInsertRule() {
 		debug('onAddNewRule');
+		const ruleIndex = this.state.rule.rules.length;
 		this.state.rule.rules.push(RuleStore.createRule('', '', '', '', true, true));
+		this.state.rule.editRules[ruleIndex] = JSON.parse(JSON.stringify(this.state.rule.rules[ruleIndex]));
 		this.trigger(this.state);
 	},
 
@@ -59,7 +61,14 @@ const RuleStore = Reflux.createStore({
 	onEditRule(ruleIndex) {
 		debug('onEditRule');
 		this.state.rule.rules[ruleIndex].editting = true;
+		// Create a shallow copy
+		this.state.rule.editRules[ruleIndex] = JSON.parse(JSON.stringify(this.state.rule.rules[ruleIndex]));
 		this.trigger(this.state);
+	},
+
+	onEditRuleField(ruleIndex, field, value) {
+		this.state.rule.editRules[ruleIndex][field] = value;
+		this.trigger(this.state); // TODO: change to stateCast
 	},
 
 	onCancelEditRule(ruleIndex) {

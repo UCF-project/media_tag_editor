@@ -9,7 +9,8 @@ const RuleActions = Reflux.createActions({
 	deleteRule: {},
 	saveRule: {},
 	editRule: {},
-	cancelEditRule: {}
+	cancelEditRule: {},
+	editRuleField: {}
 });
 
 module.exports = RuleActions;

@@ -1,0 +1,20 @@
+6c6
+< function createFunctions(Reflux, PromiseFactory) {
+---
+> function createFunctions(Reflux, PromiseFactory, catchHandler) {
+67c67,71
+<         createdPromise["catch"](function () {});
+---
+>         if (typeof (catchHandler) === "function") {
+>             createdPromise["catch"](catchHandler);
+>         } else {
+>             createdPromise["catch"](function () {});
+>         }
+133c137
+< exports["default"] = function (promiseFactory) {
+---
+> exports["default"] = function (promiseFactory, catchHandler) {
+135c139
+<         var _createFunctions = createFunctions(Reflux, promiseFactory);
+---
+>         var _createFunctions = createFunctions(Reflux, promiseFactory, catchHandler);

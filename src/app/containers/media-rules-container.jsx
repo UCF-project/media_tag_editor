@@ -50,6 +50,7 @@ const MediaRulesContainer = class extends React.Component {
 		return (
 			<MediaRules
 				rules={this.state.rule.rules}
+				editRules={this.state.rule.editRules}
 				editable={this.props.editable}
 				onInsertRule={this.handleInsertRule}
 				onDeleteRule={this.handleDeleteRule}

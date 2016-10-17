@@ -3,6 +3,7 @@
 import React from 'react';
 import MediaTag from 'media-tag';
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
+import {RuleActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import SelectTextField from './select-text-field';
 
 const debug = require('debug')('MTME:Components:RuleInput');
@@ -89,6 +90,10 @@ const RuleInput = props => {
 		index,
 		...other
 	} = props;
+	const updateEditField = () => {
+		const value = document.querySelector(`input[name=${item}_${index}Input]`).value;
+		RuleActions.editRuleField(index, item, value);
+	};
 	let items = [];
 	if (item === 'monitor' || item === 'action') {
 		items = mediaTagInfos[`${item}sArr`];
@@ -116,6 +121,7 @@ const RuleInput = props => {
 			items={items}
 			defaultValue={rule[item]}
 			style={{width: '100%'}}
+			onBlur={updateEditField}
 			{...other}
 			/>
 	);

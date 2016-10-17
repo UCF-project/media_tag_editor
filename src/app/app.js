@@ -18,7 +18,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 // Uses the user agent's Promise implementation
-Reflux.use(refluxPromise(window.Promise));
+Reflux.use(refluxPromise(window.Promise, err =>	console.error('Error inside store', err)));
 
 // refluxPromise needs to be before the routes import
 // and if AppRoutes is done on the begging of the file

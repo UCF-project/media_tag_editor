@@ -23,13 +23,15 @@ npm start      # Start two web servers, one with application and another with as
 * View/render area update (only work in chrome because webcomponents)
 * Add in View controllers for monitor state change
 * Upload in other storages
+* Upload package or manifest (Today only manifest)
+* Hoping that one day [this](https://github.com/reflux/reflux-promise/pull/18) lands
 
 ## Backend references
 
-https://www.filestack.com/
-https://github.com/vishesh04/Filesutra
-https://github.com/silexlabs/unifile
-https://github.com/silexlabs/cloud-explorer/
+* https://www.filestack.com/
+* https://github.com/vishesh04/Filesutra
+* https://github.com/silexlabs/unifile
+* https://github.com/silexlabs/cloud-explorer/
 
 ## Editors references
 

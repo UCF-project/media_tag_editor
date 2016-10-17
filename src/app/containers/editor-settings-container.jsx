@@ -63,7 +63,7 @@ const EditorSettingsContainer = class extends React.Component {
 					<Divider/>
 					<MenuItem onTouchTap={this.handleDownload} primaryText="Download manifest" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-download"/>}/>
 					<MenuItem onTouchTap={this.handleDownloadPackage} primaryText="Download package" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-package-down"/>}/>
-					<MenuItem onTouchTap={this.handleClickUpload} primaryText="Upload" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-upload"/>}/>
+					<MenuItem onTouchTap={this.handleClickUpload} primaryText="Upload manifest" leftIcon={<FontIcon style={{top: -10}} className="mdi mdi-upload"/>}/>
 				</IconMenu>
 				<input
 					ref={this.setRef}

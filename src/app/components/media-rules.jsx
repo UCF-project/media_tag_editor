@@ -15,6 +15,7 @@ const rulesProps = ['monitor', 'state', 'action', 'flag'];
 const MediaRules = (props, context) => {
 	const {
 		rules,
+		editRules,
 		editable,
 		onInsertRule,
 		onSaveRule,
@@ -63,7 +64,7 @@ const MediaRules = (props, context) => {
 						if (editable && r.editting) {
 							return (
 								<TableRowColumn key={rpi} style={{position: 'relative'}}>
-									<RuleInput index={i} rule={r} item={rp}/>
+									<RuleInput index={i} rule={editRules[i]} item={rp}/>
 								</TableRowColumn>
 							);
 						}
@@ -117,6 +118,7 @@ MediaRules.contextTypes = {
 
 MediaRules.propTypes = {
 	rules: React.PropTypes.array,
+	editRules: React.PropTypes.array,
 	editable: React.PropTypes.bool,
 	onInsertRule: React.PropTypes.func,
 	onSaveRule: React.PropTypes.func,
