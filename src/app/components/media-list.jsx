@@ -12,7 +12,8 @@ const MediaList = props => {
 			itemIndex={i}
 			media={m}
 			onDelete={props.onDeleteMedia}
-			onEdit={props.onEditMedia}
+			onEditMedia={props.onEditMedia}
+			onEditRules={props.onEditRules}
 			onShow={props.onShowMedia}
 			/>);
 	});
@@ -38,6 +39,7 @@ MediaList.propTypes = {
 	manifestParsed: React.PropTypes.object,
 	onDeleteMedia: React.PropTypes.func,
 	onEditMedia: React.PropTypes.func,
+	onEditRules: React.PropTypes.func,
 	onShowMedia: React.PropTypes.func,
 	onOpenNewMedia: React.PropTypes.func
 };

@@ -65,6 +65,12 @@ const MediaStore = Reflux.createStore({
 		this.onStateCast();
 	},
 
+	onCancelEditRule(ruleIndex) {
+		debug('onCancelEditRule');
+		this.state.media.rules[ruleIndex].editting = false;
+		this.onStateCast();
+	},
+
 	onGotoStep(stepIndex) {
 		if (stepIndex > MediaStore.maxSteps) {
 			throw new Error('Tried to go higher than max steps.');

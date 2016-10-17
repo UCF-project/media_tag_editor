@@ -1,6 +1,6 @@
 'use strict';
 
-import {MediaRules, MediaActions, MediaStore} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
+import {MediaRules, RuleActions, RuleStore} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 
 const debug = require('debug')('MTME:Containers:MediaRulesContainer');
@@ -8,7 +8,7 @@ const debug = require('debug')('MTME:Containers:MediaRulesContainer');
 const MediaRulesContainer = class extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = MediaStore.getInitialState();
+		this.state = RuleStore.getInitialState();
 	}
 
 	handleStateChange = newState => {
@@ -16,47 +16,53 @@ const MediaRulesContainer = class extends React.Component {
 	}
 
 	handleInsertRule = () => {
-		MediaActions.insertRule();
+		RuleActions.insertRule();
 	}
 
 	handleDeleteRule = e => {
 		debug('handleDeleteRule', arguments);
 		debug('handleDeleteRule e', e.currentTarget.dataset.itemIndex);
-		MediaActions.deleteRule(e.currentTarget.dataset.itemIndex);
+		RuleActions.deleteRule(e.currentTarget.dataset.itemIndex);
 	}
 
 	handleSaveRule = e => {
 		const itemIndex = e.currentTarget.dataset.itemIndex;
-		const newRule = MediaStore.createRule(
-			document.querySelector(`input[name=monitor_${itemIndex}]`).value,
-			document.querySelector(`input[name=state_${itemIndex}]`).value,
-			document.querySelector(`input[name=action_${itemIndex}]`).value,
-			document.querySelector(`input[name=flag_${itemIndex}]`).value,
+		debug('handleSaveRule', `input[name=monitor_${itemIndex}Input]`);
+		const newRule = RuleStore.createRule(
+			document.querySelector(`input[name=monitor_${itemIndex}Input]`).value,
+			document.querySelector(`input[name=state_${itemIndex}Input]`).value,
+			document.querySelector(`input[name=action_${itemIndex}Input]`).value,
+			document.querySelector(`input[name=flag_${itemIndex}Input]`).value,
+			false,
 			false);
-		MediaActions.saveRule(itemIndex, newRule);
+		RuleActions.saveRule(itemIndex, newRule);
 	}
 
 	handleEditRule = e => {
-		MediaActions.editRule(e.currentTarget.dataset.itemIndex);
+		RuleActions.editRule(e.currentTarget.dataset.itemIndex);
+	}
+
+	handleCancelEditRule = e => {
+		RuleActions.cancelEditRule(e.currentTarget.dataset.itemIndex);
 	}
 
 	render() {
 		return (
 			<MediaRules
-				height="30vh"
-				rules={this.state.media.rules}
+				rules={this.state.rule.rules}
 				editable={this.props.editable}
 				onInsertRule={this.handleInsertRule}
 				onDeleteRule={this.handleDeleteRule}
 				onSaveRule={this.handleSaveRule}
 				onEditRule={this.handleEditRule}
+				onCancelEditRule={this.handleCancelEditRule}
 				/>
 		);
 	}
 
 	componentDidMount() {
-		this.unsubscribe = MediaStore.listen(this.handleStateChange);
-		MediaActions.stateCast();
+		this.unsubscribe = RuleStore.listen(this.handleStateChange);
+		RuleActions.stateCast();
 	}
 
 	componentWillUnmount() {

@@ -18,6 +18,7 @@ import Editor from 'app/views/editor'; // eslint-disable-line import/no-extraneo
 import PanelMediaList from 'app/views/panel-media-list'; // eslint-disable-line import/no-extraneous-dependencies
 import PanelMedia from 'app/views/panel-media'; // eslint-disable-line import/no-extraneous-dependencies
 import NotFound from 'app/views/not-found'; // eslint-disable-line import/no-extraneous-dependencies
+import PanelMediaRules from 'app/views/panel-media-rules'; // eslint-disable-line import/no-extraneous-dependencies
 
 // Routes
 const Routes = (
@@ -26,6 +27,7 @@ const Routes = (
 			<Route component={Editor}>
 				<IndexRoute component={PanelMediaList}/>
 				<Route path=":id" component={PanelMedia}/>
+				<Route path=":id/rules" component={PanelMediaRules}/>
 			</Route>
 			<Route path="*" component={NotFound}/>
 		</Route>

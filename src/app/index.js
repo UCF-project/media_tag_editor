@@ -5,12 +5,14 @@ export Api from './helpers/api';
 /* Actions */
 export ManifestActions from './actions/manifest';
 export MediaActions from './actions/media';
+export RuleActions from './actions/rule';
 export StorageActions from './actions/storage';
 
 /* Stores */
 export ManifestStore from './stores/manifest';
 export MediaStore from './stores/media';
 export StorageStore from './stores/storage';
+export RuleStore from './stores/rule';
 
 /* Components */
 export CodeEditor from './components/code-editor';

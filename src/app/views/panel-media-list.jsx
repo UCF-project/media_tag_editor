@@ -27,6 +27,10 @@ class PanelMediaList extends React.Component {
 		ManifestActions.showMedia(mediaIndex);
 	}
 
+	handleEditRules = mediaIndex => {
+		ManifestActions.editRules(mediaIndex);
+	}
+
 	handleOpenNewMedia() {
 		MediaActions.openNew();
 	}
@@ -52,6 +56,7 @@ class PanelMediaList extends React.Component {
 					<MediaList
 						onDeleteMedia={this.handleDeleteMedia}
 						onEditMedia={this.handleEditMedia}
+						onEditRules={this.handleEditRules}
 						onShowMedia={this.handleShowMedia}
 						onOpenNewMedia={this.handleOpenNewMedia}
 						manifestParsed={this.state.manifest.parsed}

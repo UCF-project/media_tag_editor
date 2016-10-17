@@ -94,7 +94,7 @@ SelectInput.contextTypes = {
 };
 
 SelectInput.propTypes = {
-	menu: React.PropTypes.array.required,
+	menu: React.PropTypes.array.isRequired,
 	value: React.PropTypes.string,
 	inputStyle: React.PropTypes.object
 };

@@ -46,21 +46,12 @@ class DialogMediaContainer extends React.Component {
 		if (this.state && this.state.media && this.state.media.dialog) {
 			const actions = [];
 
-			if (this.state.media.dialog.stepIndex === 2) {
-				actions.push(<FlatButton
-					label="Save"
-					primary
-					onClick={this.handleSave}
-					key={0}
-					/>);
-			} else {
-				actions.push(<FlatButton
-					label="Next"
-					primary
-					onClick={this.handleNext}
-					key={0}
-					/>);
-			}
+			actions.push(<FlatButton
+				label="Save"
+				primary
+				onClick={this.handleSave}
+				key={0}
+				/>);
 
 			actions.push(<FlatButton
 				label="Cancel"
@@ -71,32 +62,13 @@ class DialogMediaContainer extends React.Component {
 
 			return (
 				<Dialog
-					title="Add Media"
+					title={this.state.media.dialog.type === 'NEW' ? 'Add Media' : 'Edit Media'}
 					actions={actions}
 					modal={false}
 					open={this.state.media.dialog.open}
 					onRequestClose={this.handleClose}
 					>
-					<Stepper linear={false} activeStep={this.state.media.dialog.stepIndex}>
-						<Step>
-							<StepButton onClick={this.handleStep1}>Select media</StepButton>
-						</Step>
-						<Step>
-							<StepButton onClick={this.handleStep2}>Create rules</StepButton>
-						</Step>
-						<Step>
-							<StepButton onClick={this.handleStep3}>Confirm media</StepButton>
-						</Step>
-					</Stepper>
-					{this.state.media.dialog.stepIndex === 0 && (
-						<MediaContentContainer/>
-					)}
-					{this.state.media.dialog.stepIndex === 1 && (
-						<MediaRulesContainer editable/>
-					)}
-					{this.state.media.dialog.stepIndex === 2 && (
-						<MediaConfirmContainer/>
-					)}
+					<MediaContentContainer/>
 				</Dialog>);
 		}
 		return <div/>;
@@ -116,5 +88,4 @@ class DialogMediaContainer extends React.Component {
 	}
 }
 
-module.exports = DialogMediaContainer;
 module.exports = DialogMediaContainer;

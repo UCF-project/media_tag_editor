@@ -11,6 +11,7 @@ const ManifestActions = Reflux.createActions({
 	deleteMedia: {},
 	updateMedia: {},
 	editMedia: {},
+	editRules: {},
 	showMedia: {},
 	stateCast: {},
 	listMedia: {},

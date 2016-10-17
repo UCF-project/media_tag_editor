@@ -11,26 +11,37 @@ const MediaBox = (props, context) => {
 		props.onDelete(props.itemIndex);
 	};
 
-	const handleEdit = () => {
-		props.onEdit(props.itemIndex);
+	const handleEditRules = () => {
+		props.onEditRules(props.itemIndex);
 	};
 
-	const handleShow = () => {
-		props.onShow(props.itemIndex);
+	const handleEditMedia = () => {
+		props.onEditMedia(props.itemIndex);
 	};
+
+	// const handleShow = () => {
+	// 	props.onShow(props.itemIndex);
+	// };
 	const stylesIcon = {
 		float: 'right'
 	};
+	const styleEditButtons = {
+		marginLeft: -12
+	};
+	const styleSpan = {
+		minWidth: 20
+	};
+	// 				<IconButton onClick={handleShow} tooltip="Details" style={stylesIcon} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-magnify-plus"/>
 	return (
 		<Card style={{width: '98%', display: 'inline-block', margin: '0 2% 2% 0'}}>
 			<CardText>
 				<MediaAvatar type={props.media.type} style={{marginRight: 6}}/>
-				<LabeledSpan label="type" value={props.media.type}/>
-				<LabeledSpan label="rules" value={props.media.rulesCount}/>
+				<LabeledSpan style={styleSpan} label="type" value={props.media.type}/>
+				<IconButton onClick={handleEditMedia} tooltip="Edit Media" style={styleEditButtons} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-pencil"/>
+				<LabeledSpan style={styleSpan} label="rules" value={props.media.rulesCount}/>
+				<IconButton onClick={handleEditRules} tooltip="Edit Rules" style={styleEditButtons} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-pencil"/>
 
 				<IconButton onClick={handleDelete} tooltip="Delete" style={stylesIcon} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-delete"/>
-				<IconButton onClick={handleEdit} tooltip="Edit" style={stylesIcon} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-pencil"/>
-				<IconButton onClick={handleShow} tooltip="Details" style={stylesIcon} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-magnify-plus"/>
 			</CardText>
 		</Card>
 	);
@@ -47,7 +58,8 @@ MediaBox.propTypes = {
 		React.PropTypes.number
 	]),
 	onDelete: React.PropTypes.func,
-	onEdit: React.PropTypes.func,
+	onEditMedia: React.PropTypes.func,
+	onEditRules: React.PropTypes.func,
 	onShow: React.PropTypes.func
 };
 

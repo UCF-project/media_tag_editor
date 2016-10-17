@@ -5,6 +5,7 @@ import Reflux from 'reflux';
 import {hashHistory} from 'react-router';
 import ManifestActions from 'app/actions/manifest'; // eslint-disable-line import/no-extraneous-dependencies
 import MediaActions from 'app/actions/media'; // eslint-disable-line import/no-extraneous-dependencies
+import RuleActions from 'app/actions/rule'; // eslint-disable-line import/no-extraneous-dependencies
 import Templates from 'app/templates'; // eslint-disable-line import/no-extraneous-dependencies
 import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 import Manifest from 'app/helpers/manifest'; // eslint-disable-line import/no-extraneous-dependencies
@@ -98,6 +99,7 @@ const ManifestStore = Reflux.createStore({
 	},
 
 	onUpdateMedia(mediaIndex, newMedia) {
+		debug('onUpdateMedia', mediaIndex, newMedia);
 		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
 		manifestParsed.medias[mediaIndex] = newMedia;
 		ManifestActions.changeSource('manifest', json2str(manifestParsed));
@@ -111,6 +113,12 @@ const ManifestStore = Reflux.createStore({
 	onShowMedia(mediaIndex) {
 		debug('onShowMedia', mediaIndex);
 		hashHistory.replace(`/${mediaIndex}`);
+	},
+
+	onEditRules(mediaIndex) {
+		debug('onEditRules', mediaIndex);
+		const manifestParsed = JSON.parse(this.manifestObj.getManifestSource());
+		RuleActions.openUpdate(mediaIndex, manifestParsed.medias[mediaIndex]);
 	},
 
 	onListMedia() {
@@ -128,6 +136,7 @@ const ManifestStore = Reflux.createStore({
 	},
 
 	onChangeSource(type, newSource) {
+		debug('onChangeSource', type, newSource);
 		if (type === 'manifest') {
 			this.manifestObj.setManifestSource(newSource);
 		} else if (type === 'html') {
