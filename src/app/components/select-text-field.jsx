@@ -38,6 +38,7 @@ const SelectTextField = class extends React.Component {
 	}
 
 	selectionChange(newSelection) {
+		debug('selectionChange', newSelection);
 		this.setState({selectedItems: newSelection});
 		if (this.props.onChange) {
 			this.props.onChange(newSelection);
@@ -121,11 +122,12 @@ const SelectTextField = class extends React.Component {
 
 	handleTextChange = e => {
 		debug('handleTextChange', e);
-		let filterValue = e.target.value;
-		if (!this.props.multiple && this.state.selectedItems !== null) {
-			const inputValue = this.getItemByValue(this.state.selectedItems).label;
-			filterValue = filterValue.substr(inputValue.length);
-			this.selectionRemoveAll();
+		const filterValue = e.target.value;
+		if (!this.props.multiple) {
+			// const inputValue = this.getItemByValue(this.state.selectedItems).label;
+			// filterValue = filterValue.substr(inputValue.length);
+			// this.selectionRemoveAll();
+			this.selectionChange(filterValue);
 		}
 		this.setState({filterValue, focusMenuItem: -1});
 		setTimeout(() => {
@@ -228,6 +230,8 @@ const SelectTextField = class extends React.Component {
 			multiple,
 			maxHeight,
 			defaultValue, // eslint-disable-line no-unused-vars
+			onChange, // eslint-disable-line no-unused-vars
+			errorText,
 			...others
 		} = this.props;
 		// const palette = context.muiTheme.baseTheme.palette;
@@ -276,7 +280,10 @@ const SelectTextField = class extends React.Component {
 				.map(a => this.getItemByValue(a))
 				.map(this.renderSelected);
 		} else if (this.state.selectedItems) {
-			inputValue = this.getItemByValue(this.state.selectedItems).label;
+			// TODO: we should have the label of the previous selectedItems
+			// in case the props changed and the item does not exists anymore
+			const selected = this.getItemByValue(this.state.selectedItems);
+			inputValue = selected ? selected.label : this.state.selectedItems;
 		}
 
 		this.lastRenderedItems = this.mappedItems
@@ -348,6 +355,7 @@ const SelectTextField = class extends React.Component {
 							inputStyle={{width: 'initial'}}
 							value={inputValue}
 							size={inputSize}
+							errorText={errorText}
 							/>
 					</div>
 					{showResetButton && <div style={styleWrapperButtons}><IconButton onClick={this.handleResetItems} style={styleIconBt} iconStyle={Object.assign({}, styleIconClose, iconStyle)}>
@@ -357,7 +365,7 @@ const SelectTextField = class extends React.Component {
 						{iconDrop}
 					</IconButton></div>}
 				</div>
-				<div style={{position: 'relative', marginTop: -4}}><TextFieldUnderline focus={this.state.itemsOpen} muiTheme={this.context.muiTheme}/></div>
+				<div style={{position: 'relative', marginTop: -4}}><TextFieldUnderline error={Boolean(errorText)} focus={this.state.itemsOpen} muiTheme={this.context.muiTheme}/></div>
 				{showItems && this.state.itemsOpen && <Paper style={Object.assign(styleMenuBase, menuStyle)} ref={this.setRefMenu}>
 					{availableRendered}
 					{notFoundRendered}
@@ -376,6 +384,9 @@ const SelectTextField = class extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.calcItems(nextProps);
+		if (nextProps.defaultValue !== this.props.defaultValue) {
+			this.setState({filterValue: nextProps.defaultValue});
+		}
 	}
 
 	getItemByValue(value) {
@@ -480,7 +491,8 @@ SelectTextField.propTypes = {
 	name: React.PropTypes.string,
 	multiple: React.PropTypes.bool,
 	maxHeight: React.PropTypes.number,
-	defaultValue: React.PropTypes.string
+	defaultValue: React.PropTypes.string,
+	errorText: React.PropTypes.node
 };
 
 module.exports = SelectTextField;

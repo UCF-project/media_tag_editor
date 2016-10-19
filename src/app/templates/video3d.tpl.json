@@ -7,6 +7,7 @@
           "show3d": {"visibility": true},
           "started": {"visibility": false},
           "showVideo": {"visibility": false},
+          "showAudio": {"visibility": false},
           "showText": {"visibility": false},
           "showImage": {"visibility": false}
         }
@@ -29,6 +30,20 @@
           "show3d": {"visibility": false},
           "started": {"visibility": false},
           "showVideo": {"visibility": true},
+          "showAudio": {"visibility": false},
+          "showText": {"visibility": false},
+          "showImage": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "http://0.0.0.0:9091/assets/sample.mp3",
+      "rules": {
+        "fakeMonitor": {
+          "show3d": {"visibility": false},
+          "started": {"visibility": false},
+          "showVideo": {"visibility": false},
+          "showAudio": {"visibility": true},
           "showText": {"visibility": false},
           "showImage": {"visibility": false}
         }
@@ -41,6 +56,7 @@
           "show3d": {"visibility": false},
           "started": {"visibility": false},
           "showVideo": {"visibility": false},
+          "showAudio": {"visibility": false},
           "showText": {"visibility": false},
           "showImage": {"visibility": true}
         }
@@ -53,6 +69,7 @@
           "show3d": {"visibility": false},
           "started": {"visibility": false},
           "showVideo": {"visibility": false},
+          "showAudio": {"visibility": false},
           "showText": {"visibility": true},
           "showImage": {"visibility": false}
         }

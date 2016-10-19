@@ -21,12 +21,24 @@ const EditorStore = Reflux.createStore({
 
 	init() {
 		this.state = {};
+
+		// // All 3 sections visible and 2/1 grid
+		// this.state.editor = {
+		// 	alignment: GridAlignment.ALIGNMENT_GRID36,
+		// 	sections: [
+		// 		{id: 'Media', visible: true},
+		// 		{id: 'Source', visible: true},
+		// 		{id: 'View', visible: true}
+		// 	]
+		// };
+
+		// Section Media and Source visible, horizontal grid
 		this.state.editor = {
-			alignment: GridAlignment.ALIGNMENT_GRID36,
+			alignment: GridAlignment.ALIGNMENT_GRID22,
 			sections: [
 				{id: 'Media', visible: true},
 				{id: 'Source', visible: true},
-				{id: 'View', visible: true}
+				{id: 'View', visible: false}
 			]
 		};
 	},

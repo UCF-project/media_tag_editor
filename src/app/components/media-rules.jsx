@@ -6,11 +6,12 @@ import {Table, TableBody, TableHeader, TableFooter, TableHeaderColumn, TableRow,
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
+import ruleText from 'app/helpers/rule-text'; // eslint-disable-line import/no-extraneous-dependencies
 import RuleInput from './rule-input';
 
 const debug = require('debug')('MTME:Components:MediaRules');
 
-const rulesProps = ['monitor', 'state', 'action', 'flag'];
+const rulesProps = ['monitor', 'state', 'action', 'flagType', 'flag'];
 
 const MediaRules = (props, context) => {
 	const {
@@ -68,7 +69,7 @@ const MediaRules = (props, context) => {
 								</TableRowColumn>
 							);
 						}
-						return <TableRowColumn key={rpi}>{String(r[rp])}</TableRowColumn>;
+						return <TableRowColumn key={rpi}>{ruleText({rule: r, item: rp})}</TableRowColumn>;
 					})}
 					{editable && buttons}
 				</TableRow>
@@ -86,6 +87,7 @@ const MediaRules = (props, context) => {
 					<TableHeaderColumn>Monitor</TableHeaderColumn>
 					<TableHeaderColumn>State</TableHeaderColumn>
 					<TableHeaderColumn>Action</TableHeaderColumn>
+					<TableHeaderColumn>Flag Type</TableHeaderColumn>
 					<TableHeaderColumn>Flag</TableHeaderColumn>
 					{editable && <TableHeaderColumn/>}
 				</TableRow>

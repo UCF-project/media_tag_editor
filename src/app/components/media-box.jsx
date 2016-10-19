@@ -33,7 +33,7 @@ const MediaBox = (props, context) => {
 	};
 	// 				<IconButton onClick={handleShow} tooltip="Details" style={stylesIcon} iconStyle={{color: context.muiTheme.palette.accent1Color}} iconClassName="mdi mdi-magnify-plus"/>
 	return (
-		<Card style={{width: '98%', display: 'inline-block', margin: '0 2% 2% 0'}}>
+		<Card style={{width: '100%', display: 'inline-block', margin: '0 10px 10px 0'}}>
 			<CardText>
 				<MediaAvatar type={props.media.type} style={{marginRight: 6}}/>
 				<LabeledSpan style={styleSpan} label="type" value={props.media.type}/>

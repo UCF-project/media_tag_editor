@@ -2,8 +2,9 @@
 
 import React from 'react';
 import MediaTag from 'media-tag';
-import {json2str} from 'app/helpers/utils'; // eslint-disable-line import/no-extraneous-dependencies
 import {RuleActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
+import {flags, flagTypes} from 'app/helpers/flag-types'; // eslint-disable-line import/no-extraneous-dependencies
+import ruleText from 'app/helpers/rule-text'; // eslint-disable-line import/no-extraneous-dependencies
 import SelectTextField from './select-text-field';
 
 const debug = require('debug')('MTME:Components:RuleInput');
@@ -31,57 +32,47 @@ const fillMenus = () => {
 	debug('mediaTagInfos', mediaTagInfos);
 };
 
-mediaTagInfos.flags = {};
-mediaTagInfos.flags[MediaTag.constants.ACTION_FLAG_TYPE.BOOLEAN] = {
-	restrict: true,
-	flags: ['true', 'false'],
-	convert: value => {
-		if (value === 'true') {
-			return true;
-		} else if (value === 'false') {
-			return false;
-		}
-		throw new Error(`Could not convert value ${value}`);
-	},
-	validate: value => (value === 'true' || value === 'false')
-};
-
-mediaTagInfos.flags[MediaTag.constants.ACTION_FLAG_TYPE.NUMBER] = {
-	restrict: false,
-	flags: [],
-	convert: value => parseInt(value, 10),
-	validate: value => {
-		try {
-			const convertedValue = parseInt(value, 10);
-			return value === String(convertedValue);
-		} catch (err) {
-			return false;
-		}
-	}
-};
-
-mediaTagInfos.flags[MediaTag.constants.ACTION_FLAG_TYPE.STRING] = {
-	restrict: false,
-	flags: [],
-	convert: value => value,
-	validate: value => value === String(value)
-};
-
-mediaTagInfos.flags[MediaTag.constants.ACTION_FLAG_TYPE.OBJECT] = {
-	restrict: false,
-	flags: [],
-	convert: value => json2str(value),
-	validate: value => {
-		try {
-			const convertedValue = JSON.parse(value);
-			return typeof convertedValue === 'object';
-		} catch (err) {
-			return false;
-		}
-	}
-};
-
 fillMenus();
+
+const errorValidateField = (value, type) => {
+	debug('errorValidateField', value, type);
+	if (flags[type].validate(value)) {
+		return false;
+	}
+	return `This field is invalid`;
+};
+
+const updateEditField = (index, item, rule, value) => {
+	RuleActions.editRuleField(index, item, value);
+};
+
+const getItems = (item, rule) => {
+	if (item === 'monitor' || item === 'action') {
+		return mediaTagInfos[`${item}sArr`];
+	} else if (item === 'state') {
+		const currentMonitorIndex = mediaTagInfos.monitorsArr.indexOf(rule.monitor);
+		if (currentMonitorIndex !== -1) {
+			// If there is a select valid monitor, proposes its states
+			return mediaTagInfos.monitors[currentMonitorIndex].states;
+		}
+		// Otherwise state is a free input
+		return [];
+	} else if (item === 'flag') {
+		let currentFlagType = rule.flagType;
+		const currentActionIndex = mediaTagInfos.actionsArr.indexOf(rule.action);
+		if (currentActionIndex !== -1) {
+			// If there is a select valid monitor, proposes its states
+			currentFlagType = mediaTagInfos.actions[currentActionIndex].flagType;
+			return flags[currentFlagType].flags;
+		}
+		// Otherwise state is a free input
+		return [];
+	} else if (item === 'flagType') {
+		// Otherwise state is a free input
+		return [];
+	}
+	throw new Error(`Unkown item type ${item}`);
+};
 
 const RuleInput = props => {
 	const {
@@ -90,42 +81,48 @@ const RuleInput = props => {
 		index,
 		...other
 	} = props;
-	const updateEditField = () => {
-		const value = document.querySelector(`input[name=${item}_${index}Input]`).value;
-		RuleActions.editRuleField(index, item, value);
-	};
-	let items = [];
-	if (item === 'monitor' || item === 'action') {
-		items = mediaTagInfos[`${item}sArr`];
-	} else if (item === 'state') {
-		const currentMonitorIndex = mediaTagInfos.monitorsArr.indexOf(rule.monitor);
-		if (currentMonitorIndex !== -1) {
-			// If there is a select valid monitor, proposes its states
-			items = mediaTagInfos.monitors[currentMonitorIndex].states;
-		}
-		// Otherwise state is a free input
-	} else if (item === 'flag') {
-		const currentActionIndex = mediaTagInfos.actionsArr.indexOf(rule.action);
-		if (currentActionIndex !== -1) {
-			// If there is a select valid monitor, proposes its states
-			const currentFlagType = mediaTagInfos.actions[currentActionIndex].flagType;
-			items = mediaTagInfos.flags[currentFlagType].flags;
-		}
-		// Otherwise state is a free input
-	} else {
-		throw new Error(`Unkown item type ${item}`);
-	}
+	const handleUpdateEditField = updateEditField.bind(null, index, item, rule);
+	const items = getItems(item, rule);
+	// const defaultValue = ruleText({rule, item});
+	const defaultValue = rule[item];
+	const errorText = false;
+	// if (item === 'monitor' || item === 'action') {
+	// 	items = mediaTagInfos[`${item}sArr`];
+	// } else if (item === 'state') {
+	// 	const currentMonitorIndex = mediaTagInfos.monitorsArr.indexOf(rule.monitor);
+	// 	if (currentMonitorIndex !== -1) {
+	// 		// If there is a select valid monitor, proposes its states
+	// 		items = mediaTagInfos.monitors[currentMonitorIndex].states;
+	// 	}
+	// 	// Otherwise state is a free input
+	// } else if (item === 'flag') {
+	// 	let currentFlagType = rule.flagType;
+	// 	const currentActionIndex = mediaTagInfos.actionsArr.indexOf(rule.action);
+	// 	if (currentActionIndex !== -1) {
+	// 		// If there is a select valid monitor, proposes its states
+	// 		currentFlagType = mediaTagInfos.actions[currentActionIndex].flagType;
+	// 		items = flags[currentFlagType].flags;
+	// 	}
+	// 	defaultValue = flags[currentFlagType].convert2Str(defaultValue);
+	// 	errorText = errorValidateField(defaultValue, currentFlagType);
+	// 	// Otherwise state is a free input
+	// } else if (item === 'flagType') {
+	// 	defaultValue = flags[rule.flagType].name;
+	// 	// Otherwise state is a free input
+	// } else {
+	// 	throw new Error(`Unkown item type ${item}`);
+	// }
 	return (
 		<SelectTextField
 			name={`${item}_${index}`}
 			items={items}
-			defaultValue={rule[item]}
+			defaultValue={defaultValue}
 			style={{width: '100%'}}
-			onBlur={updateEditField}
+			onChange={handleUpdateEditField}
+			errorText={errorText}
 			{...other}
 			/>
 	);
-	// <SelectInput inputStyle={{fontSize: 13}} value={String(r[rp])} name={`${rp}_${i}`} menu={menus[rp]}/>
 };
 
 RuleInput.propTypes = {
@@ -133,7 +130,8 @@ RuleInput.propTypes = {
 		monitor: React.PropTypes.string,
 		state: React.PropTypes.string,
 		action: React.PropTypes.string,
-		flag: React.PropTypes.string
+		flagType: React.PropTypes.string,
+		flag: React.PropTypes.any
 	}),
 	item: React.PropTypes.string,
 	index: React.PropTypes.number

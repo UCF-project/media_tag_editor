@@ -12,7 +12,8 @@ const types = {
 	'videojs-audio': 'mdi mdi-video',
 	'oembed': 'mdi mdi-share-variant',
 	'videoObj': 'mdi mdi-video',
-	'text': 'mdi mdi-format-text'
+	'text': 'mdi mdi-format-text',
+	'audio': 'mdi mdi-volume-high'
 };
 
 const MediaIcon = props => {

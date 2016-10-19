@@ -25,6 +25,7 @@ npm start      # Start two web servers, one with application and another with as
 * Upload in other storages
 * Upload package or manifest (Today only manifest)
 * Hoping that one day [this](https://github.com/reflux/reflux-promise/pull/18) lands
+* [BUG] Problem when dragging with view iframe
 
 ## Backend references
 

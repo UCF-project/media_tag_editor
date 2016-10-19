@@ -1,0 +1,88 @@
+{
+  "medias":  [
+    {
+      "content": "https://sketchfab.com/models/1b3f7cabd0854bb59c725c13514fec19",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": true},
+          "showTwitch": {"visibility": false},
+          "showSoundcloud": {"visibility": false},
+          "showSlideshare": {"visibility": false},
+          "showKickstarter": {"visibility": false},
+          "showDocs": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "https://www.twitch.tv/riotgames/v/72749628",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": false},
+          "showTwitch": {"visibility": true},
+          "showSoundcloud": {"visibility": false},
+          "showSlideshare": {"visibility": false},
+          "showKickstarter": {"visibility": false},
+          "showDocs": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "http://soundcloud.com/forss/flickermood",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": false},
+          "showTwitch": {"visibility": false},
+          "showSoundcloud": {"visibility": true},
+          "showSlideshare": {"visibility": false},
+          "showKickstarter": {"visibility": false},
+          "showDocs": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "http://www.slideshare.net/haraldf/business-quotes-for-2011",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": false},
+          "showTwitch": {"visibility": false},
+          "showSoundcloud": {"visibility": false},
+          "showSlideshare": {"visibility": true},
+          "showKickstarter": {"visibility": false},
+          "showDocs": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "http://www.kickstarter.com/projects/1115015686/help-support-the-kiggins-theatre-to-go-digital",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": false},
+          "showTwitch": {"visibility": false},
+          "showSoundcloud": {"visibility": false},
+          "showSlideshare": {"visibility": false},
+          "showKickstarter": {"visibility": true},
+          "showDocs": {"visibility": false}
+        }
+      }
+    },
+    {
+      "content": "https://docs.com/constance/6216/silver-week",
+      "rules": {
+        "fakeMonitor": {
+          "started": {"visibility": false},
+          "showSketchfab": {"visibility": false},
+          "showTwitch": {"visibility": false},
+          "showSoundcloud": {"visibility": false},
+          "showSlideshare": {"visibility": false},
+          "showKickstarter": {"visibility": true},
+          "showDocs": {"visibility": true}
+        }
+      }
+    }
+  ]
+}

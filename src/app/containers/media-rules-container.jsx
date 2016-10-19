@@ -27,15 +27,7 @@ const MediaRulesContainer = class extends React.Component {
 
 	handleSaveRule = e => {
 		const itemIndex = e.currentTarget.dataset.itemIndex;
-		debug('handleSaveRule', `input[name=monitor_${itemIndex}Input]`);
-		const newRule = RuleStore.createRule(
-			document.querySelector(`input[name=monitor_${itemIndex}Input]`).value,
-			document.querySelector(`input[name=state_${itemIndex}Input]`).value,
-			document.querySelector(`input[name=action_${itemIndex}Input]`).value,
-			document.querySelector(`input[name=flag_${itemIndex}Input]`).value,
-			false,
-			false);
-		RuleActions.saveRule(itemIndex, newRule);
+		RuleActions.saveRule(itemIndex);
 	}
 
 	handleEditRule = e => {

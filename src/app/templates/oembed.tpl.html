@@ -8,7 +8,7 @@
 					// Add fake monitoring
 					MediaTag.extensionApi.addMonitor({
 						name: 'fakeMonitor',
-						states: ['started', 'show3d', 'showVideo', 'showAudio', 'showText', 'showImage'],
+						states: ['started', 'showSketchfab', 'showTwitch', 'showSoundcloud', 'showSlideshare', 'showKickstarter', 'showDocs'],
 						startup: function () {
 							// Initiates value
 							MediaTag.controller.changeState('fakeMonitor', 'started');
@@ -33,11 +33,12 @@
 	</head>
 	<body onload="onload()">
 		<div>
-			<button data-state="show3d">show 3d</button>
-			<button data-state="showVideo">show video</button>
-			<button data-state="showAudio">show audio</button>
-			<button data-state="showImage">show image</button>
-			<button data-state="showText">show text</button>
+			<button data-state="showSketchfab">show Sketchfab</button>
+			<button data-state="showTwitch">show Twitch</button>
+			<button data-state="showSoundcloud">show Soundcloud</button>
+			<button data-state="showSlideshare">show Slideshare</button>
+			<button data-state="showKickstarter">show Kickstarter</button>
+			<button data-state="showDocs">show Docs</button>
 		</div>
 	</body>
 </html>
