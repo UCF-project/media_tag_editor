@@ -18,18 +18,28 @@ class GridBox extends React.Component {
 		// e.nativeEvent.dataTransfer.setData('text/html', '<div/>');
 
 		debug('handleDragStart', e);
+		// this.setState({isDragActive: true});
+		window.myHappyGlobalisDragActive = true;
 	}
 
+	// getChildContext() {
+	// 	return {isDragActive: this.state.isDragActive};
+	// }
+
 	handleDrag = e => {
-		if (e.screenX) {
+		if (e.pageX) {
 			// debug('e', e, e.pageX, e.pageY, document.body.scrollWidth, document.body.scrollHeight, e.currentTarget.dataset.sizingIndex, e.currentTarget);
 			const totalWidth = window.innerWidth;
 			// TODO: change to detect total height without appbar
 			const totalHeight = (window.innerHeight - 64);
-			const offsetX = window.screenLeft;
-			const offsetY = window.screenTop + (window.outerHeight - window.innerHeight) + 64;
-			const posX = e.screenX;
-			const posY = e.screenY;
+			// const offsetX = window.screenLeft;
+			// const offsetY = window.screenTop + (window.outerHeight - window.innerHeight);
+			// const posX = e.screenX;
+			// const posY = e.screenY;
+			const offsetX = 0;
+			const offsetY = 64;
+			const posX = e.pageX;
+			const posY = e.pageY;
 			const percentage = Math.round(this.props.columns ? (posX - offsetX) / totalWidth * 100 : (posY - offsetY) / totalHeight * 100);
 			// debug('values', {
 			// 	totalWidth,
@@ -56,6 +66,8 @@ class GridBox extends React.Component {
 
 	handleDragEnd = e => {
 		debug('handleDragEnd', e);
+		// this.setState({isDragActive: false});
+		window.myHappyGlobalisDragActive = false;
 	}
 
 	calculateSizes = props => {
@@ -82,7 +94,7 @@ class GridBox extends React.Component {
 	// TODO: maybe improve render speed with shouldComponentUpdate
 
 	render() {
-		debug('render', 'state', this.state);
+		// debug('render', 'state', this.state);
 		const resizeBarSize = 5;
 		let styleResizeBar = {
 			backgroundColor: this.context.muiTheme.palette.primary1Color,
@@ -151,6 +163,10 @@ class GridBox extends React.Component {
 GridBox.contextTypes = {
 	muiTheme: React.PropTypes.object
 };
+
+// GridBox.childContextTypes = {
+// 	isDragActive: React.PropTypes.bool
+// };
 
 GridBox.propTypes = {
 	columns: React.PropTypes.bool,

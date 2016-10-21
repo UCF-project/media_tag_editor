@@ -7,7 +7,7 @@ import ManifestActions from 'app/actions/manifest'; // eslint-disable-line impor
 
 // const debug = require('debug')('MTME:Containers:ViewContentContainer');
 
-class SourceSectionContainer extends React.Component {
+class ViewSectionContainer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {};
@@ -43,7 +43,7 @@ class SourceSectionContainer extends React.Component {
 		// );
 		return (
 			<div key="View" style={{height: '100%', width: '100%', overflow: 'auto'}}>
-				{this.state.manifest && this.state.manifest.status === 'PARSED' && (
+				{this.state.manifest && this.state.manifest.status === 'PARSED' && !window.myHappyGlobalisDragActive && (
 					<iframe srcDoc={this.state.manifest.htmlSourceDoc} style={styleIframe}>
 						<p>Your browser does not support iframes.</p>
 					</iframe>
@@ -75,4 +75,8 @@ class SourceSectionContainer extends React.Component {
 	}
 }
 
-module.exports = SourceSectionContainer;
+// ViewSectionContainer.contextTypes = {
+// 	isDragActive: React.PropTypes.bool
+// };
+
+module.exports = ViewSectionContainer;

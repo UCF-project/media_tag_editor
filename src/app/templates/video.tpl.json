@@ -43,7 +43,7 @@
         "network": {"up": {"visibility": true}, "down": {"visibility": false}}
       }
     }, {
-      "content": "<div class=\"divWarnMessage\">We detect that your bandwidth is insufficient to play the content.</div>",
+      "content": "<div class=\"divWarnMessageRed\">We detect that your bandwidth is insufficient to play the content.</div>",
       "rules": {
         "bandwidth": {
           "insufficient": {
