@@ -1,0 +1,79 @@
+{
+  "medias": [
+    {
+      "content": {
+        "id": "test",
+        "sourcesVideo": [{
+          "src": "http://0.0.0.0:9091/assets/media/video-only.mpd",
+          "type": "application/dash+xml"
+        }],
+        "sourcesAudio": [{
+          "src": "http://0.0.0.0:9091/assets/media/audio-only.mpd",
+          "type": "application/dash+xml"
+        }],
+        "class": "video-js vjs-sublime-skin",
+        "contentType": "videojs-audio",
+        "width": "600",
+        "height": "400",
+        "style": "display: inline-block;"
+      },
+      "rules": {
+        "bandwidth": {
+          "insufficient": {
+            "playAudio": false,
+            "playVideo": false,
+            "playSync": false
+          },
+          "audio": {
+            "playAudio": true,
+            "playVideo": false,
+            "playSync": false
+          },
+          "video": {
+            "playAudio": true,
+            "playVideo": true,
+            "playSync": true
+          }
+        },
+        "network": {"up": {"visibility": true}, "down": {"visibility": false}}
+      }
+    }, {
+      "content": "<div class=\"divWarnMessage\">We detect that your bandwidth suffice to play only audio content.</div>",
+      "rules": {
+        "bandwidth": {
+          "insufficient": {
+            "visibility": false
+          },
+          "audio": {
+            "visibility": true
+          },
+          "video": {
+            "visibility": false
+          }
+        },
+        "network": {"up": {"visibility": true}, "down": {"visibility": false}}
+      }
+    }, {
+      "content": "<div class=\"divWarnMessage\">We detect that your bandwidth is insufficient to play the content.</div>",
+      "rules": {
+        "bandwidth": {
+          "insufficient": {
+            "visibility": true
+          },
+          "audio": {
+            "visibility": false
+          },
+          "video": {
+            "visibility": false
+          }
+        },
+        "network": {"up": {"visibility": true}, "down": {"visibility": false}}
+      }
+    }, {
+      "content": "http://0.0.0.0:9091/assets/media/image.png",
+      "rules": {
+        "network": {"up": {"visibility": false}, "down": {"visibility": true}}
+      }
+    }
+  ]
+}

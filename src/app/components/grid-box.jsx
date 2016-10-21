@@ -21,13 +21,26 @@ class GridBox extends React.Component {
 	}
 
 	handleDrag = e => {
-		if (e.pageX) {
-			const totalWidth = document.body.scrollWidth;
+		if (e.screenX) {
+			// debug('e', e, e.pageX, e.pageY, document.body.scrollWidth, document.body.scrollHeight, e.currentTarget.dataset.sizingIndex, e.currentTarget);
+			const totalWidth = window.innerWidth;
 			// TODO: change to detect total height without appbar
-			const totalHeight = (document.body.scrollHeight - 64);
-			// debug('handleDrag');
-			// TODO: change to detect total height without appbar
-			const percentage = Math.round(this.props.columns ? e.pageX / totalWidth * 100 : (e.pageY - 64) / totalHeight * 100);
+			const totalHeight = (window.innerHeight - 64);
+			const offsetX = window.screenLeft;
+			const offsetY = window.screenTop + (window.outerHeight - window.innerHeight) + 64;
+			const posX = e.screenX;
+			const posY = e.screenY;
+			const percentage = Math.round(this.props.columns ? (posX - offsetX) / totalWidth * 100 : (posY - offsetY) / totalHeight * 100);
+			// debug('values', {
+			// 	totalWidth,
+			// 	totalHeight,
+			// 	offsetX,
+			// 	offsetY,
+			// 	posX,
+			// 	posY,
+			// 	percentage,
+			// 	columns: this.props.columns
+			// });
 			const sizingIndex = parseInt(e.currentTarget.dataset.sizingIndex, 10);
 			const newSizes = this.state.sizes.slice(0);
 			const previousSum = newSizes.slice(0, sizingIndex).reduce((p, c) => {

@@ -1,9 +1,12 @@
-import image from './image.tpl.json';
+import imageJson from './image.tpl.json';
 import imageObjJson from './image-obj.tpl.json';
-import dash from './dash.tpl.json';
+import dashJson from './dash.tpl.json';
 
 import videoJson from './video.tpl.json';
 import videoHtml from './video.tpl.html';
+
+import videojsJson from './videojs.tpl.json';
+import videojsHtml from './videojs.tpl.html';
 
 import video3dJson from './video3d.tpl.json';
 import video3dHtml from './video3d.tpl.html';
@@ -26,7 +29,7 @@ import defaultHtml from './default.tpl.html';
 module.exports = {
 	manifests: [{
 		label: 'image',
-		json: image,
+		json: imageJson,
 		html: defaultHtml
 	}, {
 		label: 'image object',
@@ -34,7 +37,7 @@ module.exports = {
 		html: defaultHtml
 	}, {
 		label: 'DASH video, image, HTML',
-		json: dash,
+		json: dashJson,
 		html: defaultHtml
 	}, {
 		label: 'Video, audio, image, HTML',
@@ -62,3 +65,9 @@ module.exports = {
 		html: stylingDivHtml
 	}]
 };
+
+// , {
+// 		label: 'video.js',
+// 		json: videojsJson,
+// 		html: videojsHtml
+// 	}
