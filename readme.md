@@ -7,6 +7,18 @@ npm run build  # Build media-tag and application, creates ./dist with all needed
 npm start      # Start two web servers, one with application and another with assets
 ```
 
+## Templates
+
+Templates are available in the folder `src/app/templates/`.
+The file `src/app/templates/index.js` contains the list that will be
+shown inside the editor (with the respective labels).
+
+To add a new template you can create new files inside template
+directory and add their references inside the `index.js` file.
+Be aware that, with the current configuration, only files
+named `*.tpl.html` and `*.tpl.json` are read as strings by the
+bundler.
+
 ## Roadmap
 
 * Download with assets and HTML sample
