@@ -2,8 +2,8 @@
   "medias":  [
     {
       "content": {
-        "urlVideo": "http://0.0.0.0:9091/assets/media/video-only.mpd",
-        "urlAudio": "http://0.0.0.0:9091/assets/media/audio-only.mpd",
+        "urlVideo": "{location}tests/assets/media/video-only.mpd",
+        "urlAudio": "{location}tests/assets/media/audio-only.mpd",
         "contentType": "dash-audio"
       },
       "rules": {
@@ -59,7 +59,7 @@
         "network": {"up": {"visibility": true}, "down": {"visibility": false}}
       }
     }, {
-      "content": "http://0.0.0.0:9091/assets/media/image.png",
+      "content": "{location}tests/assets/media/image.png",
       "rules": {
         "network": {"up": {"visibility": false}, "down": {"visibility": true}}
       }

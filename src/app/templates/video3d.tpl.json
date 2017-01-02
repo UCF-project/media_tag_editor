@@ -17,10 +17,10 @@
       "content": {
         "sources": [
           {
-            "src": "http://0.0.0.0:9091/assets/sample.webm"
+            "src": "{location}tests/assets/media/cube.webm"
           },
           {
-            "src": "http://0.0.0.0:9091/assets/sample.mp4"
+            "src": "{location}tests/assets/media/cube.mp4"
           }
         ],
         "contentType": "videoObj"
@@ -37,7 +37,7 @@
       }
     },
     {
-      "content": "http://0.0.0.0:9091/assets/sample.mp3",
+      "content": "{location}tests/assets/media/cube.mp3",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},
@@ -50,7 +50,7 @@
       }
     },
     {
-      "content": "http://0.0.0.0:9091/assets/sample.png",
+      "content": "{location}tests/assets/media/cube.png",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},
@@ -63,7 +63,7 @@
       }
     },
     {
-      "content": "http://0.0.0.0:9091/assets/sample.txt",
+      "content": "{location}tests/assets/media/cube.txt",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},

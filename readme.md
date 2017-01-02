@@ -4,8 +4,15 @@
 ```
 npm i          # Install dependencies
 npm run build  # Build media-tag and application, creates ./dist with all needed files
-npm start      # Start two web servers, one with application and another with assets
+npm start      # Start 3 servers: frontend application, assets and media server
 ```
+
+## Assets
+
+The assets related to DASH content are not included in the project due
+to its size (more than 2GB). In order to have functional DASH
+templates, you can easily download them by following the instructions
+in the Media Tag project readme.
 
 ## Templates
 
@@ -51,9 +58,3 @@ bundler.
 * https://jsfiddle.net/
 * https://jsbin.com/?html,css,js,console,output
 * http://codepen.io/pen/
-
-## Templates
-
-* video dash + image + html
-* video non dash + audio + text
-* 3d > video > image

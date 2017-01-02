@@ -3,8 +3,8 @@
 import React from 'react';
 import MediaTag from 'media-tag';
 import {RuleActions} from 'app'; // eslint-disable-line import/no-extraneous-dependencies
-import {flags, flagTypes} from 'app/helpers/flag-types'; // eslint-disable-line import/no-extraneous-dependencies
-import ruleText from 'app/helpers/rule-text'; // eslint-disable-line import/no-extraneous-dependencies
+import {flags/* , flagTypes*/} from 'app/helpers/flag-types'; // eslint-disable-line import/no-extraneous-dependencies
+// import ruleText from 'app/helpers/rule-text'; // eslint-disable-line import/no-extraneous-dependencies
 import SelectTextField from './select-text-field';
 
 const debug = require('debug')('MTME:Components:RuleInput');
@@ -34,13 +34,13 @@ const fillMenus = () => {
 
 fillMenus();
 
-const errorValidateField = (value, type) => {
-	debug('errorValidateField', value, type);
-	if (flags[type].validate(value)) {
-		return false;
-	}
-	return `This field is invalid`;
-};
+// const errorValidateField = (value, type) => {
+// 	debug('errorValidateField', value, type);
+// 	if (flags[type].validate(value)) {
+// 		return false;
+// 	}
+// 	return `This field is invalid`;
+// };
 
 const updateEditField = (index, item, rule, value) => {
 	RuleActions.editRuleField(index, item, value);

@@ -12,6 +12,14 @@ import Manifest from 'app/helpers/manifest'; // eslint-disable-line import/no-ex
 
 const debug = require('debug')('MTME:Stores:Manifest');
 
+// Replace location is needed because we use iframe blob:...
+// and this is not recognized by window.URL as a valid URL within
+// content parser
+const replaceLocation = sourceJson => {
+	const rootLocation = new window.URL('/', window.location.href);
+	return sourceJson.replace(/\{location\}/g, rootLocation.href);
+};
+
 const ManifestStore = Reflux.createStore({
 
 	ERROR: Manifest.ERROR,
@@ -47,7 +55,7 @@ const ManifestStore = Reflux.createStore({
 
 	onChangeToTemplateIndex(index) {
 		debug('onChangeToTemplateIndex', index);
-		ManifestActions.changeSource('manifest', Templates.manifests[index].json);
+		ManifestActions.changeSource('manifest', replaceLocation(Templates.manifests[index].json));
 		ManifestActions.changeSource('html', Templates.manifests[index].html);
 		ManifestActions.listMedia();
 	},

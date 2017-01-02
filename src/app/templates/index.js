@@ -5,8 +5,8 @@ import dashJson from './dash.tpl.json';
 import videoJson from './video.tpl.json';
 import videoHtml from './video.tpl.html';
 
-import videojsJson from './videojs.tpl.json';
-import videojsHtml from './videojs.tpl.html';
+// import videojsJson from './videojs.tpl.json';
+// import videojsHtml from './videojs.tpl.html';
 
 import video3dJson from './video3d.tpl.json';
 import video3dHtml from './video3d.tpl.html';

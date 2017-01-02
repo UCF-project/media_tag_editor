@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "watch:app": "NODE_PATH=./src/ watchify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -t [ stringify --extensions [.tpl.html .tpl.json] ] -v",
-    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -t [ stringify --extensions [.tpl.html .tpl.json]",
+    "build:app": "NODE_PATH=./src/ browserify ./src/app/app.js -o dist/app.js --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -t [ stringify --extensions [.tpl.html .tpl.json] ]",
     "build": "run-s copy-files:mdi copy-files:static build:sass build:media-tag copy-files:media-tag build:app",
     "copy-files:static": "mkdir dist || true && cp -R src/static/* dist/",
     "copy-files:mdi": "mkdir -p dist/css || true && cp ./node_modules/mdi/css/materialdesignicons.min.css* dist/css/ && mkdir -p dist/fonts || true && cp ./node_modules/mdi/fonts/* dist/fonts/ ",
@@ -15,11 +15,10 @@
     "build:media-tag": "cd node_modules/media-tag && npm i --production && npm run build-lib",
     "copy-files:media-tag": "cp node_modules/media-tag/dist/media* dist/",
     "test": "xo",
-    "start": "run-p server-editor server-assets server-vendor server-media",
+    "start": "run-p server-editor server-assets server-media",
     "server-editor": "http-server -p 9091 --cors ./dist/ -P http://localhost:9092",
-    "server-assets": "http-server -p 9092 ./node_modules/media-tag/tests/ -P http://localhost:9093",
-    "server-vendor": "http-server -p 9093 ./node_modules/media-tag/ -P http://localhost:9094",
-    "server-media": "PORT=9094 mtmserver",
+    "server-assets": "http-server -p 9092 ./node_modules/media-tag/ -P http://localhost:9093",
+    "server-media": "PORT=9093 mtmserver",
     "budo": "NODE_PATH=./src/ budo ./src/app/app.js:dist/app.js  -v --live -d ./dist/ -- --debug --extension=.jsx --standalone MTME -t [ babelify --presets [ es2015 react stage-1 ] ] -t [ stringify --extensions [.tpl.html .tpl.json] ]"
   },
   "author": "",
@@ -76,6 +75,7 @@
     "eslint": "3.7.1",
     "eslint-config-xo-react": "0.10.0",
     "eslint-plugin-react": "6.4.1",
+    "http-server": "^0.9.0",
     "watchify": "3.7.0",
     "xo": "0.16.0"
   }
