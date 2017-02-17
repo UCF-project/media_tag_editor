@@ -1,6 +1,8 @@
 
 ## Usage
 
+!Important! Make sure your node is at least version 6.
+
 ```
 npm i          # Install dependencies
 npm run build  # Build media-tag and application, creates ./dist with all needed files

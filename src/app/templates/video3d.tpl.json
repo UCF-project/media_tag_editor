@@ -37,7 +37,7 @@
       }
     },
     {
-      "content": "{location}tests/assets/media/cube.mp3",
+      "content": "{location}tests/assets/media/alterway.mp3",
       "rules": {
         "fakeMonitor": {
           "show3d": {"visibility": false},
