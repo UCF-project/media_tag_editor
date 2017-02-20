@@ -5,6 +5,9 @@ import dashJson from './dash.tpl.json';
 import videoJson from './video.tpl.json';
 import videoHtml from './video.tpl.html';
 
+import shakaPlayerJson from './shaka-player.tpl.json';
+import shakaPlayerHtml from './shaka-player.tpl.html';
+
 // import videojsJson from './videojs.tpl.json';
 // import videojsHtml from './videojs.tpl.html';
 
@@ -63,6 +66,10 @@ module.exports = {
 		label: 'styling div (no webcomponent)',
 		json: stylingDivJson,
 		html: stylingDivHtml
+	}, {
+		label: 'Shaka Player Content',
+		json: shakaPlayerJson,
+		html: shakaPlayerHtml
 	}]
 };
 

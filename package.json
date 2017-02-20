@@ -38,7 +38,7 @@
     "lodash": "^4.16.4",
     "material-ui": "0.16.0",
     "mdi": "1.7.22",
-    "media-tag": "git+ssh://git@git.rnd.alterway.fr:UCF/media_tag.git",
+    "media-tag": "git+ssh://git@git.rnd.alterway.fr:UCF/media_tag.git#shaka_player",
     "mt-media-server": "git+ssh://git@git.rnd.alterway.fr:UCF/media_server.git",
     "node-sass": "3.10.1",
     "npm-run-all": "^3.1.0",

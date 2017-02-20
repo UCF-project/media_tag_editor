@@ -13,7 +13,8 @@ const types = {
 	'oembed': 'mdi mdi-share-variant',
 	'videoObj': 'mdi mdi-video',
 	'text': 'mdi mdi-format-text',
-	'audio': 'mdi mdi-volume-high'
+	'audio': 'mdi mdi-volume-high',
+	'shakaPlayer': 'mdi mdi-file-video'
 };
 
 const MediaIcon = props => {
