@@ -69,7 +69,7 @@ module.exports = {
 	}, {
 		label: 'Shaka Player Content',
 		json: shakaPlayerJson,
-		html: shakaPlayerHtml
+		html: defaultHtml
 	}]
 };
 
