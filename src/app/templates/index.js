@@ -6,7 +6,6 @@ import videoJson from './video.tpl.json';
 import videoHtml from './video.tpl.html';
 
 import shakaPlayerJson from './shaka-player.tpl.json';
-import shakaPlayerHtml from './shaka-player.tpl.html';
 
 // import videojsJson from './videojs.tpl.json';
 // import videojsHtml from './videojs.tpl.html';
