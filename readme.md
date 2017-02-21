@@ -1,7 +1,12 @@
 
+![Media Tag Manifest Editor](media-tag-manifest-editor.png "Media Tag Manifest Editor")
+
+**Media Tag Manifest Editor** is a web application, made with React, that
+allows a user to create and edit Media Tag manifests.
+
 ## Usage
 
-!Important! Make sure your node is at least version 6.
+:bangbang: Make sure your node is at least version 6.
 
 ```
 npm i          # Install dependencies
@@ -28,35 +33,14 @@ Be aware that, with the current configuration, only files
 named `*.tpl.html` and `*.tpl.json` are read as strings by the
 bundler.
 
-## Roadmap
+## References
 
-* Download with assets and HTML sample
-* Animations on delete/etc
-* Save/load state last navigation
-* Fix code format, some es5, some es6
-* Refactor dialog store (separate dialog from media)
-* Flag different types (now is only string, we need bool, object, etc)
-* Upload connectors? For example, connect with other sites APIs to upload oEmbed content
-* Update buttons with app/IconButton
-* Advanced formatting media (more user friendly for complex formats like videojs)
-* Upload login
-* Electron
-* View/render area update (only work in chrome because webcomponents)
-* Add in View controllers for monitor state change
-* Upload in other storages
-* Upload package or manifest (Today only manifest)
-* Hoping that one day [this](https://github.com/reflux/reflux-promise/pull/18) lands
-* [BUG] Problem when dragging with view iframe
-
-## Backend references
-
-* https://www.filestack.com/
-* https://github.com/vishesh04/Filesutra
-* https://github.com/silexlabs/unifile
-* https://github.com/silexlabs/cloud-explorer/
-
-## Editors references
-
-* https://jsfiddle.net/
-* https://jsbin.com/?html,css,js,console,output
-* http://codepen.io/pen/
+* Backend
+	* https://www.filestack.com/
+	* https://github.com/vishesh04/Filesutra
+	* https://github.com/silexlabs/unifile
+	* https://github.com/silexlabs/cloud-explorer/
+* Editors
+	* https://jsfiddle.net/
+	* https://jsbin.com/?html,css,js,console,output
+	* http://codepen.io/pen/
