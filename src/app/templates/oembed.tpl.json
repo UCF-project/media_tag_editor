@@ -15,20 +15,6 @@
       }
     },
     {
-      "content": "https://www.twitch.tv/riotgames/v/72749628",
-      "rules": {
-        "fakeMonitor": {
-          "started": {"visibility": false},
-          "showSketchfab": {"visibility": false},
-          "showTwitch": {"visibility": true},
-          "showSoundcloud": {"visibility": false},
-          "showSlideshare": {"visibility": false},
-          "showKickstarter": {"visibility": false},
-          "showDocs": {"visibility": false}
-        }
-      }
-    },
-    {
       "content": "http://soundcloud.com/forss/flickermood",
       "rules": {
         "fakeMonitor": {
@@ -67,20 +53,6 @@
           "showSlideshare": {"visibility": false},
           "showKickstarter": {"visibility": true},
           "showDocs": {"visibility": false}
-        }
-      }
-    },
-    {
-      "content": "https://docs.com/constance/6216/silver-week",
-      "rules": {
-        "fakeMonitor": {
-          "started": {"visibility": false},
-          "showSketchfab": {"visibility": false},
-          "showTwitch": {"visibility": false},
-          "showSoundcloud": {"visibility": false},
-          "showSlideshare": {"visibility": false},
-          "showKickstarter": {"visibility": true},
-          "showDocs": {"visibility": true}
         }
       }
     }

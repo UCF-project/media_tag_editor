@@ -59,7 +59,7 @@
         "network": {"up": {"visibility": true}, "down": {"visibility": false}}
       }
     }, {
-      "content": "{location}tests/assets/media/image.png",
+      "content": "{location}tests/assets/media/cube.png",
       "rules": {
         "network": {"up": {"visibility": false}, "down": {"visibility": true}}
       }
